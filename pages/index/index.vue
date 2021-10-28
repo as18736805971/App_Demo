@@ -1,52 +1,76 @@
 <template>
-	<view class="content">
-		<image class="logo" src="/static/logo.png"></image>
-		<view class="text-area">
-			<text class="title">{{title}}</text>
+	<view class="page-index">
+		<view class="list">
+			<view v-for="(item,index) in list" :key="index" class="button" @click="jump(item.link)">{{item.title}}</view>
 		</view>
+
+		<!-- 组件 -->
+		<BaseDialog ref="noteDialog" :style-type="'style1'">
+			<view class="note-content"></view>
+		</BaseDialog>
+		<!-- 组件 -->
 	</view>
 </template>
 
 <script>
+	import BaseDialog from '../../components/BaseDialog.vue'
 	export default {
+		components: {
+			BaseDialog
+		},
 		data() {
 			return {
-				title: 'Hello'
+				list: [{
+					title: '弹框',
+					link: {
+						type: 'button',
+					},
+				}]
 			}
 		},
 		onLoad() {
-
+			console.log('11111111111')
 		},
 		methods: {
-
+			jump(link) {
+				if (link.type === 'button') {
+					this.$refs.noteDialog.show()
+				}
+			}
 		}
 	}
 </script>
 
-<style>
-	.content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-	}
+<style lang="scss">
+	.page-index {
+		width: 100%;
+		min-height: 100vh;
 
-	.logo {
-		height: 200rpx;
-		width: 200rpx;
-		margin-top: 200rpx;
-		margin-left: auto;
-		margin-right: auto;
-		margin-bottom: 50rpx;
-	}
+		.list {
+			width: 100%;
+			padding: 20rpx;
+			display: flex;
+			align-items: center;
+			flex-wrap: wrap;
 
-	.text-area {
-		display: flex;
-		justify-content: center;
-	}
-
-	.title {
-		font-size: 36rpx;
-		color: #8f8f94;
+			.button {
+				padding: 12rpx 20rpx;
+				font-size: 24rpx;
+				border-radius: 8rpx;
+				color: #fff;
+				background-color: #409eff;
+				border-color: #409eff;
+			}
+		}
+		
+		// 组件样式
+		.note-content {
+			width: 500rpx;
+			height: 500rpx;
+			border-radius: 20rpx;
+			background-color: #FFFFFF;
+			position: relative;
+			box-sizing: border-box;
+		}
 	}
 </style>

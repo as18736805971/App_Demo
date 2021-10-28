@@ -1,0 +1,50 @@
+$index-fixed-container: 100;
+$index-dialog: 1000;
+$index-mask: 999;
+
+$font-base: 30rpx;
+$font-desc: 22rpx;
+$font-input: 24rpx;
+$font-tab: 26rpx;
+$font-title: 28rpx;
+$font-tag: 20rpx;
+
+$color-normal: #f83e3a;
+$color-second: #fe8e1d;
+$color-tag-bg: #f4f4f4;
+$color-text-title: #222;
+$color-text-normal: #666;
+$color-text-desc: #999;
+$color-text-input: #444;
+
+$height-tabbar: 96rpx;
+
+/* 默认资源文件目录 */
+$path-static: '~@/static/';
+$path-framework-static: '../../static/';
+/* 内容层级 */
+$z-index-background: 1; // 与元素同高的背景
+$z-index-absolute: 10;  // 页面绝对定位元素
+$z-index-fixed: 100;  // 页面固定元素
+$z-index-mask: 1000;  // 蒙层
+$z-index-dialog: 10000; // 弹窗内容
+$z-index-toast: 100000; // 弹窗提示
+/* 页面背景色 */
+$color-background: #f83e3a;
+/* 字体大小 */
+$font-title: 34rpx;
+$font-tab: 28rpx;
+$font-desc-title: 28rpx;
+$font-desc: 22rpx;
+$font-tag: 20rpx;
+/* 字体颜色 */
+$color-text: #333030;
+$color-text-important: #BE3A3A;
+$color-text-desc: #9D9999;
+/* 边距 */
+$page-padding-left: 30rpx;
+$page-padding-right: 30rpx;
+/* 阴影 */
+$box-shadow: 0 5rpx 12rpx -3rpx rgba(51,49,48, 0.1);
+/* 圆角大小 */
+$border-radius: 8rpx;
