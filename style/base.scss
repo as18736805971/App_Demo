@@ -21,7 +21,7 @@ $height-tabbar: 96rpx;
 
 /* 默认资源文件目录 */
 $path-static: '~@/static/';
-$path-framework-static: '../../static/';
+$path-in-static: '../../static/';
 /* 内容层级 */
 $z-index-background: 1; // 与元素同高的背景
 $z-index-absolute: 10;  // 页面绝对定位元素

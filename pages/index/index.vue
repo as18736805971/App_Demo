@@ -13,7 +13,7 @@
 </template>
 
 <script>
-	import BaseDialog from '../../components/BaseDialog.vue'
+	import BaseDialog from '../../components/base/BaseDialog.vue'
 	export default {
 		components: {
 			BaseDialog

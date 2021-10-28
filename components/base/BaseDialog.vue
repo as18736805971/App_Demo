@@ -62,7 +62,8 @@
 	}
 </script>
 <style lang="scss">
-	@import "../style/base";
+	@import "../../style/base";
+	@import "../../style/mixin";
 	
 	.base-dialog {
 		position: fixed;
