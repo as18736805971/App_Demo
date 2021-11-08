@@ -1,7 +1,8 @@
 <template>
 	<view class="page-index">
 		<view class="list">
-			<view v-for="(item,index) in list" :key="index" class="button" @click="jump(item.link)">{{item.title}}</view>
+			<view v-for="(item,index) in list" :key="index" class="button" @click="jump(item.link)">{{item.title}}
+			</view>
 		</view>
 
 		<!-- 组件 -->
@@ -14,6 +15,7 @@
 
 <script>
 	import BaseDialog from '../../components/base/BaseDialog.vue'
+
 	export default {
 		components: {
 			BaseDialog
@@ -29,7 +31,7 @@
 			}
 		},
 		onLoad() {
-			console.log('11111111111')
+			console.log(getApp().CommonTool.time_format(1636338154))
 		},
 		methods: {
 			jump(link) {
@@ -62,7 +64,7 @@
 				border-color: #409eff;
 			}
 		}
-		
+
 		// 组件样式
 		.note-content {
 			width: 500rpx;

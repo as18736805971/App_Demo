@@ -10,6 +10,7 @@
 	</view>
 </template>
 <script>
+	import CommonTool from '../../utils/common.js'
 	export default {
 		name: 'BaseRichText',
 		props: {
