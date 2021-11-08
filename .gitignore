@@ -5,3 +5,12 @@
 */unpackage/
 .unpackage/
 unpackage/
+
+node_modules
+dist
+.env.local
+.env.*.local
+.idea
+public/video
+*.zip
+*.7z
