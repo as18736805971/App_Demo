@@ -1,5 +1,5 @@
 <template>
-	<view class="page-index">我的</view>
+	<view class="page-index">加载数据示例</view>
 </template>
 
 <script>
@@ -8,7 +8,16 @@
 			return {}
 		},
 		onLoad() {
-
+			uni.$off('handleMethods') // 清除全局方法
+			uni.$on('handleMethods', (res) => {
+				console.log(res, '获取到的数据') // 获取全局方法数据
+			})
+			let params = {
+				id: 1,
+			}
+			setTimeout(() => {
+				uni.$emit('handleMethods', params) // 创建全局方法 并传递数据
+			}, 300)
 		},
 		onPullDownRefresh() {
 			//下拉刷新
