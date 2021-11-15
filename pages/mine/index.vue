@@ -10,46 +10,7 @@
 		onLoad() {
 
 		},
-		onPullDownRefresh() {
-			//下拉刷新
-			let that = this
-			that.format();
-		},
-		onReachBottom() {
-			//加载下一页
-			if (!this.nodata) {
-				this.params.page++;
-				this.request();
-			}
-		},
-		methods: {
-			// 格式化请求
-			format() {
-				this.params.page = 1;
-				this.request();
-			},
-			// 请求列表数据
-			request() {
-				var that = this;
-				// getApp().Req.get('Delivery_oderList', that.params, function(res) {
-				// 	if (res.code == 200) {
-				// 		if (that.params.page == 1) {
-				// 			that.order_list = [];
-				// 		}
-				// 		that.order_list = that.order_list.concat(res.data);
-				// 		if (res.data.length == 0) {
-				// 			that.nodata = true;
-				// 		} else {
-				// 			that.nodata = false;
-				// 		}
-				// 		uni.hideLoading();
-				// 	} else {
-				// 		uni.hideLoading();
-				// 		uni.stopPullDownRefresh();
-				// 	}
-				// })
-			},
-		}
+		methods: {}
 	}
 </script>
 
