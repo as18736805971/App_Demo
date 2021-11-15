@@ -1,9 +1,19 @@
 <template>
 	<view class="share" @touchmove.stop.prevent>
 		<!-- 遮罩层 -->
-		<view :class="{'share-box': shareState}" @click="handleHiddenShare"></view>
+		<view :class="{'share-box': modalState}" @click="handleHiddenModal()"></view>
 		<!-- 遮罩层 -->
-		<view class="share-item" :class="{'share-show': shareState}">
+		<view class="share-item" :class="{'share-show': modalState}">
+			<!-- 默认标题样式 -->
+			<view class="title-item" v-if="title.show">
+				<image :src="closeIcon" @click="handleHiddenModal()"></image>
+				<view class="cnote-title">
+					<view>{{ title.name }}</view>
+					<view></view>
+				</view>
+			</view>
+			<!-- 默认标题样式 -->
+
 			<!-- 插槽内容 -->
 			<slot name="default"></slot>
 			<!-- 插槽内容 -->
@@ -13,19 +23,34 @@
 
 <script>
 	export default {
+		props: {
+			// 显示默认标题
+			title: {
+				type: Object,
+				default: {
+					show: false,
+					name: '标题'
+				}
+			},
+			// 显示默认关闭按钮图标
+			closeIcon: {
+				type: String,
+				default: ''
+			}
+		},
 		data() {
 			return {
-				shareState: false,
-			};
+				modalState: false,
+			}
 		},
 		methods: {
-			// 显示弹框  通过组件 this.$ref.参数.handleShowShare() 使用
-			handleShowShare() {
-				this.shareState = true;
+			// 显示弹框  通过组件 this.$ref.参数.handleShowModal() 使用
+			handleShowModal() {
+				this.modalState = true;
 			},
 			// 隐藏弹框
-			handleHiddenShare() {
-				this.shareState = false;
+			handleHiddenModal() {
+				this.modalState = false;
 			}
 		}
 	}
@@ -47,7 +72,7 @@
 		right: 0rpx;
 		background-color: rgba(0, 0, 0, 0.4);
 		transition: .5s;
-		z-index: 99999;
+		z-index: 999;
 	}
 
 	// 进入弹框动画
@@ -67,31 +92,44 @@
 		transform: translateY(100%);
 		z-index: 1999;
 
-		.share-to {
+		.title-item {
 			width: 100%;
-			height: 3rem;
+			height: 80rpx;
 			display: flex;
-			justify-content: center;
 			align-items: center;
+			justify-content: center;
+			position: relative;
+			background-color: #FFFFFF;
+			border-radius: 20rpx 20rpx 0 0;
 
-			&::after {
-				content: '';
-				width: 240rpx;
-				height: 0rpx;
-				border-top: 1px solid #E4E7ED;
-				-webkit-transform: scaleY(0.5);
-				transform: scaleY(0.5);
-				margin-left: 30rpx;
+			image {
+				position: absolute;
+				top: 20rpx;
+				right: 20rpx;
+				width: 40rpx;
+				height: 40rpx;
 			}
 
-			&::before {
-				content: '';
-				width: 240rpx;
-				height: 0rpx;
-				border-top: 1px solid #E4E7ED;
-				-webkit-transform: scaleY(0.5);
-				transform: scaleY(0.5);
-				margin-right: 30rpx;
+			.cnote-title {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+
+				view:first-child {
+					font-size: 32rpx;
+					color: #333333;
+					font-weight: 600;
+					z-index: 999;
+				}
+
+				view:last-child {
+					width: 100rpx;
+					height: 10rpx;
+					background-color: #FFF001;
+					border-radius: 5rpx;
+					margin-top: -14rpx;
+				}
 			}
 		}
 	}
