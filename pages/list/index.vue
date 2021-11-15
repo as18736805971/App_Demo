@@ -139,7 +139,7 @@
 
 		.list {
 			width: 100%;
-			height: 1000rpx;
+			height: calc(100vh - var(--status-bar-height) - 38rpx);
 			display: flex;
 
 			.left-scroll-item {
