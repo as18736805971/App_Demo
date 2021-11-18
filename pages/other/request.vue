@@ -5,7 +5,12 @@
 <script>
 	export default {
 		data() {
-			return {}
+			return {
+        nodata: false,
+        params: {
+          page: 1,
+        }
+      }
 		},
 		onLoad() {
 			uni.$off('handleMethods') // 清除全局方法
@@ -40,23 +45,23 @@
 			// 请求列表数据
 			request() {
 				var that = this;
-				// getApp().Req.get('Delivery_oderList', that.params, function(res) {
-				// 	if (res.code == 200) {
-				// 		if (that.params.page == 1) {
-				// 			that.order_list = [];
-				// 		}
-				// 		that.order_list = that.order_list.concat(res.data);
-				// 		if (res.data.length == 0) {
-				// 			that.nodata = true;
-				// 		} else {
-				// 			that.nodata = false;
-				// 		}
-				// 		uni.hideLoading();
-				// 	} else {
-				// 		uni.hideLoading();
-				// 		uni.stopPullDownRefresh();
-				// 	}
-				// })
+				getApp().Req.get('Delivery_oderList', that.params, function(res) {
+					if (res.code == 200) {
+						if (that.params.page == 1) {
+							that.order_list = [];
+						}
+						that.order_list = that.order_list.concat(res.data);
+						if (res.data.length == 0) {
+							that.nodata = true;
+						} else {
+							that.nodata = false;
+						}
+						uni.hideLoading();
+					} else {
+						uni.hideLoading();
+						uni.stopPullDownRefresh();
+					}
+				})
 			},
 		}
 	}

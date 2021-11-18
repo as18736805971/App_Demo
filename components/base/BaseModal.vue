@@ -5,13 +5,23 @@
 		<!-- 遮罩层 -->
 		<view class="share-item" :class="{'share-show': modalState}">
 			<!-- 默认标题样式 -->
-			<view class="title-item" v-if="title.show">
-				<image :src="closeIcon" @click="handleHiddenModal()"></image>
-				<view class="cnote-title">
-					<view>{{ title.name }}</view>
-					<view></view>
+			<template v-if="parameter.show">
+				<view class="title-item" v-if="parameter.style === 'style1'">
+					<image v-if="closeIcon !== ''" :src="closeIcon" @click="handleHiddenModal()"></image>
+					<view class="cnote-title">
+						<view>{{ parameter.name }}</view>
+						<view></view>
+					</view>
 				</view>
-			</view>
+
+				<view class="title-item2" v-if="parameter.style === 'style2'">
+					<image v-if="closeIcon !== ''" :src="closeIcon" @click="handleHiddenModal()"></image>
+					<view class="cnote-title">
+						<view class="name">{{ parameter.name }}</view>
+					</view>
+					<view class="desc" v-if="parameter.desc !== ''">{{ parameter.desc }}</view>
+				</view>
+			</template>
 			<!-- 默认标题样式 -->
 
 			<!-- 插槽内容 -->
@@ -25,11 +35,15 @@
 	export default {
 		props: {
 			// 显示默认标题
-			title: {
+			parameter: {
 				type: Object,
-				default: {
-					show: false,
-					name: '标题'
+				default: function() {
+					return {
+						show: true,
+						name: '标题',
+						style: 'style1',
+						desc: '描述'
+					}
 				}
 			},
 			// 显示默认关闭按钮图标
@@ -56,7 +70,7 @@
 	}
 </script>
 
-<style lang="less">
+<style lang="scss">
 	.share {
 		width: 100%;
 		height: 100%;
@@ -130,6 +144,52 @@
 					border-radius: 5rpx;
 					margin-top: -14rpx;
 				}
+			}
+		}
+
+		.title-item2 {
+			width: 100%;
+			height: auto;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-wrap: wrap;
+			position: relative;
+			background-color: #FFFFFF;
+			border-radius: 20rpx 20rpx 0 0;
+			padding-bottom: 15rpx;
+			border-bottom: 1rpx solid #F0F0F0;
+
+			image {
+				position: absolute;
+				top: 20rpx;
+				right: 20rpx;
+				width: 40rpx;
+				height: 40rpx;
+			}
+
+			.cnote-title {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				margin-top: 20rpx;
+
+				.name {
+					font-size: 30rpx;
+					z-index: 999;
+					color: #333333;
+				}
+			}
+
+			.desc {
+				width: 100%;
+				padding: 0 20rpx;
+				height: auto;
+				margin-top: 10rpx;
+				font-size: 24rpx;
+				text-align: center;
+				color: #8F8F8F;
 			}
 		}
 	}

@@ -10,23 +10,40 @@
 			<view class="note-content"></view>
 		</BaseDialog>
 		<!-- 组件 -->
+
+		<base-modal ref="modal" :parameter="list[1].param" :closeIcon="'../../static/icon/close.png'">
+			<view class="modal"></view>
+		</base-modal>
 	</view>
 </template>
 
 <script>
 	import BaseDialog from '../../components/base/BaseDialog.vue'
+	import BaseModal from '../../components/base/BaseModal.vue'
 
 	export default {
 		components: {
-			BaseDialog
+			BaseDialog,
+			BaseModal,
 		},
 		data() {
 			return {
 				list: [{
-					title: '弹框',
+					title: '中间弹框',
 					link: {
 						type: 'button',
 					},
+				}, {
+					title: '底部弹框',
+					link: {
+						type: 'modal',
+					},
+					param: {
+						show: true,
+						name: '测试标题',
+						style: 'style2',
+						desc: '文字描述'
+					}
 				}]
 			}
 		},
@@ -37,6 +54,8 @@
 			jump(link) {
 				if (link.type === 'button') {
 					this.$refs.noteDialog.show()
+				} else if (link.type === 'modal') {
+					this.$refs.modal.handleShowModal()
 				}
 			}
 		}
@@ -62,6 +81,7 @@
 				color: #fff;
 				background-color: #409eff;
 				border-color: #409eff;
+				margin-right: 20rpx;
 			}
 		}
 
@@ -73,6 +93,12 @@
 			background-color: #FFFFFF;
 			position: relative;
 			box-sizing: border-box;
+		}
+
+		.modal {
+			width: 100%;
+			height: 500rpx;
+			background-color: #007AFF;
 		}
 	}
 </style>
