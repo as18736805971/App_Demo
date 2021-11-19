@@ -13,6 +13,10 @@
 		</view>
 		<!-- 列表导航 -->
 
+		<!-- 公告组件 -->
+		<notice :list="notice" :icon="require('@/static/appicon/notice.png')" @handleNotice="handleNotice"></notice>
+		<!-- 公告组件 -->
+
 		<!-- 列表组件 -->
 		<diy-list :list="list" @handleListJump="handleList"></diy-list>
 		<!-- 列表组件 -->
@@ -22,11 +26,13 @@
 <script>
 	import Shuffling from '@/components/components/Shuffling'
 	import diyList from '@/components/components/list'
+	import notice from '@/components/components/notice'
 
 	export default {
 		components: {
 			Shuffling,
 			diyList,
+			notice,
 		},
 		data() {
 			return {
@@ -47,43 +53,43 @@
 					id: 1,
 					title: '地图',
 					icon: require('@/static/appicon/address.png'),
-				},{
-          id: 1,
-          title: '文章列表',
-          icon: require('@/static/appicon/app.png'),
-        },{
-          id: 1,
-          title: '文章列表',
-          icon: require('@/static/appicon/article.png'),
-        },{
-          id: 1,
-          title: '文章列表',
-          icon: require('@/static/appicon/cate.png'),
-        },{
-          id: 1,
-          title: '文章列表',
-          icon: require('@/static/appicon/close.png'),
-        },{
-          id: 1,
-          title: '文章列表',
-          icon: require('@/static/appicon/code.png'),
-        },{
-          id: 1,
-          title: '文章列表',
-          icon: require('@/static/appicon/coupon.png'),
-        },{
-          id: 1,
-          title: '文章列表',
-          icon: require('@/static/appicon/data.png'),
-        },{
-          id: 1,
-          title: '文章列表',
-          icon: require('@/static/appicon/email.png'),
-        },{
-          id: 1,
-          title: '文章列表',
-          icon: require('@/static/appicon/file.png'),
-        },],
+				}, {
+					id: 1,
+					title: '文章列表',
+					icon: require('@/static/appicon/app.png'),
+				}, {
+					id: 1,
+					title: '文章列表',
+					icon: require('@/static/appicon/article.png'),
+				}, {
+					id: 1,
+					title: '文章列表',
+					icon: require('@/static/appicon/cate.png'),
+				}, {
+					id: 1,
+					title: '文章列表',
+					icon: require('@/static/appicon/close.png'),
+				}, {
+					id: 1,
+					title: '文章列表',
+					icon: require('@/static/appicon/code.png'),
+				}, {
+					id: 1,
+					title: '文章列表',
+					icon: require('@/static/appicon/coupon.png'),
+				}, {
+					id: 1,
+					title: '文章列表',
+					icon: require('@/static/appicon/data.png'),
+				}, {
+					id: 1,
+					title: '文章列表',
+					icon: require('@/static/appicon/email.png'),
+				}, {
+					id: 1,
+					title: '文章列表',
+					icon: require('@/static/appicon/file.png'),
+				}, ],
 				list: [{
 					id: 1,
 					hidden: true,
@@ -120,7 +126,24 @@
 					show_icon: true,
 					icon: require('@/static/appicon/about.png'),
 					content: '关于我们',
-				}]
+				}],
+				notice: [{
+						id: 1,
+						content: '这是第一条公告内容，可设置向上或向左滚动哦！'
+					},
+					{
+						id: 2,
+						content: '这是第二条公告内容，可设置向上或向左滚动哦！'
+					},
+					{
+						id: 3,
+						content: '这是第三条公告内容，可设置向上或向左滚动哦！'
+					},
+					{
+						id: 4,
+						content: '这是第四条公告内容，可设置向上或向左滚动哦！'
+					},
+				],
 			}
 		},
 		onLoad() {},
@@ -135,6 +158,10 @@
 			},
 			// 点击列表
 			handleList(data) {
+				console.log('🥒', data)
+			},
+			// 点击公告
+			handleNotice(data) {
 				console.log('🥒', data)
 			},
 		}
@@ -192,7 +219,9 @@
 
 		/* 列表导航  */
 
-		/* 列表组件 */
-		/* 列表组件 */
+		/* 公告组件 */
+
+
+		/* 公告组件 */
 	}
 </style>
