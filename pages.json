@@ -29,6 +29,12 @@
 			"style": {
 				"navigationBarTitleText": "我的"
 			}
+		},
+		{
+			"path": "pages/other/animation",
+			"style": {
+				"navigationBarTitleText": "动画"
+			}
 		}
 	],
 	"tabBar": {
