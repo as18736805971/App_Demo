@@ -76,6 +76,7 @@
 			// 点击卡片
 			handleCard(data) {
 				console.log('🥒', data)
+        console.log('🥒', data)
 			}
 		}
 	}
