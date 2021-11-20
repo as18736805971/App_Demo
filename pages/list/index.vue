@@ -98,7 +98,7 @@
 				for (let i = 0; i < this.list.length; i++) {
 					for (let j = 0; j < 8; j++) {
 						this.list[i].list.push({
-							src: '../../static/logo.png',
+							src: require('@/static/appicon/app.png'),
 							name: `商品${j}`
 						})
 					}

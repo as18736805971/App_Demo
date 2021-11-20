@@ -14,6 +14,10 @@
 
 <style>
 	/*每个页面公共css */
+	page {
+		background-color: #f8f8f8;
+		font-size: 24rpx;
+	}
 
 	/* 解决小程序和app滚动条的问题 */
 	/* #ifdef MP-WEIXIN || APP-PLUS */

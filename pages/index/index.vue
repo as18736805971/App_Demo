@@ -82,10 +82,6 @@
 </script>
 
 <style lang="scss">
-	page {
-		background-color: #f8f8f8;
-	}
-
 	.page-index {
 		width: 100%;
 		min-height: 100vh;
