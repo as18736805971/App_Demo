@@ -17,13 +17,18 @@
 		<notice :list="notice" :icon="require('@/static/appicon/notice.png')" @handleNotice="handleNotice"></notice>
 		<!-- 公告组件 -->
 
-    <!-- 进度条组件 -->
-		<progress :nowD="nowD" :sumD="100" :contentColor='"rgba(3,144,252,1)"' :contentBacColor='"#ffffff"' :wid="320" :type='"linear"'></progress>
-    <!-- 进度条组件 -->
+		<!-- 进度条组件 -->
+		<progress class="margin_top" :nowD="nowD" :sumD="100" :contentColor='"rgba(3,144,252,1)"'
+			:contentBacColor='"#ffffff"' :wid="380" :type='"linear"'></progress>
+		<!-- 进度条组件 -->
 
 		<!-- 列表组件 -->
 		<diy-list :list="list" @handleListJump="handleList"></diy-list>
 		<!-- 列表组件 -->
+
+		<!-- 卡片组件 -->
+		<card :list="card" @handleCard="handleCard"></card>
+		<!-- 卡片组件 -->
 	</view>
 </template>
 
@@ -32,6 +37,7 @@
 	import diyList from '@/components/components/list'
 	import notice from '@/components/components/notice'
 	import progress from '@/components/components/progress'
+	import card from '@/components/components/card'
 
 	import index from './index.js'
 	export default {
@@ -40,11 +46,12 @@
 			diyList,
 			notice,
 			progress,
+			card,
 		},
 		mixins: [index],
 		data() {
 			return {
-        nowD: 20,
+				nowD: 20,
 			}
 		},
 		onLoad() {},
@@ -63,9 +70,13 @@
 			},
 			// 点击公告
 			handleNotice(data) {
-        this.nowD = this.nowD + 10
+				this.nowD = this.nowD + 10
 				console.log('🥒', data)
 			},
+			// 点击卡片
+			handleCard(data) {
+				console.log('🥒', data)
+			}
 		}
 	}
 </script>
@@ -78,9 +89,14 @@
 	.page-index {
 		width: 100%;
 		min-height: 100vh;
+		padding-bottom: 20rpx;
 
 		.margin {
 			margin-bottom: 10rpx !important;
+		}
+
+		.margin_top {
+			margin-top: 10rpx !important;
 		}
 
 		/* 列表导航  */
@@ -121,9 +137,7 @@
 
 		/* 列表导航  */
 
-		/* 公告组件 */
-
-
-		/* 公告组件 */
+		/* 卡片组件 */
+		/* 卡片组件 */
 	}
 </style>

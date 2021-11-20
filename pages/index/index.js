@@ -113,6 +113,38 @@ export default {
 					content: '这是第四条公告内容，可设置向上或向左滚动哦！'
 				},
 			],
+			// 卡片数据
+			card: [{
+					id: 1,
+					title: '早柚',
+					icon: require('@/static/appicon/help.png'),
+					desc: '神里绫华，巴巴托斯',
+				},
+				{
+					id: 2,
+					title: '宵宫',
+					icon: require('@/static/appicon/password.png'),
+					desc: '璃月钟离，稻妻雷神',
+				},
+				{
+					id: 3,
+					title: '甘雨',
+					icon: require('@/static/appicon/price.png'),
+					desc: '枫原万叶，九条裟罗',
+				},
+				{
+					id: 4,
+					title: '可莉',
+					icon: require('@/static/appicon/phone.png'),
+					desc: '罗莎莉亚，巴巴托斯',
+				},
+				{
+					id: 5,
+					title: '刻晴',
+					icon: require('@/static/appicon/tips.png'),
+					desc: '达达利亚，稻妻雷神',
+				},
+			]
 		}
 	},
 }
