@@ -17,6 +17,10 @@
 		<notice :list="notice" :icon="require('@/static/appicon/notice.png')" @handleNotice="handleNotice"></notice>
 		<!-- 公告组件 -->
 
+    <!-- 进度条组件 -->
+		<progress :nowD="nowD" :sumD="100" :contentColor='"rgba(3,144,252,1)"' :contentBacColor='"#ffffff"' :wid="320" :type='"linear"'></progress>
+    <!-- 进度条组件 -->
+
 		<!-- 列表组件 -->
 		<diy-list :list="list" @handleListJump="handleList"></diy-list>
 		<!-- 列表组件 -->
@@ -27,6 +31,7 @@
 	import Shuffling from '@/components/components/Shuffling'
 	import diyList from '@/components/components/list'
 	import notice from '@/components/components/notice'
+	import progress from '@/components/components/progress'
 
 	import index from './index.js'
 	export default {
@@ -34,11 +39,12 @@
 			Shuffling,
 			diyList,
 			notice,
+			progress,
 		},
 		mixins: [index],
 		data() {
 			return {
-
+        nowD: 20,
 			}
 		},
 		onLoad() {},
@@ -57,6 +63,7 @@
 			},
 			// 点击公告
 			handleNotice(data) {
+        this.nowD = this.nowD + 10
 				console.log('🥒', data)
 			},
 		}
@@ -65,7 +72,7 @@
 
 <style lang="scss">
 	page {
-		background-color: #f4f6f9;
+		background-color: #f8f8f8;
 	}
 
 	.page-index {
