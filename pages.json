@@ -27,7 +27,8 @@
 		{
 			"path": "pages/mine/index",
 			"style": {
-				"navigationBarTitleText": "我的"
+				"navigationBarTitleText": "我的",
+				"navigationStyle": "custom" //禁用uni-app默认的头部导航
 			}
 		},
 		{

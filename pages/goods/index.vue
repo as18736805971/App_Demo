@@ -2,34 +2,33 @@
 	<view class="index-center">
 		<template v-if="shopList.length !== 0">
 			<view class="shop">
-				<view class="shop-item item-center" v-for="(item, index) in shopList" :key="item.id"
-					@click.stop="handleJump()">
+				<view class="shop-item item-center" v-for="(item, index) in shopList" :key="item.id">
 					<view class="radio" @click.stop="itemChecked(index)">
 						<label>
 							<checkbox style="transform:scale(0.8)" :checked="item.status" />
 						</label>
 					</view>
-					<view class="image">
+					<view class="image" @click.stop="handleJump()">
 						<image :src="item.goods_img" mode="aspectFill"></image>
 					</view>
 					<view class="text">
 						<view class="title">
-							<text>{{item.goods_name}}</text>
+							<text @click.stop="handleJump()">{{item.goods_name}}</text>
 							<view class="del item-center">
 								<image :src="require('@/static/appicon/del.png')" @click.stop="handleDel(index)">
 								</image>
 							</view>
 						</view>
 						<view class="button">
-							<view class="price">
+              <view class="price" @click.stop="handleJump()">
 								￥<text>{{item.price}}</text>
 							</view>
 							<view class="number">
-								<view class="jian item-center" @click="handleAdd.stop(index, 1)">-</view>
+								<view class="jian item-center" @click="handleAdd(index, 1)">-</view>
 								<view class="input">
 									<input type="number" v-model.number="item.number" :min="1" class="input-text" />
 								</view>
-								<view class="jian item-center" @click="handleAdd.stop(index, 2)">+</view>
+								<view class="jian item-center" @click="handleAdd(index, 2)">+</view>
 							</view>
 						</view>
 					</view>
