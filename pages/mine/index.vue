@@ -10,6 +10,8 @@
 					{{ userInfo.nickName }}
 					<image class="icon" :src="require('@/static/icon/right_arrow.png')"></image>
 				</view>
+
+				<!-- 会员卡 -->
 				<view class="member-level">
 					<template v-if="userInfo.auth">
 						<view class="level">
@@ -21,14 +23,16 @@
 						</view>
 						<view class="content">
 							<view class="left">
-								<view class="level-num">{{ userInfo.growth_value }}/100</view>
-								<view class="level-line"></view>
+								<view class="level-num">{{ growth.value }}/{{ growth.max_value }}</view>
+								<view class="level-line" :style="{ width: getWid }">
+									<view class="active" :style="{ width: activePx }"></view>
+								</view>
 								<view class="level-desc">
-									距离下一等级只差100成长值
+									距离下一等级只差{{ poor_value }}成长值
 									<image class="icon" :src="require('@/static/icon/right_arrow.png')"></image>
 								</view>
 							</view>
-							<view class="right">
+							<view class="right" @click="handleGrowthAdd()">
 								<image class="icon" :src="require('@/static/appicon/code.png')"></image>
 								<view class="ewm">会员码</view>
 							</view>
@@ -44,13 +48,51 @@
 						<view class="member-btn" @click="handleAuthModal(1)">立即授权</view>
 					</tempalte>
 				</view>
+				<!-- 会员卡 -->
 			</view>
 		</view>
 		<!-- 顶部导航栏 -->
 
 		<!-- 我的资产 -->
-		<view class="assets"></view>
+		<view class="assets">
+			<view class="top-item">
+				<view>积分变动可第一时间得到通知</view>
+				<view class="btn" @click="handleAuthEdit()">去领取</view>
+			</view>
+			<view class="content-item">
+				<view class="title">我的资产</view>
+				<view class="list">
+					<view class="item" v-for="(item, index) in assets" :key="index">
+						<view class="block">{{ item.number }}</view>
+						<view class="num">{{ item.title }}</view>
+					</view>
+				</view>
+			</view>
+		</view>
 		<!-- 我的资产 -->
+
+		<!-- 我的服务 -->
+		<view class="assets">
+			<view class="content-item">
+				<view class="title">我的服务</view>
+				<view class="list">
+					<view class="item distance" v-for="(item, index) in service" :key="index">
+						<view class="block">
+							<image class="item-icon" :src="item.icon"></image>
+							<view class="hot" v-if="item.hot">HOT</view>
+						</view>
+						<view class="num">{{ item.title }}</view>
+					</view>
+				</view>
+			</view>
+		</view>
+		<!-- 我的服务 -->
+
+		<!-- 版权 -->
+		<view class="copyright">
+			会员卡最终解释权归你的眼里有星星诠释
+		</view>
+		<!-- 版权 -->
 
 		<!-- 授权弹窗 -->
 		<base-modal ref="modal_auth">
@@ -84,20 +126,119 @@
 		components: {
 			BaseModal,
 		},
+		computed: {
+			poor_value() {
+				return Number(this.growth.max_value) - Number(this.growth.value)
+			},
+			getWid() {
+				return this.growth.wid.toString() + "px"
+			},
+      // 选中成长值长度
+      activePx() {
+        return (this.growth.value / this.growth.max_value * this.growth.wid) + 'px'
+      },
+		},
 		data() {
 			return {
-        userInfo: {
-					auth: false, // 授权
+				growth: {
+					wid: 200, // 未选中长度
+					max_value: 1000, // 最大成长值
+					value: 10, // 当前成长值
+				},
+				userInfo: {
+					auth: true, // 授权
 					nickName: '亲爱的用户',
 					avatarUrl: require('@/static/appicon/portrait.png'),
-					growth_value: 50, // 成长值
-				}
+				},
+				assets: [{
+					title: '优惠券',
+					number: 10,
+				}, {
+					title: '积分商城',
+					number: 98,
+				}, {
+					title: '余额(元)',
+					number: 112.00,
+				}, {
+					title: '礼品卡',
+					number: 6,
+				}, ], // 我的资产
+				service: [{
+					title: '储值有礼',
+					icon: require('@/static/appicon/coupon.png'),
+					hot: true,
+					link: {
+						type: 'stored_value',
+					}
+				}, {
+					title: '积分签到',
+					icon: require('@/static/appicon/sign_in.png'),
+					hot: false,
+					link: {
+						type: 'sign_in',
+					}
+				}, {
+					title: '送TA心意',
+					icon: require('@/static/appicon/gift.png'),
+					hot: false,
+					link: {
+						type: 'heart',
+					}
+				}, {
+					title: '联系客服',
+					icon: require('@/static/appicon/mine.png'),
+					hot: false,
+					link: {
+						type: 'service',
+					}
+				}, {
+					title: '兑换中心',
+					icon: require('@/static/appicon/exchange.png'),
+					hot: false,
+					link: {
+						type: 'exchange',
+					}
+				}, {
+					title: '收货地址',
+					icon: require('@/static/appicon/address.png'),
+					hot: false,
+					link: {
+						type: 'address',
+					}
+				}, {
+					title: '开发票',
+					icon: require('@/static/appicon/invoice.png'),
+					hot: false,
+					link: {
+						type: 'invoice',
+					}
+				}, {
+					title: '更多服务',
+					icon: require('@/static/appicon/more.png'),
+					hot: false,
+					link: {
+						type: 'more',
+					}
+				}, ], // 我的服务
 			}
 		},
 		onLoad() {
 
 		},
 		methods: {
+      // 成长值增加
+      handleGrowthAdd() {
+        if (this.growth.value < this.growth.max_value) {
+          this.growth.value += 20
+          if (this.growth.value > this.growth.max_value) {
+            this.growth.value = this.growth.max_value
+          }
+        }
+      },
+      // 权限状态
+      handleAuthEdit() {
+        this.userInfo.auth = !this.userInfo.auth
+      },
 			// 授权弹窗
 			handleAuthModal(type) {
 				if (type === 2) {
@@ -122,8 +263,8 @@
 							...this.userInfo,
 							...res.userInfo
 						}
-            this.userInfo.auth = true
-            this.$refs.modal_auth.handleHiddenModal()
+						this.userInfo.auth = true
+						this.$refs.modal_auth.handleHiddenModal()
 					},
 					fail: err => {}
 				})
@@ -327,11 +468,17 @@
 							}
 
 							.level-line {
-								width: 400rpx;
+								//width: 400rpx;
 								height: 10rpx;
 								background-color: #FFFFFF;
 								border-radius: 10rpx;
 								margin: 20rpx 0;
+								overflow: hidden;
+
+								.active {
+									height: 100%;
+									background-color: #b0d341;
+								}
 							}
 
 							.level-desc {
@@ -397,8 +544,113 @@
 
 		.assets {
 			padding: 20rpx;
-			height: 200rpx;
-			background-color: #4cd964;
+
+			.top-item {
+				width: 86%;
+				margin: 0 auto;
+				height: 80rpx;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				background-color: #f6fbdd;
+				border-radius: 20rpx 20rpx 0 0;
+				font-size: 26rpx;
+				color: #272a19;
+				padding: 0 20rpx;
+
+				.btn {
+					width: 120rpx;
+					height: 50rpx;
+					font-size: 24rpx;
+					color: #272a19;
+					line-height: 50rpx;
+					background-color: #b0d341;
+					border-radius: 50rpx;
+					text-align: center;
+				}
+			}
+
+			.content-item {
+				border-radius: 20rpx;
+				background-color: #FFFFFF;
+				padding: 40rpx;
+				box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.1);
+
+				.title {
+					height: 60rpx;
+					font-size: 28rpx;
+					line-height: 60rpx;
+					color: #272a19;
+					font-weight: bold;
+				}
+
+				.list {
+					display: flex;
+					align-items: center;
+					flex-wrap: wrap;
+
+					.item {
+						width: 25%;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						flex-direction: column;
+
+						.block {
+							position: relative;
+							width: 80rpx;
+							height: 80rpx;
+							display: flex;
+							align-items: center;
+							justify-content: center;
+							font-size: 30rpx;
+							font-weight: bold;
+
+							.hot {
+								position: absolute;
+								top: -5rpx;
+								right: -48rpx;
+								width: 60rpx;
+								height: 30rpx;
+								font-size: 24rpx;
+								display: flex;
+								align-items: center;
+								justify-content: center;
+								transform: scale(0.7);
+								color: #FFFFFF;
+								padding: 4rpx 8rpx;
+								background-color: #e05653;
+								border-radius: 50rpx 50rpx 50rpx 0;
+							}
+
+							.item-icon {
+								width: 60rpx;
+								height: 60rpx;
+							}
+						}
+
+						.num {
+							height: 30rpx;
+							font-size: 24rpx;
+							text-align: center;
+							line-height: 30rpx;
+							color: #737373;
+						}
+					}
+
+					.distance {
+						margin-bottom: 15rpx;
+					}
+				}
+			}
+		}
+
+		.copyright {
+			height: 80rpx;
+			line-height: 40rpx;
+			text-align: center;
+			color: #a0a1a3;
+			font-size: 24rpx;
 		}
 	}
 </style>
