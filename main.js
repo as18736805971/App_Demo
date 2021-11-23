@@ -14,6 +14,7 @@ app.$mount()
 
 // getApp 必须在 const app 全局变量app 定义后再进行操作
 getApp()['CommonTool'] = CommonTool
+getApp()['userInfo'] = {}
 
 // #endif
 

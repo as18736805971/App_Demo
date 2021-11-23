@@ -39,7 +39,7 @@
 				type: Object,
 				default: function() {
 					return {
-						show: true,
+						show: false,
 						name: '标题',
 						style: 'style1',
 						desc: '描述'
