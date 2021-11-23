@@ -62,7 +62,7 @@
 			<view class="content-item">
 				<view class="title">我的资产</view>
 				<view class="list">
-					<view class="item" v-for="(item, index) in assets" :key="index">
+					<view class="item" v-for="(item, index) in assets" :key="index" @click="handleJump(item.link)">
 						<view class="block">{{ item.number }}</view>
 						<view class="num">{{ item.title }}</view>
 					</view>
@@ -76,7 +76,8 @@
 			<view class="content-item">
 				<view class="title">我的服务</view>
 				<view class="list">
-					<view class="item distance" v-for="(item, index) in service" :key="index">
+					<view class="item distance" v-for="(item, index) in service" :key="index"
+						@click="handleJump(item.link)">
 						<view class="block">
 							<image class="item-icon" :src="item.icon"></image>
 							<view class="hot" v-if="item.hot">HOT</view>
@@ -133,17 +134,17 @@
 			getWid() {
 				return this.growth.wid.toString() + "px"
 			},
-      // 选中成长值长度
-      activePx() {
-        return (this.growth.value / this.growth.max_value * this.growth.wid) + 'px'
-      },
+			// 选中成长值长度
+			activePx() {
+				return (this.growth.value / this.growth.max_value * this.growth.wid) + 'px'
+			},
 		},
 		data() {
 			return {
 				growth: {
 					wid: 200, // 未选中长度
 					max_value: 1000, // 最大成长值
-					value: 10, // 当前成长值
+					value: 100, // 当前成长值
 				},
 				userInfo: {
 					auth: true, // 授权
@@ -153,22 +154,34 @@
 				assets: [{
 					title: '优惠券',
 					number: 10,
+					link: {
+						type: 'preferential',
+					}
 				}, {
 					title: '积分商城',
 					number: 98,
+					link: {
+						type: 'integral_shop',
+					}
 				}, {
 					title: '余额(元)',
 					number: 112.00,
+					link: {
+						type: 'price',
+					}
 				}, {
 					title: '礼品卡',
 					number: 6,
+					link: {
+						type: 'gift',
+					}
 				}, ], // 我的资产
 				service: [{
 					title: '储值有礼',
 					icon: require('@/static/appicon/coupon.png'),
 					hot: true,
 					link: {
-						type: 'stored_value',
+						type: './member_stored',
 					}
 				}, {
 					title: '积分签到',
@@ -226,19 +239,19 @@
 
 		},
 		methods: {
-      // 成长值增加
-      handleGrowthAdd() {
-        if (this.growth.value < this.growth.max_value) {
-          this.growth.value += 20
-          if (this.growth.value > this.growth.max_value) {
-            this.growth.value = this.growth.max_value
-          }
-        }
-      },
-      // 权限状态
-      handleAuthEdit() {
-        this.userInfo.auth = !this.userInfo.auth
-      },
+			// 成长值增加
+			handleGrowthAdd() {
+				if (this.growth.value < this.growth.max_value) {
+					this.growth.value += 20
+					if (this.growth.value > this.growth.max_value) {
+						this.growth.value = this.growth.max_value
+					}
+				}
+			},
+			// 权限状态
+			handleAuthEdit() {
+				this.userInfo.auth = !this.userInfo.auth
+			},
 			// 授权弹窗
 			handleAuthModal(type) {
 				if (type === 2) {
@@ -268,6 +281,12 @@
 					},
 					fail: err => {}
 				})
+			},
+			// 页面跳转
+			handleJump(link) {
+				uni.navigateTo({
+					url: link.type
+				});
 			},
 		}
 	}
@@ -468,7 +487,6 @@
 							}
 
 							.level-line {
-								//width: 400rpx;
 								height: 10rpx;
 								background-color: #FFFFFF;
 								border-radius: 10rpx;
@@ -557,6 +575,7 @@
 				font-size: 26rpx;
 				color: #272a19;
 				padding: 0 20rpx;
+				box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.1);
 
 				.btn {
 					width: 120rpx;
