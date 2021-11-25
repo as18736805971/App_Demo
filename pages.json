@@ -1,11 +1,6 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path": "pages/mine/member_stored",
-			"style": {
-				"navigationBarTitleText": "会员储值"
-			}
-		}, {
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "首页"
@@ -53,13 +48,13 @@
 			"style": {
 				"navigationBarTitleText": "订单详情"
 			}
+		},
+		{
+			"path": "pages/mine/member_stored",
+			"style": {
+				"navigationBarTitleText": "会员储值"
+			}
 		}
-		// {
-		// 	"path": "pages/mine/member_stored",
-		// 	"style": {
-		// 		"navigationBarTitleText": "会员储值"
-		// 	}
-		// }
 	],
 	"tabBar": {
 		"color": "#707070",
