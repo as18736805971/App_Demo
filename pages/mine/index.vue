@@ -2,7 +2,9 @@
 	<view class="page-index">
 		<!-- 顶部导航栏 -->
 		<view class="navigation-top">
-			<view class="member-item">
+			<view class="member-item" @click="handleJump({
+			  type:'./info'
+			})">
 				<view class="portrait">
 					<image class="icon" :src="userInfo.avatarUrl"></image>
 				</view>

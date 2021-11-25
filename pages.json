@@ -54,6 +54,12 @@
 			"style": {
 				"navigationBarTitleText": "会员储值"
 			}
+		},
+		{
+			"path": "pages/mine/info",
+			"style": {
+				"navigationBarTitleText": "用户信息"
+			}
 		}
 	],
 	"tabBar": {
