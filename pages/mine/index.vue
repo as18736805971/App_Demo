@@ -2,13 +2,15 @@
 	<view class="page-index">
 		<!-- 顶部导航栏 -->
 		<view class="navigation-top">
-			<view class="member-item" @click="handleJump({
+			<view class="member-item">
+				<view class="portrait" @click="handleJump({
 			  type:'./info'
 			})">
-				<view class="portrait">
 					<image class="icon" :src="userInfo.avatarUrl"></image>
 				</view>
-				<view class="nick-name">
+				<view class="nick-name" @click="handleJump({
+			  type:'./info'
+			})">
 					{{ userInfo.nickName }}
 					<image class="icon" :src="require('@/static/icon/right_arrow.png')"></image>
 				</view>

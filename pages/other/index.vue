@@ -5,6 +5,8 @@
 			</view>
 		</view>
 
+    <date-table @handleDateItem="handleDate"></date-table>
+
 		<!-- 组件 -->
 		<BaseDialog ref="noteDialog" :style-type="'style1'">
 			<view class="note-content"></view>
@@ -20,11 +22,13 @@
 <script>
 	import BaseDialog from '../../components/base/BaseDialog.vue'
 	import BaseModal from '../../components/base/BaseModal.vue'
+  import dateTable from '../../components/components/dateTable'
 
 	export default {
 		components: {
 			BaseDialog,
 			BaseModal,
+      dateTable,
 		},
 		data() {
 			return {
@@ -56,6 +60,9 @@
 			// console.log(getApp().CommonTool.time_format(1636338154))
 		},
 		methods: {
+      handleDate(data) {
+        console.log(data, '21222')
+      },
 			jump(link) {
 				if (link.type === 'button') {
 					this.$refs.noteDialog.show()
@@ -77,7 +84,6 @@
 		min-height: 100vh;
 
 		.list {
-			width: 100%;
 			padding: 20rpx;
 			display: flex;
 			align-items: center;
