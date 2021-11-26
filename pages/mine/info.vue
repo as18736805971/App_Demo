@@ -23,22 +23,23 @@
 				</view>
 				<view class="item">
 					<view class="left">账号</view>
-					<view class="right">Stars18736805971</view>
+					<view class="right">{{ account }}</view>
 				</view>
 				<view class="item">
 					<view class="left">手机号</view>
-					<view class="right">18736805971</view>
+					<view class="right">{{ phone }}</view>
 				</view>
 				<view class="item">
 					<view class="left">生日</view>
 					<view class="right">
-						<view>{{ birthday || '完善生日，享生日好礼' }}</view>
+						<!--<view>{{ birthday || '完善生日，享生日好礼' }}</view>-->
+						<base-date-picker @onCancel="onCancel" @onConfirm="onConfirm" :defaultValue="birthday"></base-date-picker>
 						<image class="right_arrow" :src="require('@/static/icon/right_arrow.png')"></image>
 					</view>
 				</view>
 				<view class="item">
 					<view class="left">入会时间</view>
-					<view class="right">2021-11-25 14:40:21</view>
+					<view class="right">{{ create_time }}</view>
 				</view>
 			</view>
 		</view>
@@ -59,20 +60,33 @@
 
 <script>
 	import BaseModal from '@/components/base/BaseModal'
+	import BaseDatePicker from "@/components/base/BaseDatePicker"
 
 	export default {
 		components: {
 			BaseModal,
+			BaseDatePicker,
 		},
 		data() {
 			return {
 				nickName: '你的眼里有星星',
 				sex: '',
-				birthday: '',
+        phone: '18736805971',
+        account: 'Stars18736805971',
+				birthday: '2021-11-26',
+        create_time: '2021-11-25 14:40:21',
 			}
 		},
 		onLoad() {},
 		methods: {
+      // 取消
+      onCancel(e){
+        console.log(e);
+      },
+      // 确认
+      onConfirm(e){
+        this.pickerDate = e.dateValue;
+      },
 			// 选择性别
 			handleSex(type, str) {
 				if (type === 1) {
