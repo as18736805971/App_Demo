@@ -60,6 +60,12 @@
 			"style": {
 				"navigationBarTitleText": "用户信息"
 			}
+		},
+		{
+			"path": "pages/mine/member_interests",
+			"style": {
+				"navigationBarTitleText": "会员权益"
+			}
 		}
 	],
 	"tabBar": {

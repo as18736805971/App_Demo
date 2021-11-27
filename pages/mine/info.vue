@@ -5,7 +5,7 @@
 				<view class="item">
 					<view class="left">头像</view>
 					<view class="right">
-						<image class="portrait" :src="require('@/static/appicon/portrait.png')"></image>
+						<image class="portrait" :src="portrait"></image>
 					</view>
 				</view>
 				<view class="item">
@@ -73,6 +73,7 @@
 		},
 		data() {
 			return {
+        portrait: require('@/static/appicon/portrait.png'),
 				nickName: '你的眼里有星星',
 				sex: '',
 				phone: '18736805971',

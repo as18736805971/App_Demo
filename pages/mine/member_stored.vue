@@ -129,6 +129,7 @@
 						hot: false,
 					},
 				],
+        status: true,
 				desc: '<p>1.储值金额不可提现、不计利息、不可转赠；<br/>2.储值金额可在其他门店出示会员码，或在小程序支付时使用；<br/>3.特别注意：<br/>储值赠券有效期为30天，可在门店出示会员码或在小程序可兑换商品一件，限33元及以下商品，单个订单中购买多件商品抵扣最低价格商品，请在有效期内核销，逾期失效；<br/>4.开票说明：储值订单不支持开票，开具类型为预付卡；使用储值消费的订单储值部分不支持开票。</p>'
 			}
 		},
@@ -169,15 +170,19 @@
 			},
 			// 支付
 			handlePay() {
-				uni.showToast({
-					title: '支付成功',
-					duration: 1500
-				});
-				this.userInfo.price = parseInt(this.userInfo.price) + parseInt(this.price)
-				this.userInfo.price = this.userInfo.price.toFixed(2)
-				setTimeout(() => {
-					this.$refs.pay.handleHiddenModal()
-				}, 1000)
+        if (this.status) {
+          uni.showToast({
+            title: '支付成功',
+            duration: 1500
+          });
+          this.userInfo.price = parseInt(this.userInfo.price) + parseInt(this.price)
+          this.userInfo.price = this.userInfo.price.toFixed(2)
+          this.status = false
+          setTimeout(() => {
+            this.$refs.pay.handleHiddenModal()
+            this.status = true
+          }, 1000)
+        }
 			}
 		}
 	}

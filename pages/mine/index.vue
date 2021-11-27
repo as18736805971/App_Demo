@@ -19,8 +19,12 @@
 				<view class="member-level">
 					<template v-if="userInfo.auth">
 						<view class="level">
-							<view class="level-name">LV20</view>
-							<view class="level-desc">
+							<view class="level-name" @click="handleJump({
+                type:'./member_interests'
+              })">LV20</view>
+							<view class="level-desc" @click="handleJump({
+                type:'./member_interests'
+              })">
 								会员权益
 								<image class="icon" :src="require('@/static/icon/right_arrow.png')"></image>
 							</view>
@@ -31,7 +35,9 @@
 								<view class="level-line" :style="{ width: getWid }">
 									<view class="active" :style="{ width: activePx }"></view>
 								</view>
-								<view class="level-desc">
+								<view class="level-desc" @click="handleJump({
+                  type:'./member_interests'
+                })">
 									距离下一等级只差{{ poor_value }}成长值
 									<image class="icon" :src="require('@/static/icon/right_arrow.png')"></image>
 								</view>
