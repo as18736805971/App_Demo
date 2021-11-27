@@ -32,8 +32,7 @@
 				<view class="item">
 					<view class="left">生日</view>
 					<view class="right">
-						<!--<view>{{ birthday || '完善生日，享生日好礼' }}</view>-->
-						<base-date-picker @onCancel="onCancel" @onConfirm="onConfirm" :defaultValue="birthday"></base-date-picker>
+						<view class="birthday" @click="handleBirthday()">{{ birthday || '完善生日，享生日好礼' }}</view>
 						<image class="right_arrow" :src="require('@/static/icon/right_arrow.png')"></image>
 					</view>
 				</view>
@@ -45,6 +44,11 @@
 		</view>
 
 		<view class="save" @click="handleSave()">保存</view>
+
+		<!-- 选择日期 -->
+		<base-date-picker ref="picker" @onCancel="onCancel" @onConfirm="onConfirm" :defaultValue="no_birthday">
+		</base-date-picker>
+		<!-- 选择日期 -->
 
 		<!-- 性别弹窗 -->
 		<base-modal ref="sex">
@@ -71,22 +75,29 @@
 			return {
 				nickName: '你的眼里有星星',
 				sex: '',
-        phone: '18736805971',
-        account: 'Stars18736805971',
-				birthday: '2021-11-26',
-        create_time: '2021-11-25 14:40:21',
+				phone: '18736805971',
+				account: 'Stars18736805971',
+				birthday: '',
+				no_birthday: '',
+				create_time: '2021-11-25 14:40:21',
 			}
 		},
-		onLoad() {},
+		onLoad() {
+			this.no_birthday = getApp().CommonTool.getDate(new Date()).fullDate
+		},
 		methods: {
-      // 取消
-      onCancel(e){
-        console.log(e);
-      },
-      // 确认
-      onConfirm(e){
-        this.pickerDate = e.dateValue;
-      },
+			handleBirthday() {
+				this.$refs.picker.show()
+			},
+			// 取消
+			onCancel(e) {
+				this.birthday = this.birthday === '' ? '' : this.no_birthday
+			},
+			// 确认
+			onConfirm(e) {
+				this.no_birthday = e.dateValue
+				this.birthday = this.no_birthday
+			},
 			// 选择性别
 			handleSex(type, str) {
 				if (type === 1) {
@@ -171,6 +182,14 @@
 						width: 100%;
 						height: 80rpx;
 						text-align: right;
+					}
+
+					.birthday {
+						width: 300rpx;
+						height: 70rpx;
+						display: flex;
+						align-items: center;
+						justify-content: flex-end;
 					}
 
 					.right_arrow {

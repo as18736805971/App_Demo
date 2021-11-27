@@ -15,7 +15,8 @@
 					</picker-view-column>
 					<picker-view-column>
 						<view class="g-dp-ctt-wp-item" v-for="(item,index) in months" :key="index">
-							{{dateFormate(item)}}月</view>
+							{{dateFormate(item)}}月
+						</view>
 					</picker-view-column>
 					<picker-view-column>
 						<view class="g-dp-ctt-wp-item" v-for="(item,index) in days" :key="index">{{dateFormate(item)}}日
@@ -37,28 +38,28 @@
 	}
 	export default {
 		props: {
-      // 确认按钮颜色
+			// 确认按钮颜色
 			themeColor: {
 				type: String,
 				default () {
 					return "#6ba1ff"
 				}
 			},
-      // 初始选中日期
+			// 初始选中日期
 			defaultValue: {
 				type: String,
 				default () {
 					return getNowDate()
 				}
 			},
-      // 起始日期
+			// 起始日期
 			startDate: {
 				type: String,
 				default () {
 					return "1900-01-01"
 				}
 			},
-      // 结束日期
+			// 结束日期
 			endDate: {
 				type: String,
 				default () {
@@ -70,9 +71,7 @@
 			return {
 				pipkerShowFlag: false,
 				indicatorStyle: `height: ${uni.upx2px(88)}px;`,
-
 				selectedValue: [],
-
 				years: [],
 				months: [],
 				days: []
@@ -110,23 +109,20 @@
 				let start = new Date(this.startDate).getTime();
 				let end = new Date(this.endDate).getTime();
 				let now = new Date(this.defaultValue).getTime();
-
 				if (isNaN(start) || isNaN(end) || isNaN(now)) {
 					flag = true;
 				}
 				if (start > end || now > end || now < start) {
 					flag = true;
 				}
-
 				if (flag) {
-					uni.showToast({
-						title: "时间选择器参数错误",
-						icon: "none"
-					})
+					// uni.showToast({
+					// 	title: "时间选择器参数错误",
+					// 	icon: "none"
+					// })
 				}
 				return flag;
 			},
-
 			show() {
 				this.pipkerShowFlag = true;
 			},
@@ -147,7 +143,6 @@
 					dateValueIndex: this.selectedValue
 				});
 			},
-
 			/**
 			 * picker change时间触发
 			 * @param {Object} e
@@ -175,7 +170,6 @@
 				let endDateArray = this.endDate.split("-");
 				let startYear = Number(startDateArray[0]);
 				let endYear = Number(endDateArray[0]);
-
 				let newYears = []
 				for (let i = startYear; i <= endYear; i++) {
 					newYears.push(i);
@@ -194,7 +188,6 @@
 				let endYear = Number(endDateArray[0]);
 				let startMonth = Number(startDateArray[1]);
 				let endMonth = Number(endDateArray[1]);
-
 				let newMonths = [];
 				if (startYear == Number(nowDateArray[0])) {
 					if (endYear == Number(nowDateArray[0])) { // 起始年份,末尾年份一样时
@@ -232,7 +225,6 @@
 				let startDay = Number(startDateArray[2]);
 				let endDay = Number(endDateArray[2]);
 				let totalDays = new Date(nowDateArray[0], nowDateArray[1], 0).getDate();
-
 				let newDays = [];
 				if (startYear == Number(nowDateArray[0]) && startMonth == Number(nowDateArray[1])) {
 					if (endYear == Number(nowDateArray[0]) && endMonth == Number(nowDateArray[1])) {
