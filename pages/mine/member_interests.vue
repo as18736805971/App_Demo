@@ -1,11 +1,40 @@
 <template>
 	<view class="page-index">
 		<!-- 会员等级 -->
-		<view class="member-level"></view>
+		<view class="member-level">
+			<view class="level-name">{{ userInfo.member_level }}</view>
+
+			<view class="level-center">
+				<view class="level-top">
+					<view class="num-list">
+						<view class="num" :class="index !== 0 ? 'num-right' + index : ''"
+							v-for="(item, index) in level_list" :key="index">{{ item.growth }}</view>
+					</view>
+					<view class="level-line">
+						<view class="round-list">
+							<view class="round" :class="item.status ? 'active' : ''" v-for="(item, index) in level_list"
+								:key="index"></view>
+						</view>
+					</view>
+					<view class="txt-list">
+						<view class="txt" v-for="(item, index) in level_list" :key="index">{{ item.name }}</view>
+					</view>
+				</view>
+				<view class="level-desc">当前成长值为<span class="active">{{ userInfo.member_growth }}</span>，距离下一等级只差<span
+						class="active">{{ userInfo.next_growth }}</span>成长值
+				</view>
+			</view>
+		</view>
 		<!-- 会员等级 -->
 
 		<!-- 会员特权 -->
-		<view class="member-privilege"></view>
+		<view class="member-privilege">
+			<!-- 轮播图组件 -->
+			<Shuffling :img-list="imgList" :autoplay="false" :circular="false" @selected="selectedBanner"></Shuffling>
+			<!-- 轮播图组件 -->
+
+			<view class="shuffling-item">{{ imgList[imgIndex].name }}会员特权</view>
+		</view>
 		<!-- 会员特权 -->
 
 		<!-- 会员特权列表 -->
@@ -77,11 +106,85 @@
 </template>
 
 <script>
+	import Shuffling from '@/components/components/Shuffling'
+
 	export default {
-		data() {
-			return {}
+		components: {
+			Shuffling,
 		},
-		methods: {}
+		data() {
+			return {
+				userInfo: {
+					member_level: 'V1',
+					member_growth: 80,
+					next_growth: 20,
+				},
+				level_list: [{
+						name: 'V1',
+						growth: 0,
+						status: true,
+					},
+					{
+						name: 'V2',
+						growth: 100,
+						status: false,
+					},
+					{
+						name: 'V3',
+						growth: 500,
+						status: false,
+					},
+					{
+						name: 'V4',
+						growth: 1000,
+						status: false,
+					},
+					{
+						name: 'V5',
+						growth: 2000,
+						status: false,
+					},
+					{
+						name: 'V6',
+						growth: 5000,
+						status: false,
+					},
+				],
+				imgList: [{
+					url: 'https://img9.51tietu.net/pic/2019-091200/vgkpidei2tjvgkpidei2tj.jpg',
+					id: 1,
+					name: 'V1'
+				}, {
+					url: 'https://img9.51tietu.net/pic/2019-091200/euzekmi5m23euzekmi5m23.jpg',
+					id: 2,
+					name: 'V2'
+				}, {
+					url: 'https://img9.51tietu.net/pic/2019-091200/143tt0ta4sr143tt0ta4sr.jpg',
+					id: 3,
+					name: 'V3'
+				}, {
+					url: 'https://img9.51tietu.net/pic/2019-091200/ff1vqwm3q33ff1vqwm3q33.jpg',
+					id: 4,
+					name: 'V4'
+				}, {
+					url: 'https://img9.51tietu.net/pic/2019-091200/vgkpidei2tjvgkpidei2tj.jpg',
+					id: 5,
+					name: 'V5'
+				}, {
+					url: 'https://img9.51tietu.net/pic/2019-091200/euzekmi5m23euzekmi5m23.jpg',
+					id: 6,
+					name: 'V6'
+				}],
+				imgIndex: 0,
+			}
+		},
+		methods: {
+			// 点击轮播图图片
+			selectedBanner(item, index) {
+				this.imgIndex = index
+				// console.log('🥒', item, index)
+			},
+		}
 	}
 </script>
 
@@ -93,15 +196,143 @@
 		color: #242424;
 
 		.member-level {
-			height: 330rpx;
+			height: 260rpx;
 			background-color: #FFFFFF;
 			margin-bottom: 20rpx;
+			padding: 30rpx 20rpx 20rpx;
+
+			.level-name {
+				height: 40rpx;
+				font-size: 30rpx;
+				color: #444444;
+				line-height: 40rpx;
+				font-weight: bold;
+			}
+
+			.level-center {
+				height: 220rpx;
+				display: flex;
+				flex-wrap: wrap;
+				align-items: center;
+				justify-content: center;
+
+				.level-top {
+					width: 100%;
+					height: 160rpx;
+					display: flex;
+					align-content: center;
+					justify-content: center;
+					flex-wrap: wrap;
+
+					.num-list {
+						width: 80%;
+						height: 40rpx;
+						display: flex;
+						align-items: center;
+
+						.num {
+							font-size: 24rpx;
+							color: #a2a2a2;
+						}
+
+						.num-right1 {
+							margin-left: 85rpx;
+						}
+
+						.num-right2 {
+							margin-left: 75rpx;
+						}
+
+						.num-right3 {
+							margin-left: 65rpx;
+						}
+
+						.num-right4 {
+							margin-left: 55rpx;
+						}
+
+						.num-right5 {
+							margin-left: 55rpx;
+						}
+					}
+
+					.txt-list {
+						width: 80%;
+						height: 40rpx;
+						display: flex;
+						align-items: center;
+						justify-content: space-between;
+
+						.txt {
+							font-size: 24rpx;
+							color: #4b4c4e;
+						}
+					}
+
+					.level-line {
+						position: relative;
+						width: 80%;
+						height: 4rpx;
+						background-color: #d8d8d8;
+						border-radius: 20rpx;
+						margin: 20rpx 0;
+
+						.round-list {
+							position: absolute;
+							top: -8rpx;
+							left: 0;
+							width: 101%;
+							height: 20rpx;
+							z-index: 99;
+							display: flex;
+							align-items: center;
+							justify-content: space-between;
+
+							.round {
+								width: 18rpx;
+								height: 18rpx;
+								border-radius: 50%;
+								background-color: #d8d8d8;
+							}
+
+							.active {
+								background-color: #f6c54e;
+							}
+						}
+					}
+				}
+
+				.level-desc {
+					width: 100%;
+					height: 40rpx;
+					text-align: center;
+					line-height: 40rpx;
+					color: #727375;
+					margin-top: 10rpx;
+
+					.active {
+						color: #f6c54e;
+						margin: 0 5rpx;
+					}
+				}
+			}
 		}
 
 		.member-privilege {
-			height: 520rpx;
+			height: 460rpx;
+			padding-top: 20rpx;
 			background-color: #FFFFFF;
 			margin-bottom: 20rpx;
+
+			.shuffling-item {
+				margin-top: 30rpx;
+				height: 50rpx;
+				text-align: center;
+				line-height: 50rpx;
+				font-size: 32rpx;
+				color: #48494b;
+				font-weight: bold;
+			}
 		}
 
 		.member-list {

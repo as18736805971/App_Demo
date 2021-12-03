@@ -2,7 +2,7 @@
 	<view class="shuffling">
 		<swiper class="image-container" :indicator-dots="indicator.style === 'style1' ? true : false"
 			:indicator-color="indicator.color" :indicator-active-color="indicator.active_color" previous-margin="45rpx"
-			next-margin="45rpx" circular autoplay @change="swiperChange">
+			next-margin="45rpx" :circular="circular" :autoplay="autoplay" @change="swiperChange">
 			<swiper-item :class="currentIndex == index ? 'swiper-item' : 'swiper-item-side'"
 				v-for="(item, index) in imgList" :key="item[urlKey]">
 				<image @click="clickImg(item)" :class="currentIndex == index ? 'item-img' : 'item-img-side'"
@@ -41,6 +41,16 @@
 					return 'url'
 				}
 			},
+			// 是否自动切换
+			autoplay: {
+				type: Boolean,
+				default: true,
+			},
+			// 是否采用衔接滑动
+			circular: {
+				type: Boolean,
+				default: true,
+			},
 			// 指示点设置
 			indicator: {
 				type: Object,
@@ -63,6 +73,7 @@
 			swiperChange(e) {
 				this.dontFirstAnimation = false
 				this.currentIndex = e.detail.current
+				this.$emit('selected', this.imgList[this.currentIndex], this.currentIndex)
 			},
 			clickImg(item) {
 				// 返回选中数据及索引

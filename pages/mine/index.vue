@@ -152,7 +152,7 @@
 		data() {
 			return {
 				growth: {
-					wid: 200, // 未选中长度
+					wid: 200, // 未选中长度 默认长度
 					max_value: 1000, // 最大成长值
 					value: 100, // 当前成长值
 				},
