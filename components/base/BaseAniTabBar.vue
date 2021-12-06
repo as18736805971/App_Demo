@@ -6,7 +6,7 @@
 			:scroll-left="tabsScrollLeft" @scroll="scroll">
 			<view class="tab" id="tab_list">
 				<!-- 标题区域 -->
-				<view id="tab_item" :class="{ 'active': listActive == index,'tab__item':true}"
+				<view id="tab_item" :class="{'tab__item': true}" :style="{color: listActive === index ? active : ''}"
 					v-for="(item, index) in listArr" :key="index" @click="clickSort(index)">
 					{{item}}
 				</view>
@@ -14,7 +14,7 @@
 			</view>
 			<!-- tabs下划线 -->
 			<view class="tab__line"
-				:style="{background: lineColor, width: lineStyle.width, transform: lineStyle.transform,transitionDuration: lineStyle.transitionDuration}">
+				:style="{background: active, width: lineStyle.width, transform: lineStyle.transform,transitionDuration: lineStyle.transitionDuration}">
 			</view>
 			<!-- tabs下划线 -->
 		</scroll-view>
@@ -26,10 +26,15 @@
 <script>
 	export default {
 		props: {
-			// 导航列表
+			// 导航列表 ['全部', '列表']
 			listArr: {
 				type: Array,
 				default: () => []
+			},
+			// 下划线/文字 选中颜色
+			active: {
+				type: String,
+				default: '#b0d342'
 			},
 			// 默认选中索引
 			// listActive: {
@@ -41,7 +46,9 @@
 			return {
 				tabsScrollLeft: 0, // tabs当前偏移量
 				scrollLeft: 0, // 滑动距离左侧距离
-				lineStyle: {}, // 下划线位置--动态甲酸
+				lineStyle: {
+          width: 0,
+        }, // 下划线位置--动态甲酸
 				duration: 0.2, // 下划线动画时长
 				listActive: 0, // 默认索引
 			}
@@ -51,7 +58,6 @@
 				this.setTabList()
 			}
 		},
-
 		mounted() {
 			this.setTabList()
 		},
@@ -115,20 +121,23 @@
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	.sticky-box {
 		/* #ifndef APP-PLUS-NVUE */
 		display: flex;
-		position: -webkit-sticky;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+		// position: -webkit-sticky;
 		/* #endif */
-		position: sticky;
+		// position: sticky;
+    position: fixed;
 		top: var(--window-top);
-		z-index: 99;
+		z-index: 9999;
 		flex-direction: row;
-		margin: 0px;
-		border-top: 1px #f9f9f9 solid;
-		border-bottom: 1px #f9f9f9 solid;
-		background: #fff;
+		margin: 0;
+    background-color: #f3f4f4;
+    height: 110rpx;
 	}
 
 	.listAll {
@@ -160,7 +169,8 @@
 			text-align: center;
 			height: 60rpx;
 			line-height: 60rpx;
-			color: #666;
+			color: #6f7274;
+      font-size: 30rpx;
 
 			&.active {
 				color: #09C2C9;
@@ -171,7 +181,6 @@
 	.tab__line {
 		display: block;
 		height: 6rpx;
-		position: absolute;
 		bottom: 0;
 		left: 0;
 		z-index: 1;
