@@ -66,6 +66,12 @@
 			"style": {
 				"navigationBarTitleText": "会员权益"
 			}
+		},
+		{
+			"path": "pages/mine/member_qr_code",
+			"style": {
+				"navigationBarTitleText": "会员码"
+			}
 		}
 	],
 	"tabBar": {

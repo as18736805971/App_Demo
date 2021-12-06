@@ -19,10 +19,10 @@
 				<view class="member-level">
 					<template v-if="userInfo.auth">
 						<view class="level">
-							<view class="level-name" @click="handleJump({
+							<view class="level-name" @click.stop="handleJump({
                 type:'./member_interests'
               })">LV20</view>
-							<view class="level-desc" @click="handleJump({
+							<view class="level-desc" @click.stop="handleJump({
                 type:'./member_interests'
               })">
 								会员权益
@@ -42,8 +42,10 @@
 									<image class="icon" :src="require('@/static/icon/right_arrow.png')"></image>
 								</view>
 							</view>
-							<view class="right" @click="handleGrowthAdd()">
-								<image class="icon" :src="require('@/static/appicon/code.png')"></image>
+							<view class="right" @click.stop="handleJump({
+                type:'./member_qr_code'
+              })">
+								<image class="icon" :src="require('@/static/appicon/code1.png')"></image>
 								<view class="ewm">会员码</view>
 							</view>
 						</view>

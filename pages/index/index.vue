@@ -58,7 +58,7 @@
 		methods: {
 			// 点击轮播图图片
 			selectedBanner(item, index) {
-				console.log('🥒', item, index)
+				// console.log('🥒', item, index)
 			},
 			// 点击导航列表
 			handleNavigation(item, index) {
