@@ -167,7 +167,7 @@
 					title: '优惠券',
 					number: 10,
 					link: {
-						type: './member_card_voucher',
+						type: './member_card_voucher?type=mine',
 					}
 				}, {
 					title: '积分商城',

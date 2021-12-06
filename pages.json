@@ -75,7 +75,7 @@
 		}, {
 			"path": "pages/mine/member_card_voucher",
 			"style": {
-				"navigationBarTitleText": "我的卡券"
+				"navigationBarTitleText": ""
 				// "enablePullDownRefresh": true
 			}
 		}

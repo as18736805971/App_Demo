@@ -39,10 +39,12 @@
 		<!-- 卡券列表 -->
 
 		<!-- 底部导航 -->
-		<view class="bottom-navigation">
+		<view class="bottom-navigation" v-if="page_type === 'mine'">
 			<view class="txt">优惠券兑换</view>
 			<view class="line"></view>
-			<view class="txt">历史卡券</view>
+			<view class="txt" @click="handleJump({
+				type: './member_card_voucher?type=history',
+			})">历史卡券</view>
 		</view>
 		<!-- 底部导航 -->
 	</view>
@@ -56,13 +58,23 @@
 		},
 		data() {
 			return {
-				list: ['全部', '茶饮券', '酒屋券', '零售券'],
+				list: [],
+				page_type: 'mine',
 				active_index: 0,
 				loading: false,
 				card_list: [],
 			}
 		},
-		onLoad() {
+		onLoad(e) {
+			// type mine 我的卡券 history 历史卡券
+			this.page_type = e.type
+			let title = e.type === 'mine' ? '我的卡券' : e.type === 'history' ? '历史卡券' : '我的卡券'
+			this.list = e.type === 'mine' ? ['全部', '茶饮券', '酒屋券', '零售券'] : e.type === 'history' ? ['已使用', '已失效'] : ['全部',
+				'茶饮券', '酒屋券', '零售券'
+			]
+			uni.setNavigationBarTitle({
+				title: title
+			});
 			this.handleGetData()
 		},
 		// 下拉刷新
@@ -108,7 +120,13 @@
 						desc: '',
 					})
 				}
-			}
+			},
+			// 页面跳转
+			handleJump(link) {
+				uni.navigateTo({
+					url: link.type
+				});
+			},
 		}
 	}
 </script>
@@ -139,12 +157,11 @@
 				align-items: center;
 				justify-content: center;
 				flex-direction: column;
-				padding: 20rpx;
+				padding: 10rpx;
 				background-color: #FFFFFF;
 				box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.1);
 
 				.top {
-					margin-top: 20rpx;
 					height: 150rpx;
 					width: 92%;
 					display: flex;
@@ -154,7 +171,7 @@
 						width: 150rpx;
 						height: 150rpx;
 						border-radius: 12rpx;
-						margin-right: 30rpx;
+						margin-right: 15rpx;
 						overflow: hidden;
 
 						.icon-image {
@@ -174,8 +191,8 @@
 
 						.name {
 							width: 100%;
-							line-height: 50rpx;
-							height: 50rpx;
+							line-height: 40rpx;
+							height: 40rpx;
 							font-size: 28rpx;
 							color: #242524;
 							font-weight: bold;
@@ -186,8 +203,8 @@
 
 						.date {
 							width: 100%;
-							line-height: 50rpx;
-							height: 50rpx;
+							line-height: 40rpx;
+							height: 40rpx;
 							font-size: 24rpx;
 							color: #6f7274;
 
@@ -199,9 +216,9 @@
 				}
 
 				.line {
-					margin: 20rpx 0;
-					width: 92%;
-					border: 2rpx dashed #e2e4e6;
+					margin: 10rpx 0;
+					width: 90%;
+					border: 1rpx dashed #e2e4e6;
 				}
 
 				.bottom {
@@ -225,7 +242,7 @@
 			.card-item::after {
 				position: absolute;
 				left: -14rpx;
-				bottom: 86rpx;
+				bottom: 66rpx;
 				content: '';
 				width: 30rpx;
 				height: 30rpx;
@@ -236,7 +253,7 @@
 			.card-item::before {
 				position: absolute;
 				right: -14rpx;
-				bottom: 86rpx;
+				bottom: 66rpx;
 				content: '';
 				width: 30rpx;
 				height: 30rpx;
