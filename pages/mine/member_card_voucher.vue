@@ -6,7 +6,7 @@
 
 		<!-- 卡券列表 -->
 		<view class="card-list" v-if="card_list.length !== 0">
-			<view class="card-item" v-for="(item, index) in card_list" :key="index">
+			<view class="card-item" v-for="(item, index) in card_list" :key="index" @click="handleShowDetail(item)">
 				<view class="top">
 					<view class="image">
 						<image class="icon-image" mode="aspectFit" :src="item.image">
@@ -47,6 +47,24 @@
 			})">历史卡券</view>
 		</view>
 		<!-- 底部导航 -->
+
+		<!-- 详情 -->
+		<view class="suspension" v-if="detail_status">
+			<view class="suspension-box" @click.stop="handleHideDetail()""></view>
+			<view class=" block-item">
+				<view class="item">
+					<view class="item-title">{{ card_detail.title }}</view>
+					<view class="item-date">{{ card_detail.star_time }}-{{ card_detail.end_time }}</view>
+					<view class="item-time">(具体请以门店营业时间为准)</view>
+					<view class="item-desc" v-html="card_detail.desc"></view>
+				</view>
+				<view class="block-icon">
+					<image class="del-icon-image" @click.stop="handleHideDetail()"
+						:src="require('@/static/appicon/del1.png')"></image>
+				</view>
+			</view>
+		</view>
+		<!-- 详情 -->
 	</view>
 </template>
 
@@ -58,11 +76,13 @@
 		},
 		data() {
 			return {
-				list: [],
-				page_type: 'mine',
-				active_index: 0,
-				loading: false,
-				card_list: [],
+				list: [], // 选项卡列表
+				page_type: 'mine', // 页面类型
+				active_index: 0, // 选项卡索引
+				loading: false, // 上拉刷新 loading
+				detail_status: false, // 优惠券详情弹框显示
+				card_list: [], // 优惠券列表
+				card_detail: {}, // 优惠券详情
 			}
 		},
 		onLoad(e) {
@@ -110,14 +130,14 @@
 				}
 			},
 			handleGetData() {
-				for (let i = 0; i < 4; i++) {
+				for (let i = 0; i < 6; i++) {
 					this.card_list.push({
 						id: 1,
-						title: '新人优惠券',
+						title: '新人优惠券' + i,
 						image: require('@/static/appicon/exchange.png'),
 						star_time: '2021-04-15 00:00:00',
 						end_time: '2021-05-15 23:59:59',
-						desc: '',
+						desc: '<p>1. 适用商品：下单购买饮品或软欧包立减5元优惠</p><p>2.适用门店：奈雪中国地区内地门店(不含机场店)</p><p>3. 适用场景：仅限奈雪线下门店出示会员码或【奈雪点单】小程序“自取”/“外卖”使用，不适用于第三方外送服务</p><p>4. 在有效期内每单仅限使用一张优惠券，不可叠加使用不与其他优惠活动共享，不可兑换现金，不设找零优惠券抵扣金额不予积分</p><p>5. 此券不适用于保温袋/运费</p><p>6. 券面图片仅供参考，商品以实物为准</p>',
 					})
 				}
 			},
@@ -127,6 +147,15 @@
 					url: link.type
 				});
 			},
+			// 显示详情
+			handleShowDetail(data) {
+				this.detail_status = true
+				this.card_detail = data
+			},
+			// 隐藏详情
+			handleHideDetail() {
+				this.detail_status = false
+			}
 		}
 	}
 </script>
@@ -317,6 +346,91 @@
 				width: 2rpx;
 				height: 30rpx;
 				background-color: #ccced0;
+			}
+		}
+
+		.suspension {
+			width: 100%;
+			height: 100%;
+
+			.suspension-box {
+				width: 100%;
+				height: 100%;
+				position: fixed;
+				top: 0;
+				left: 0;
+				bottom: 0;
+				right: 0;
+				background-color: rgba(0, 0, 0, 0.4);
+				z-index: 10000;
+			}
+
+			.block-item {
+				position: fixed;
+				top: 45%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				width: 90%;
+				height: 800rpx;
+				border-radius: 12rpx;
+				overflow: hidden;
+				z-index: 10001;
+
+				.item {
+					height: auto;
+					border-radius: 12rpx;
+					background-color: #FFFFFF;
+					display: flex;
+					flex-direction: column;
+					padding: 40rpx;
+
+					.item-title {
+						height: 40rpx;
+						line-height: 40rpx;
+						font-size: 30rpx;
+						font-weight: bold;
+						text-align: center;
+						color: #242524;
+					}
+
+					.item-date {
+						margin-top: 10rpx;
+						height: 40rpx;
+						line-height: 40rpx;
+						font-size: 24rpx;
+						color: #707274;
+					}
+
+					.item-time {
+						height: 40rpx;
+						line-height: 40rpx;
+						font-size: 26rpx;
+						color: #242524;
+						margin-top: 20rpx;
+						margin-bottom: 10rpx;
+					}
+
+					.item-desc {
+						height: auto;
+						line-height: 45rpx;
+						font-size: 24rpx;
+						color: #707274;
+					}
+				}
+
+				.block-icon {
+					width: 100%;
+					height: 150rpx;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+
+					.del-icon-image {
+						width: 60rpx;
+						height: 60rpx;
+						border-radius: 50%;
+					}
+				}
 			}
 		}
 	}
