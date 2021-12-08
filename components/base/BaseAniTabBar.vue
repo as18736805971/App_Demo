@@ -36,21 +36,21 @@
 				type: String,
 				default: '#b0d342'
 			},
-			// 默认选中索引
-			// listActive: {
-			// 	type: Number,
-			// 	default: 0
-			// }
+			// 默认选中索引  不自定义索引则屏蔽
+			listActive: {
+				type: Number,
+				default: 0
+			}
 		},
 		data() {
 			return {
 				tabsScrollLeft: 0, // tabs当前偏移量
 				scrollLeft: 0, // 滑动距离左侧距离
 				lineStyle: {
-          width: 0,
-        }, // 下划线位置--动态甲酸
+					width: 0,
+				}, // 下划线位置--动态甲酸
 				duration: 0.2, // 下划线动画时长
-				listActive: 0, // 默认索引
+				// listActive: 0, // 默认索引
 			}
 		},
 		watch: {
@@ -64,15 +64,18 @@
 		methods: {
 			// 点击导航条切换
 			clickSort(index) {
-				this.listActive = index
 				// 屏幕回到顶部
 				uni.pageScrollTo({
 					scrollTop: 0,
 					duration: 300
 				})
-				this.$emit('handleActive', this.listActive)
 
-				// this.$emit('handleActive', index) // 自定义默认选中的索引
+				// 不自定义索引则打开
+				// this.listActive = index
+				// this.$emit('handleActive', this.listActive)
+
+				// 自定义索引则打开
+				this.$emit('handleActive', index) // 自定义默认选中的索引
 			},
 			// scroll-view滑动事件
 			scroll(e) {
@@ -125,19 +128,19 @@
 	.sticky-box {
 		/* #ifndef APP-PLUS-NVUE */
 		display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: space-between;
+		width: 100%;
+		align-items: center;
+		justify-content: space-between;
 		// position: -webkit-sticky;
 		/* #endif */
 		// position: sticky;
-    position: fixed;
+		position: fixed;
 		top: var(--window-top);
 		z-index: 9999;
 		flex-direction: row;
 		margin: 0;
-    background-color: #f3f4f4;
-    height: 110rpx;
+		background-color: #f3f4f4;
+		height: 110rpx;
 	}
 
 	.listAll {
@@ -170,7 +173,7 @@
 			height: 60rpx;
 			line-height: 60rpx;
 			color: #6f7274;
-      font-size: 30rpx;
+			font-size: 30rpx;
 
 			&.active {
 				color: #09C2C9;

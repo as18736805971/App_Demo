@@ -1,7 +1,7 @@
 <template>
 	<view class="page-index">
 		<!-- 导航栏 -->
-		<base-ani-tab-bar :listArr="list" @handleActive="handleTab"></base-ani-tab-bar>
+		<base-ani-tab-bar :listArr="list" :listActive="active_index" @handleActive="handleTab"></base-ani-tab-bar>
 		<!-- 导航栏 -->
 
 		<!-- 兑换优惠券 -->
@@ -127,6 +127,9 @@
 				card_number: '', // 卡号
 				camilo: '', // 卡密
 			}
+		},
+		onLoad(e) {
+			this.active_index = Number(e.type)
 		},
 		methods: {
 			handleTab(index) {

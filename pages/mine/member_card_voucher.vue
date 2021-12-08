@@ -1,7 +1,7 @@
 <template>
 	<view class="page-index">
 		<!-- 导航栏 -->
-		<base-ani-tab-bar :listArr="list" @handleActive="handleTab"></base-ani-tab-bar>
+		<base-ani-tab-bar :listArr="list" :listActive="active_index" @handleActive="handleTab"></base-ani-tab-bar>
 		<!-- 导航栏 -->
 
 		<!-- 卡券列表 -->
@@ -41,7 +41,7 @@
 		<!-- 底部导航 -->
 		<view class="bottom-navigation" v-if="page_type === 'mine'">
 			<view class="txt" @click="handleJump({
-				type: './exchange_center',
+				type: './exchange_center?type=0',
 			})">优惠券兑换</view>
 			<view class="line"></view>
 			<view class="txt" @click="handleJump({

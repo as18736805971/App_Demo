@@ -179,13 +179,13 @@
 					title: '余额(元)',
 					number: 112.00,
 					link: {
-						type: 'price',
+            type: './member_stored',
 					}
 				}, {
 					title: '礼品卡',
 					number: 6,
 					link: {
-						type: 'gift',
+						type: './gift_card',
 					}
 				}, ], // 我的资产
 				service: [{
@@ -221,7 +221,7 @@
 					icon: require('@/static/appicon/exchange.png'),
 					hot: false,
 					link: {
-            type: './exchange_center',
+            type: './exchange_center?type=1',
 					}
 				}, {
 					title: '收货地址',

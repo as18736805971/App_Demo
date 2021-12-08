@@ -85,6 +85,12 @@
 			"style": {
 				"navigationBarTitleText": "兑换中心"
 			}
+		},
+		{
+			"path": "pages/mine/gift_card",
+			"style": {
+				"navigationBarTitleText": "礼品卡列表"
+			}
 		}
 	],
 	"tabBar": {
