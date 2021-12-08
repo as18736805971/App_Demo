@@ -39,64 +39,16 @@
 
 		<!-- 会员特权列表 -->
 		<view class="member-list">
-			<view class="item">
-				<view class="top-txt">升级特权</view>
-				<view class="title">神里绫华</view>
+			<view class="item" v-for="(item, index) in privileges_list" :key="index">
+				<view class="top-txt">{{ item.title }}</view>
+				<view class="title">{{ item.name }}</view>
 				<view class="item-list">
-					<view class="block">
+					<view class="block" v-for="(vv, kk) in item.list" :key="kk">
 						<view class="block-item">
-							<image class="block-icon" :src="require('@/static/appicon/coupon1.png')"></image>
-							<view class="round">x1</view>
+							<image class="block-icon" :src="vv.icon"></image>
+							<view class="round">x{{ vv.num }}</view>
 						</view>
-						<view class="desc">5元外卖券</view>
-					</view>
-					<view class="block">
-						<view class="block-item">
-							<image class="block-icon" :src="require('@/static/appicon/coupon1.png')"></image>
-							<view class="round">x1</view>
-						</view>
-						<view class="desc">5元外卖券</view>
-					</view>
-					<view class="block">
-						<view class="block-item">
-							<image class="block-icon" :src="require('@/static/appicon/coupon1.png')"></image>
-							<view class="round">x1</view>
-						</view>
-						<view class="desc">5元外卖券</view>
-					</view>
-					<view class="block">
-						<view class="block-item">
-							<image class="block-icon" :src="require('@/static/appicon/coupon1.png')"></image>
-							<view class="round">x1</view>
-						</view>
-						<view class="desc">5元外卖券</view>
-					</view>
-					<view class="block">
-						<view class="block-item">
-							<image class="block-icon" :src="require('@/static/appicon/coupon1.png')"></image>
-							<view class="round">x1</view>
-						</view>
-						<view class="desc">5元外卖券</view>
-					</view>
-				</view>
-			</view>
-			<view class="item">
-				<view class="top-txt">升级特权</view>
-				<view class="title">神里绫华</view>
-				<view class="item-list">
-					<view class="block">
-						<view class="block-item">
-							<image class="block-icon" :src="require('@/static/appicon/coupon1.png')"></image>
-							<view class="round">x1</view>
-						</view>
-						<view class="desc">5元外卖券</view>
-					</view>
-					<view class="block">
-						<view class="block-item">
-							<image class="block-icon" :src="require('@/static/appicon/coupon1.png')"></image>
-							<view class="round">x1</view>
-						</view>
-						<view class="desc">5元外卖券</view>
+						<view class="desc">{{ vv.desc }}</view>
 					</view>
 				</view>
 			</view>
@@ -176,6 +128,60 @@
 					name: 'V6'
 				}],
 				imgIndex: 0,
+				privileges_list: [{
+					title: '升级特权',
+					name: '神里绫华',
+					list: [{
+							icon: require('@/static/appicon/activity.png'),
+							num: 1,
+							desc: '5元外卖券',
+						},
+						{
+							icon: require('@/static/appicon/coupon1.png'),
+							num: 1,
+							desc: '10元外卖券',
+						},
+						{
+							icon: require('@/static/appicon/coupon2.png'),
+							num: 1,
+							desc: '2元外卖券',
+						},
+						{
+							icon: require('@/static/appicon/coupon3.png'),
+							num: 1,
+							desc: '5元外卖券',
+						},
+					]
+				}, {
+					title: '升级特权',
+					name: '摩拉克斯',
+					list: [{
+							icon: require('@/static/appicon/drinks.png'),
+							num: 1,
+							desc: '5元外卖券',
+						},
+						{
+							icon: require('@/static/appicon/drinks1.png'),
+							num: 1,
+							desc: '5元外卖券',
+						},
+						{
+							icon: require('@/static/appicon/label1.png'),
+							num: 1,
+							desc: '5元外卖券',
+						},
+						{
+							icon: require('@/static/appicon/store.png'),
+							num: 1,
+							desc: '5元外卖券',
+						},
+						{
+							icon: require('@/static/appicon/store.png'),
+							num: 1,
+							desc: '5元外卖券',
+						},
+					]
+				}, ]
 			}
 		},
 		methods: {
