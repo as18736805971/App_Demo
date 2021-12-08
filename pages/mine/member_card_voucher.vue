@@ -40,7 +40,9 @@
 
 		<!-- 底部导航 -->
 		<view class="bottom-navigation" v-if="page_type === 'mine'">
-			<view class="txt">优惠券兑换</view>
+			<view class="txt" @click="handleJump({
+				type: './exchange_center',
+			})">优惠券兑换</view>
 			<view class="line"></view>
 			<view class="txt" @click="handleJump({
 				type: './member_card_voucher?type=history',
@@ -50,7 +52,7 @@
 
 		<!-- 详情 -->
 		<view class="suspension" v-if="detail_status">
-			<view class="suspension-box" @click.stop="handleHideDetail()""></view>
+			<view class="suspension-box"></view>
 			<view class=" block-item">
 				<view class="item">
 					<view class="item-title">{{ card_detail.title }}</view>

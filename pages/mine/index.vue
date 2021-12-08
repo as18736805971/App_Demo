@@ -221,7 +221,7 @@
 					icon: require('@/static/appicon/exchange.png'),
 					hot: false,
 					link: {
-						type: 'exchange',
+            type: './exchange_center',
 					}
 				}, {
 					title: '收货地址',

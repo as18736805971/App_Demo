@@ -79,6 +79,12 @@
 				"navigationBarTitleText": ""
 				// "enablePullDownRefresh": true
 			}
+		},
+		{
+			"path": "pages/mine/exchange_center",
+			"style": {
+				"navigationBarTitleText": "兑换中心"
+			}
 		}
 	],
 	"tabBar": {
