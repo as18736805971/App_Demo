@@ -91,6 +91,12 @@
 			"style": {
 				"navigationBarTitleText": "礼品卡列表"
 			}
+		},
+		{
+			"path": "pages/mine/gift_card_details",
+			"style": {
+				"navigationBarTitleText": ""
+			}
 		}
 	],
 	"tabBar": {

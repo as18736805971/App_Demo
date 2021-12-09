@@ -1,6 +1,6 @@
 <template>
 	<!-- 吸顶效果 -->
-	<view class="sticky-box">
+	<view class="sticky-box" :style="{background: background}">
 		<!-- 滑动区域 -->
 		<scroll-view class="scroll-view_H" style="width: 100%;" scroll-x="true" scroll-with-animation
 			:scroll-left="tabsScrollLeft" @scroll="scroll">
@@ -40,7 +40,12 @@
 			listActive: {
 				type: Number,
 				default: 0
-			}
+			},
+			// 背景颜色
+			background: {
+				type: String,
+				default: '#f3f4f4'
+			},
 		},
 		data() {
 			return {
@@ -105,7 +110,8 @@
 					lineLeft = 0
 				this.getElementData(`#tab_item`, (data) => {
 					let el = data[this.listActive]
-					lineWidth = el.width / 2
+					// lineWidth = el.width / 2 // 根据tab_item长度的一半计算下划线长度
+					lineWidth = 35
 					// lineLeft = el.width * (this.currentIndex + 0.5)  // 此种只能针对每个item长度一致的
 					lineLeft = el.width / 2 + (-data[0].left) + el.left
 					this.lineStyle = {
@@ -139,7 +145,6 @@
 		z-index: 9999;
 		flex-direction: row;
 		margin: 0;
-		background-color: #f3f4f4;
 		height: 110rpx;
 	}
 
