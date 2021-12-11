@@ -1,6 +1,6 @@
 <template>
 	<!-- 吸顶效果 -->
-	<view class="sticky-box" :style="{background: background}">
+	<view :class="type === 1 ? 'sticky-box' : 'sticky-box1'" :style="{background: background}">
 		<!-- 滑动区域 -->
 		<scroll-view class="scroll-view_H" style="width: 100%;" scroll-x="true" scroll-with-animation
 			:scroll-left="tabsScrollLeft" @scroll="scroll">
@@ -26,6 +26,11 @@
 <script>
 	export default {
 		props: {
+			// 样式列型 1 吸顶 2 固定
+			type: {
+				type: Number,
+				default: 1
+			},
 			// 导航列表 ['全部', '列表']
 			listArr: {
 				type: Array,
@@ -144,6 +149,20 @@
 		top: var(--window-top);
 		z-index: 9999;
 		flex-direction: row;
+		margin: 0;
+		height: 110rpx;
+	}
+
+	.sticky-box1 {
+		/* #ifndef APP-PLUS-NVUE */
+		display: flex;
+		width: 100%;
+		align-items: center;
+		justify-content: space-between;
+		/* #endif */
+		z-index: 9999;
+		flex-direction: row;
+		position: relative;
 		margin: 0;
 		height: 110rpx;
 	}

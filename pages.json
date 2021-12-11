@@ -19,9 +19,9 @@
 			}
 		},
 		{
-			"path": "pages/other/index",
+			"path": "pages/order/index",
 			"style": {
-				"navigationBarTitleText": "其他"
+				"navigationBarTitleText": "订单"
 			}
 		},
 		{
@@ -97,11 +97,17 @@
 			"style": {
 				"navigationBarTitleText": ""
 			}
+		},
+		{
+			"path": "pages/order/details",
+			"style": {
+				"navigationBarTitleText": "订单详情"
+			}
 		}
 	],
 	"tabBar": {
-		"color": "#707070",
-		"selectedColor": "#17abe3",
+		"color": "#a2a1a6",
+		"selectedColor": "#b1d442",
 		"borderStyle": "black",
 		"backgroundColor": "#ffffff",
 		"list": [{
@@ -120,10 +126,10 @@
 			"selectedIconPath": "static/icon/share1.png",
 			"text": "购物车"
 		}, {
-			"pagePath": "pages/other/index",
+			"pagePath": "pages/order/index",
 			"iconPath": "static/icon/other.png",
 			"selectedIconPath": "static/icon/other1.png",
-			"text": "其他"
+			"text": "订单"
 		}, {
 			"pagePath": "pages/mine/index",
 			"iconPath": "static/icon/mine.png",

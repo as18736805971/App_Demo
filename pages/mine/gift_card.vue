@@ -9,7 +9,7 @@
 		<template v-if="active_index === 0">
 			<!-- 封面图 -->
 			<view class="cover">
-				<!--<image class="icon-cover" :src="require('@/static/appicon/coupon.png')"></image>-->
+				<image class="icon-cover" :src="cover"></image>
 			</view>
 			<!-- 封面图 -->
 			<!-- 列表 -->
@@ -19,7 +19,7 @@
 					<view class="item-list">
 						<view class="item" v-for="(vv, kk) in item.list" :key="kk"
 							@click="handleJump({type: `./gift_card_details?id=${kk}&title=${vv.name}`})">
-							<image class="icon-image" mode="aspectFit" :src="vv.image"></image>
+							<image class="icon-image" mode="scaleToFill" :src="vv.image"></image>
 							<view class="item-desc">{{ vv.name }}</view>
 						</view>
 					</view>
@@ -63,14 +63,15 @@
 			return {
 				list: ['购买礼品卡', '我的礼品卡'], // 选项卡列表
 				active_index: 0,
+				cover: 'https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png',
 				card_list: [{
 						title: '神里绫华',
 						list: [{
-								image: require('@/static/appicon/coupon.png'),
+								image: 'https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png',
 								name: '神里绫华神里绫华',
 							},
 							{
-								image: require('@/static/appicon/coupon.png'),
+								image: 'https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png',
 								name: '神里绫华神里绫华',
 							},
 						]
@@ -78,11 +79,11 @@
 					{
 						title: '神里绫华',
 						list: [{
-								image: require('@/static/appicon/coupon.png'),
+								image: 'https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png',
 								desc: '神里绫华神里绫华',
 							},
 							{
-								image: require('@/static/appicon/coupon.png'),
+								image: 'https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png',
 								name: '神里绫华神里绫华',
 							},
 						]
@@ -90,11 +91,11 @@
 					{
 						title: '神里绫华',
 						list: [{
-								image: require('@/static/appicon/coupon.png'),
+								image: 'https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png',
 								name: '神里绫华神里绫华',
 							},
 							{
-								image: require('@/static/appicon/coupon.png'),
+								image: 'https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png',
 								name: '神里绫华神里绫华',
 							},
 						]
@@ -102,11 +103,11 @@
 					{
 						title: '神里绫华',
 						list: [{
-								image: require('@/static/appicon/coupon.png'),
+								image: 'https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png',
 								name: '神里绫华神里绫华',
 							},
 							{
-								image: require('@/static/appicon/coupon.png'),
+								image: 'https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png',
 								name: '神里绫华神里绫华',
 							},
 						]
@@ -114,11 +115,11 @@
 					{
 						title: '神里绫华',
 						list: [{
-								image: require('@/static/appicon/coupon.png'),
+								image: 'https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png',
 								name: '神里绫华神里绫华',
 							},
 							{
-								image: require('@/static/appicon/coupon.png'),
+								image: 'https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png',
 								name: '神里绫华神里绫华',
 							},
 						]
