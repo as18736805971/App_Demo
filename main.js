@@ -1,5 +1,5 @@
 import App from './App'
-import Tool from './utils/Tool.js'
+import Req from './utils/request.js'
 import CommonTool from './utils/common.js'
 
 // #ifndef VUE3
@@ -14,6 +14,7 @@ app.$mount()
 
 // getApp 必须在 const app 全局变量app 定义后再进行操作
 // getApp().user = {} // 直接赋值 let user = getApp().user // 直接使用  使用时要先定义
+getApp()['Req'] = Req
 getApp()['CommonTool'] = CommonTool
 getApp()['userInfo'] = {}
 
