@@ -2,7 +2,7 @@
 	<view class="page-index">
 		<!-- 封面图 -->
 		<swiper class="cover-list" :indicator-dots="true" :indicator-color="'rgba(0, 0, 0, 0.3)'"
-			:indicator-active-color="'rgba(0, 0, 0, 0.6)'" :autoplay="true" :interval="3000" :circular="true">
+			:indicator-active-color="'rgba(0, 0, 0, 0.6)'" :autoplay="true" :interval="5000" :circular="true">
 			<swiper-item v-for="(item, index) in cover_list" :key="index">
 				<view class="swiper-item" @click="handleCover(item)">
 					<image class="swiper-item" mode="scaleToFill" :src="item.pic"></image>
@@ -15,28 +15,28 @@
 		<view class="member-integral">
 			<view class="left-integral">
 				<view class="portrait">
-					<image class="icon-portrait" :src="require('@/static/appicon/portrait.png')"></image>
+					<image class="icon-portrait" :src="userInfo.avatarUrl"></image>
 					<view class="level">
-						<image class="level-icon" :src="require('@/static/appicon/level.png')"></image>
+						<image class="level-icon" :src="userInfo.level.level_icon"></image>
 					</view>
 				</view>
 				<view class="integral">
-					<view class="name">你的眼里有星星</view>
+					<view class="name">{{ userInfo.nickName }}</view>
 					<view class="level-item">
 						<view class="level-line" :style="{ width: getWid }">
 							<view class="active" :style="{ width: activePx }"></view>
 						</view>
-						10/100
+						{{ userInfo.growth.value }}/{{ userInfo.growth.max_value }}
 					</view>
 				</view>
 			</view>
 			<view class="right-integral">
 				<view class="right-item" @click="handleJump({type: '../mine/member_qr_code'})">
-					<view class="item-num">99</view>
+					<view class="item-num">{{ userInfo.integral }}</view>
 					<view class="item-txt">积分</view>
 				</view>
 				<view class="right-item" @click="handleJump({type: '../mine/member_card_voucher?type=mine'})">
-					<view class="item-num">8</view>
+					<view class="item-num">{{ userInfo.coupons }}</view>
 					<view class="item-txt">优惠券</view>
 				</view>
 				<view class="right-item" @click="handleJump({type: '../mine/member_qr_code'})">
@@ -55,7 +55,8 @@
 
 		<!-- 卡片列表 -->
 		<view class="card-list">
-			<view class="card-item" v-for="(item, index) in card_list_new" :key="index" @click="handleCardNew(item, index)">
+			<view class="card-item" v-for="(item, index) in card_list_new" :key="index"
+				@click="handleCardNew(item, index)">
 				<view class="card-title">{{ item.title }}</view>
 				<view class="card-desc">{{ item.desc }}</view>
 				<view class="card-image">
@@ -91,11 +92,7 @@
 		},
 		data() {
 			return {
-				growth: {
-					wid: 200, // 未选中长度 默认长度
-					max_value: 100, // 最大成长值
-					value: 10, // 当前成长值
-				},
+				userInfo: getApp()['userInfo'],
 				// 封面图数据
 				cover_list: [{
 					id: 1,
@@ -154,16 +151,16 @@
 				member_list: [{
 					id: 1,
 					image: 'https://img9.51tietu.net/pic/2019-091200/vgkpidei2tjvgkpidei2tj.jpg',
-				}, ],
+				}],
 			}
 		},
 		computed: {
 			getWid() {
-				return this.growth.wid.toString() + "px"
+				return this.userInfo.growth.wid.toString() + "px"
 			},
 			// 选中成长值长度
 			activePx() {
-				return (this.growth.value / this.growth.max_value * this.growth.wid) + 'px'
+				return (this.userInfo.growth.value / this.userInfo.growth.max_value * this.userInfo.growth.wid) + 'px'
 			},
 		},
 		onLoad() {},
@@ -179,27 +176,37 @@
 			// 点击卡片
 			handleCardNew(data, index) {
 				if (index === 0) {
-          this.handleJump({type: '../mine/exchange_center?type=1'})
-        } else if(index ===1 ) {
-          this.handleJump({type: '../mine/exchange_center?type=1'})
-        } else {
-          this.handleJump({type: '../mine/exchange_center?type=1'})
-        }
+					this.handleJump({
+						type: '../mine/exchange_center?type=1'
+					})
+				} else if (index === 1) {
+					this.handleJump({
+						type: '../mine/exchange_center?type=1'
+					})
+				} else {
+					this.handleJump({
+						type: '../mine/exchange_center?type=1'
+					})
+				}
 			},
 			// 点击会员新鲜事更多
 			handleMemberMore() {
-        this.handleJump({type: '../mine/member_new_list'})
+				this.handleJump({
+					type: '../mine/member_new_list'
+				})
 			},
 			// 点击会员新鲜事
 			handleMember(data) {
-        this.handleJump({type: '../mine/member_new_list'})
+				this.handleJump({
+					type: '../mine/member_new_list'
+				})
 			},
-      // 页面跳转
-      handleJump(link) {
-        uni.navigateTo({
-          url: link.type
-        });
-      },
+			// 页面跳转
+			handleJump(link) {
+				uni.navigateTo({
+					url: link.type
+				});
+			},
 		}
 	}
 </script>

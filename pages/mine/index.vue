@@ -6,12 +6,12 @@
 				<view class="portrait" @click="handleJump({
 			  type:'./info'
 			})">
-					<image class="icon" :src="userInfo.avatarUrl"></image>
+					<image class="icon" :src="userInfo.avatarUrl || require('@/static/appicon/portrait.png')"></image>
 				</view>
 				<view class="nick-name" @click="handleJump({
 			  type:'./info'
 			})">
-					{{ userInfo.nickName }}
+					{{ userInfo.nickName || '亲爱的用户' }}
 					<image class="icon" :src="require('@/static/icon/right_arrow.png')"></image>
 				</view>
 
@@ -21,7 +21,7 @@
 						<view class="level">
 							<view class="level-name" @click.stop="handleJump({
                 type:'./member_interests'
-              })">LV20</view>
+              })">LV{{ userInfo.level.value }}</view>
 							<view class="level-desc" @click.stop="handleJump({
                 type:'./member_interests'
               })">
@@ -31,7 +31,8 @@
 						</view>
 						<view class="content">
 							<view class="left">
-								<view class="level-num">{{ growth.value }}/{{ growth.max_value }}</view>
+								<view class="level-num">{{ userInfo.growth.value }}/{{ userInfo.growth.max_value }}
+								</view>
 								<view class="level-line" :style="{ width: getWid }">
 									<view class="active" :style="{ width: activePx }"></view>
 								</view>
@@ -141,49 +142,52 @@
 		},
 		computed: {
 			poor_value() {
-				return Number(this.growth.max_value) - Number(this.growth.value)
+				if (this.userInfo.growth) {
+					return Number(this.userInfo.growth.max_value) - Number(this.userInfo.growth.value)
+				} else {
+					return 0
+				}
 			},
 			getWid() {
-				return this.growth.wid.toString() + "px"
+				if (this.userInfo.growth) {
+					return this.userInfo.growth.wid.toString() + 'px'
+				} else {
+					return 0
+				}
 			},
 			// 选中成长值长度
 			activePx() {
-				return (this.growth.value / this.growth.max_value * this.growth.wid) + 'px'
+				if (this.userInfo.growth) {
+					return (this.userInfo.growth.value / this.userInfo.growth.max_value * this.userInfo.growth.wid) + 'px'
+				} else {
+					return 0
+				}
 			},
 		},
 		data() {
 			return {
-				growth: {
-					wid: 200, // 未选中长度 默认长度
-					max_value: 1000, // 最大成长值
-					value: 100, // 当前成长值
-				},
-				userInfo: {
-					auth: true, // 授权
-					nickName: '亲爱的用户',
-					avatarUrl: require('@/static/appicon/portrait.png'),
-				},
+				userInfo: getApp()['userInfo'],
 				assets: [{
 					title: '优惠券',
-					number: 10,
+					number: getApp()['userInfo'].coupons || '*',
 					link: {
 						type: './member_card_voucher?type=mine',
 					}
 				}, {
 					title: '积分商城',
-					number: 98,
+					number: getApp()['userInfo'].integral || '*',
 					link: {
 						type: 'integral_shop',
 					}
 				}, {
 					title: '余额(元)',
-					number: 112.00,
+					number: getApp()['userInfo'].price || '*',
 					link: {
-            type: './member_stored',
+						type: './member_stored',
 					}
 				}, {
 					title: '礼品卡',
-					number: 6,
+					number: getApp()['userInfo'].gift_card || '*',
 					link: {
 						type: './gift_card',
 					}
@@ -221,7 +225,7 @@
 					icon: require('@/static/appicon/exchange.png'),
 					hot: false,
 					link: {
-            type: './exchange_center?type=1',
+						type: './exchange_center?type=1',
 					}
 				}, {
 					title: '收货地址',
@@ -253,10 +257,10 @@
 		methods: {
 			// 成长值增加
 			handleGrowthAdd() {
-				if (this.growth.value < this.growth.max_value) {
-					this.growth.value += 20
-					if (this.growth.value > this.growth.max_value) {
-						this.growth.value = this.growth.max_value
+				if (this.userInfo.growth.value < this.userInfo.growth.max_value) {
+					this.userInfo.growth.value += 20
+					if (this.userInfo.growth.value > this.userInfo.growth.max_value) {
+						this.growth.userInfo.value = this.userInfo.growth.max_value
 					}
 				}
 			},
@@ -284,11 +288,29 @@
 				uni.getUserProfile({
 					desc: 'Wexin',
 					success: res => {
-						this.userInfo = {
-							...this.userInfo,
-							...res.userInfo
+						res.userInfo.id = 1 // 用户id
+						res.userInfo.auth = true // 是否授权
+						res.userInfo.price = '996.25' // 用户id
+						res.userInfo.integral = 88 // 积分
+						res.userInfo.gift_card = 6 // 礼品卡
+						res.userInfo.coupons = 8 // 优惠券
+						// 会员等级
+						res.userInfo.level = {
+							value: 3, // 等级
+							level_icon: require('@/static/appicon/level.png'), // 等级图标
 						}
-						this.userInfo.auth = true
+						// 成长值
+						res.userInfo.growth = {
+							wid: 200, // 未选中长度 默认长度
+							max_value: 100, // 最大成长值
+							value: 10, // 当前成长值
+						}
+						this.userInfo = res.userInfo
+						this.assets[0].number = res.userInfo.coupons
+						this.assets[1].number = res.userInfo.integral
+						this.assets[2].number = res.userInfo.price
+						this.assets[3].number = res.userInfo.gift_card
+						uni.setStorageSync('userInfo', res.userInfo);
 						this.$refs.modal_auth.handleHiddenModal()
 					},
 					fail: err => {}
