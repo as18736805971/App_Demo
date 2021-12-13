@@ -61,57 +61,74 @@
 			return {
 				list: ['当前订单', '历史订单'], // 选项卡列表
 				history_list: ['全部', '自取', '外卖'], // 选项卡列表
-				active_index: 1,
+				active_index: 0,
 				history_index: 0,
-				order_list: [{
-					id: 1,
-					name: '礼品卡',
-					status: 1, // 0 已取消 1待支付 2已支付 3待取单 4已取单 5订单已完成
-					order_time: '2021-12-11 11:50:23',
-					price: '1057.59',
-					goods_list: [{
-							pic: 'https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png',
-						},
-						{
-							pic: 'https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png',
-						},
-						{
-							pic: 'https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png',
-						}
-					],
-				}, {
-					id: 2,
-					name: '餐饮卡',
-					status: 1, // 0 已取消 1待支付 2已支付 3待取单 4已取单 5订单已完成
-					order_time: '2021-12-11 11:50:23',
-					price: '1057.59',
-					goods_list: [{
-						pic: 'https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png',
-					}],
-				}, {
-					id: 3,
-					name: '餐饮卡',
-					status: 1, // 0 已取消 1待支付 2已支付 3待取单 4已取单 5订单已完成
-					order_time: '2021-12-11 11:50:23',
-					price: '1057.59',
-					goods_list: [{
-							pic: 'https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png',
-						},
-						{
-							pic: 'https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png',
-						},
-					],
-				}],
+				order_list: [],
 			}
+		},
+		onLoad() {
+			this.handleOrderData()
 		},
 		methods: {
 			// 切换
 			handleTab(index) {
 				this.active_index = index
+				this.handleOrderData()
 			},
 			// 历史订单切换
 			handleHistoryTab(index) {
 				this.history_index = index
+				this.handleOrderData()
+			},
+			// 订单列表数据
+			handleOrderData() {
+				if (this.active_index === 0) {
+					this.order_list = []
+				} else {
+					if (this.history_index === 0 || this.history_index === 1) {
+						this.order_list = [{
+							id: 1,
+							name: '礼品卡',
+							status: 1, // 0 已取消 1待支付 2已支付 3待取单 4已取单 5订单已完成
+							order_time: '2021-12-11 11:50:23',
+							price: '1057.59',
+							goods_list: [{
+									pic: 'https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png',
+								},
+								{
+									pic: 'https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png',
+								},
+								{
+									pic: 'https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png',
+								}
+							],
+						}, {
+							id: 2,
+							name: '餐饮卡',
+							status: 1, // 0 已取消 1待支付 2已支付 3待取单 4已取单 5订单已完成
+							order_time: '2021-12-11 11:50:23',
+							price: '1057.59',
+							goods_list: [{
+								pic: 'https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png',
+							}],
+						}, {
+							id: 3,
+							name: '餐饮卡',
+							status: 1, // 0 已取消 1待支付 2已支付 3待取单 4已取单 5订单已完成
+							order_time: '2021-12-11 11:50:23',
+							price: '1057.59',
+							goods_list: [{
+									pic: 'https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png',
+								},
+								{
+									pic: 'https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png',
+								},
+							],
+						}]
+					} else {
+						this.order_list = []
+					}
+				}
 			},
 			// 订单详情
 			handleOrderDetails(data) {

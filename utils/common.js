@@ -112,7 +112,6 @@ module.exports = {
 			return obj
 		}
 	},
-
 	/**
 	 * 对象转json字符串
 	 */
@@ -142,7 +141,6 @@ module.exports = {
 			uni.getLocation({
 				type: 'wgs84',
 				success: function(res) {
-					console.log(res)
 					getApp().setCache("map", res, 1200);
 					var latitude = res.latitude
 					var longitude = res.longitude
@@ -159,79 +157,8 @@ module.exports = {
 			})
 		}
 	},
-	SetLocalData: function localData(key, data) {
-		uni.setStorage({
-			key: key,
-			data: data,
-			success: function() {
-				console.log('success 存储首页数据:+' + key + " " + data);
-			}
-		});
-	},
-	GetLocalData: function(key) {
-
-	},
-	//设置标题栏字体颜色背景颜色从缓存
-	setNavigationBarColorCache: function() {
-		try {
-			const value = uni.getStorageSync(this.IndexCacheKey);
-			if (value) {
-				var pageinfo = value.info.page;
-				console.log("dsdsds" + pageinfo)
-				// #ifndef MP-TOUTIAO
-				uni.setNavigationBarColor({
-					frontColor: pageinfo.text_color,
-					backgroundColor: pageinfo.nv_color,
-					animation: {
-						duration: 400,
-						timingFunc: 'easeIn'
-					}
-				});
-				// #endif
-
-			}
-		} catch (e) {
-			// error
-			console.log("获取首页缓存数据出错");
-			return {};
-		}
-		//头条不支持
-
-	},
-
-
-
-	setPageStyle(pagedata) {
-		console.log('设置标题背景数据')
-		getApp().title = pagedata.name
-		uni.setNavigationBarTitle && uni.setNavigationBarTitle({
-			title: pagedata.name
-		});
-
-		//#ifndef MP-TOUTIAO
-		uni.setNavigationBarColor && uni.setNavigationBarColor({
-			frontColor: pagedata.text_color === 'black' ? '#000000' : '#ffffff',
-			backgroundColor: pagedata.nv_color.toHexColor(),
-			animation: {
-				duration: 400,
-				timingFunc: 'easeIn'
-			}
-		});
-		//#endif
-
-		//#ifdef MP-WEIXIN || MP-BAIDU
-		let bgcolor = pagedata.nv_color.toHexColor()
-		uni.setBackgroundColor && uni.setBackgroundColor({
-			backgroundColor: bgcolor,
-			backgroundColorTop: bgcolor,
-			backgroundColorBottom: bgcolor
-		});
-		//#endif
-	},
-
 	//设置页面标题
 	setNavigationBarTitle: function(title) {
-		getApp().title = title
 		uni.setNavigationBarTitle({
 			title: title
 		});
@@ -256,43 +183,32 @@ module.exports = {
 			console.log("获取首页缓存数据出错");
 			return {};
 		}
-
-
 	},
-	//首页缓存key
-	IndexCacheKey: "IndexData",
-	//跳转
-	jump: function(url, i) {
-		console.log(url);
-		(!i || i == '') ? i = 1: i = i;
-
-		i = url === '/yb_guanwang/pages/index/index' ? 3 : i;
-
-		if (i == 1) {
+	// 跳转
+	jump: function(url, type) {
+		if (type == 1) {
+			// 保留当前页面，跳转到应用内的某个页面，使用uni.navigateBack可以返回到原页面
 			uni.navigateTo({
 				url: url,
-				fail: function(i) {
-					if (i.errMsg.indexOf("tabbar") >= 0) {
-						uni.switchTab({ //跳转到 tabBar 页面，并关闭其他所有非 tabBar 页面
-							url: url
-						})
-					}
-				}
+				fail: function(i) {}
 			})
-
-		} else if (i == 2) {
+		} else if (type == 2) {
+			// 关闭当前页面，跳转到应用内的某个页面
 			uni.redirectTo({
 				url: url
 			})
-		} else if (i == 3) {
-			uni.reLaunch({ //关闭所有页面，打开到应用内的某个页面。
+		} else if (type == 3) {
+			// 关闭所有页面，打开到应用内的某个页面
+			uni.reLaunch({
 				url: url
 			})
-		} else if (i == 4) {
-			uni.switchTab({ //跳转到 tabBar 页面，并关闭其他所有非 tabBar 页面
+		} else if (type == 4) {
+			// 跳转到 tabBar 页面，并关闭其他所有非 tabBar 页面
+			uni.switchTab({
 				url: url
 			})
-		} else if (i == 5) {
+		} else if (type == 5) {
+			// 关闭当前页面，返回上一页面或多级页面
 			uni.navigateBack()
 		}
 	},
@@ -325,63 +241,6 @@ module.exports = {
 			icon: "success",
 			duration: 1000,
 		})
-	},
-	//底部导航跳转小程序，web网页，内部页面
-	menu_url: function(k, i = 1) {
-		var that_ = this;
-		var data = that_.pdata(k),
-			k = data.key,
-			url = data.url ? data.url : '',
-			appid = data.appid ? data.appid : '',
-			path = data.path ? data.path : '',
-			title = data.title ? data.title : '',
-			phone = data.phone ? data.phone : '',
-			lat = data.lat ? data.lat : '',
-			lng = data.lng ? data.lng : '';
-		console.log(data)
-		if (k == 1) {
-			if (url) {
-				if (url.length > 0) {
-					that_.jump(url, i);
-				}
-			}
-		} else if (k == 2) { //跳转小程序
-			uni.navigateToMiniProgram({
-				appId: appid,
-				path: path,
-				extraData: {
-					foo: 'bar'
-				},
-				envVersion: 'release',
-				success(res) {
-					console.log('打开成功')
-				},
-				fail: function(res) {
-					//that_.alert('请绑定小程序');
-				}
-			})
-		} else if (k == 3) { //web网页
-
-			that_.jump(url, 1);
-
-		} else if (k == 4) { //打电话
-			if (phone) {
-				uni.makePhoneCall({
-					phoneNumber: phone
-				})
-			} else {
-				that_.alert('电话不能为空');
-			}
-		} else if (k == 5) { //地图
-			if (lat && lng) {
-				that_.tx_map(lat, lng, title);
-			} else {
-				that_.alert('请完善位置信息');
-			}
-
-		} else {
-			return;
-		}
 	},
 	/*
 	 * @desc 富文本html转换为小程序nodes

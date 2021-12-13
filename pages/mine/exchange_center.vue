@@ -129,7 +129,8 @@
 			}
 		},
 		onLoad(e) {
-			this.active_index = Number(e.type)
+      // e.type 0 兑换优惠券 1 兑换礼品卡
+			this.active_index = Number(e.type) || 0
 		},
 		methods: {
 			handleTab(index) {

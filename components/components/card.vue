@@ -79,7 +79,7 @@
 	.card {
 		height: auto;
 		margin: 0 auto;
-		padding: 20rpx 20rpx 0;
+		padding: 0 20rpx;
 
 		.card-list {
 			background-color: #FFFFFF;
