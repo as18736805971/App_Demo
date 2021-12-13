@@ -92,7 +92,7 @@
 		},
 		data() {
 			return {
-				userInfo: getApp()['userInfo'],
+				userInfo: {},
 				// 封面图数据
 				cover_list: [{
 					id: 1,
@@ -163,7 +163,9 @@
 				return (this.userInfo.growth.value / this.userInfo.growth.max_value * this.userInfo.growth.wid) + 'px'
 			},
 		},
-		onLoad() {},
+		onLoad() {
+      this.userInfo = getApp()['userInfo']
+    },
 		methods: {
 			// 点击封面图
 			handleCover(data) {
