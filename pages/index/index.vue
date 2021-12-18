@@ -156,11 +156,11 @@
 		},
 		computed: {
 			getWid() {
-				return this.userInfo.growth.wid.toString() + "px"
+				return getApp()['userInfo'].growth.wid.toString() + "px"
 			},
 			// 选中成长值长度
 			activePx() {
-				return (this.userInfo.growth.value / this.userInfo.growth.max_value * this.userInfo.growth.wid) + 'px'
+				return (getApp()['userInfo'].growth.value / getApp()['userInfo'].growth.max_value * getApp()['userInfo'].growth.wid) + 'px'
 			},
 		},
 		onLoad() {
