@@ -234,7 +234,6 @@
 								.shop-car {
 									width: 36rpx;
 									height: 36rpx;
-									border-radius: 12rpx;
 								}
 							}
 						}

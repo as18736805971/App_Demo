@@ -1,29 +1,9 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path": "pages/new_page/orderDetail",
+			"path": "pages/new_page/index",
 			"style": {
-				"navigationBarTitleText": "订单详情"
-			}
-		}, {
-			"path": "pages/new_page/makeOrder",
-			"style": {
-				"navigationBarTitleText": "确认订单"
-			}
-		}, {
-			"path": "pages/new_page/orderList",
-			"style": {
-				"navigationBarTitleText": "订单列表"
-			}
-		}, {
-			"path": "pages/new_page/results",
-			"style": {
-				"navigationBarTitleText": "购买结果"
-			}
-		}, {
-			"path": "pages/new_page/goodsCar",
-			"style": {
-				"navigationBarTitleText": "购物车"
+				"navigationBarTitleText": "详情"
 			}
 		}, {
 			"path": "pages/index/index",
