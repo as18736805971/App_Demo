@@ -1,4 +1,5 @@
 <template>
+	<!-- 两列瀑布流布局 -->
 	<view class="page-index">
 		<view class="gift-list">
 			<!-- 左侧 -->
@@ -9,7 +10,7 @@
 					</view>
 					<view class="goods-name">倍轻松 眼部按摩</view>
 					<view class="goods-desc">方便携带，免拆磁吸充电，快速方便携带，免拆磁吸充电，快速</view>
-					<view class="goods-svip">
+					<view class="goods-svip" v-if="index % 2 === 0">
 						<view class="goods-vip">
 							<image class="svip" src="../../static/new_image/svip.png"></image>
 							<view class="sivp-txt">￥160</view>
@@ -40,7 +41,7 @@
 					</view>
 					<view class="goods-name">倍轻松 眼部按摩</view>
 					<view class="goods-desc">方便携带，免拆磁吸充电，快速方便携带，免拆磁吸充电，快速</view>
-					<view class="goods-svip">
+					<view class="goods-svip" v-if="index % 3 === 0">
 						<view class="goods-vip">
 							<image class="svip" src="../../static/new_image/svip.png"></image>
 							<view class="sivp-txt">￥160</view>
@@ -99,7 +100,8 @@
 			padding: 20rpx;
 			height: auto;
 			display: flex;
-			align-items: center;
+			flex-direction: row;
+			align-items: flex-start;
 			justify-content: space-between;
 			background-color: #F5F5F4;
 
@@ -114,6 +116,7 @@
 					border-radius: 16rpx;
 					overflow: hidden;
 					margin-bottom: 20rpx;
+					box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.1);
 
 					.goods-pic {
 						width: 100%;

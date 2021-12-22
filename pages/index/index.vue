@@ -31,7 +31,7 @@
 				</view>
 			</view>
 			<view class="right-integral">
-				<view class="right-item" @click="handleJump({type: '../mine/member_qr_code'})">
+				<view class="right-item" @click="handleJump({type: '../mine/integral_mall'})">
 					<view class="item-num">{{ userInfo.integral }}</view>
 					<view class="item-txt">积分</view>
 				</view>

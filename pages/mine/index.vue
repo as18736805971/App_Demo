@@ -177,7 +177,7 @@
 					title: '积分商城',
 					number: getApp()['userInfo'].integral || '*',
 					link: {
-						type: 'integral_shop',
+						type: './integral_mall',
 					}
 				}, {
 					title: '余额(元)',

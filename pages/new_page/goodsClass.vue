@@ -145,7 +145,7 @@
 						display: flex;
 						align-items: center;
 						justify-content: space-between;
-            margin-bottom: 20rpx;
+						margin-bottom: 20rpx;
 
 						.goods-pic {
 							width: 180rpx;
