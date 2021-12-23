@@ -134,6 +134,12 @@
 			"style": {
 				"navigationBarTitleText": "兑换详情"
 			}
+		},
+		{
+			"path": "pages/mine/mine_address",
+			"style": {
+				"navigationBarTitleText": "我的地址"
+			}
 		}
 	],
 	"tabBar": {
