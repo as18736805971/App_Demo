@@ -211,7 +211,7 @@
 					icon: require('@/static/appicon/gift.png'),
 					hot: false,
 					link: {
-						type: 'heart',
+						type: './gift_card',
 					}
 				}, {
 					title: '联系客服',

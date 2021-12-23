@@ -33,12 +33,6 @@
 			}
 		},
 		{
-			"path": "pages/other/animation",
-			"style": {
-				"navigationBarTitleText": "动画"
-			}
-		},
-		{
 			"path": "pages/goods/details",
 			"style": {
 				"navigationBarTitleText": "商品详情"
@@ -127,6 +121,18 @@
 			"path": "pages/mine/integral_sign",
 			"style": {
 				"navigationBarTitleText": "积分签到"
+			}
+		},
+		{
+			"path": "pages/mine/integral_list",
+			"style": {
+				"navigationBarTitleText": "积分商城"
+			}
+		},
+		{
+			"path": "pages/mine/integral_detail",
+			"style": {
+				"navigationBarTitleText": "兑换详情"
 			}
 		}
 	],

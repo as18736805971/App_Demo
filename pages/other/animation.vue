@@ -1,19 +1,27 @@
 <template>
 	<view class="page-index">
-		<!-- 放大缩小样式动画 -->
-		<view class="amplification margin">你的眼里有星星诶</view>
+		<view class="item-title" @click="handleFolding()">
+			<view class="item-name">折叠列表</view>
+			<image class="arrow-icon" :class="folding ? 'folding' : 'folding1'" :src="require('@/static/icon/right_arrow.png')"></image>
+		</view>
+		<view class="list" :class="folding ? 'list1' : 'list2'">
+			<view class="item" v-for="(item, index) in 4" :key="index">你的眼里有星星 神里绫华 雷电将军</view>
+		</view>
 	</view>
 </template>
 
 <script>
 	export default {
 		data() {
-			return {}
+			return {
+        folding: true,
+      }
 		},
-		onLoad() {
-
-		},
-		methods: {}
+		methods: {
+      handleFolding() {
+        this.folding = !this.folding
+      }
+    }
 	}
 </script>
 
@@ -24,54 +32,56 @@
 		background-color: #FFFFFF;
 		padding: 20rpx 0;
 
-		.margin {
-			margin-bottom: 40rpx;
-		}
-
-		// 放大缩小样式动画
-		.amplification {
-			width: 240rpx;
-			height: 50rpx;
-			margin: 0 auto;
+		.item-title {
+			padding: 0 50rpx;
+			height: 70rpx;
 			display: flex;
 			align-items: center;
-			justify-content: center;
-			font-size: 24rpx;
-			border-radius: 50rpx;
-			border: 1rpx solid #222222;
-			/*  组合写 */
-			-webkit-animation: scaleDraw 5s ease-in-out infinite;
+			justify-content: space-between;
+			background-color: #4cd964;
 
-			// -webkit-animation-name: scaleDraw;
-			// /* 关键帧名称 */
-			// -webkit-animation-timing-function: ease-in-out;
-			// /* 动画的速度曲线 */
-			// -webkit-animation-iteration-count: infinite;
-			// /* 动画播放的次数 */
-			// -webkit-animation-duration: 5s;
-			// /* 动画所花费的时间 */
+			.item-name {
+				height: 70rpx;
+				line-height: 70rpx;
+				font-size: 26rpx;
+			}
+
+			.arrow-icon {
+				width: 25rpx;
+				height: 25rpx;
+			}
+
+      .folding {
+        transition: all 0.2s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+        transform: rotate(90deg);
+      }
+
+      .folding1 {
+        transition: all 0.2s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+        transform: rotate(0);
+      }
 		}
 
-		@keyframes scaleDraw {
+		.list {
+			padding: 0 50rpx;
 
-			/*定义关键帧、scaleDrew是需要绑定到选择器的关键帧名称*/
-			0% {
-				transform: scale(1);
-				/*开始为原始大小*/
-			}
-
-			25% {
-				transform: scale(1.1);
-				/*放大1.1倍*/
-			}
-
-			50% {
-				transform: scale(1);
-			}
-
-			75% {
-				transform: scale(1.1);
+			.item {
+				width: 100%;
+				height: 70rpx;
+				line-height: 70rpx;
+				border-bottom: 2rpx solid #e3e4e6;
 			}
 		}
+
+    .list1 {
+      height: 400rpx;
+      transition: height 0.5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    }
+
+    .list2 {
+      height: 0;
+      overflow: hidden;
+      transition: height 0.2s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    }
 	}
 </style>
