@@ -204,7 +204,7 @@
 					icon: require('@/static/appicon/sign_in.png'),
 					hot: false,
 					link: {
-						type: 'sign_in',
+						type: './integral_sign',
 					}
 				}, {
 					title: '送TA心意',

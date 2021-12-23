@@ -110,10 +110,23 @@
 			"style": {
 				"navigationBarTitleText": "会员新鲜事"
 			}
-		}, {
+		},
+		{
 			"path": "pages/mine/integral_mall",
 			"style": {
 				"navigationBarTitleText": "积分商城"
+			}
+		},
+		{
+			"path": "pages/mine/integral_mall_remind",
+			"style": {
+				"navigationBarTitleText": "签到提醒"
+			}
+		},
+		{
+			"path": "pages/mine/integral_sign",
+			"style": {
+				"navigationBarTitleText": "积分签到"
 			}
 		}
 	],

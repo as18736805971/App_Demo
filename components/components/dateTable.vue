@@ -290,10 +290,8 @@
 
 <style lang="scss">
 	.date {
-		// width: 100%;
 		padding: 40rpx;
 		height: auto;
-		background-color: #FFFFFF;
 
 		.date-item {
 			background-color: #FFFFFF;
@@ -351,6 +349,7 @@
 				display: flex;
 				align-items: center;
 				justify-content: center;
+        color: #707274;
 
 				.item-title {
 					flex: 1;
@@ -381,6 +380,7 @@
 				display: flex;
 				align-items: center;
 				justify-content: center;
+        color: #707274;
 
 				.item-num {
 					flex: 1;
@@ -401,7 +401,7 @@
 
 				.active {
 					border-radius: 10rpx;
-					background-color: #4cd964;
+					background-color: #b0d342;
 				}
 			}
 		}

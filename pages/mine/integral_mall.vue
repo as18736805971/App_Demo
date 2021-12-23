@@ -23,9 +23,10 @@
 					<view class="line-list">
 						<template v-for="(item, index) in integral_list">
 							<view class="round-item" :key="index">
-								<view class="round"></view>
+								<view class="round" :class="item.status ? 'line-active' : ''"></view>
 							</view>
-							<view class="line" v-if="index + 1 !== integral_list.length"></view>
+							<view class="line" :class="integral_list[index + 1].status ? 'line-active' : ''"
+								v-if="index + 1 !== integral_list.length"></view>
 						</template>
 						<view class="icon-integral">{{ integral_list[integral_list.length - 1].num }}</view>
 					</view>
@@ -35,8 +36,10 @@
 						</view>
 					</view>
 				</view>
-				<view class="integral-btn">立即签到</view>
-				<view class="integral-see">查看签到日历</view>
+				<view class="integral-btn" :class="sign_status ?'active' : ''" @click="handleSign()">
+					{{ sign_status ? '已签到' : '立即签到' }}
+				</view>
+				<view class="integral-see" @click="handleJump({type: './integral_sign'})">查看签到日历</view>
 			</view>
 			<!-- 签到卡片 -->
 		</view>
@@ -49,7 +52,8 @@
 				<image class="arrow" :src="require('@/static/icon/right_arrow4.png')"></image>
 			</view>
 			<view class="goods-item">
-				<view class="goods-info" v-for="(item, index) in goods_list" :key="index">
+				<view class="goods-info" :class="item.end ? 'end-active' : ''" v-for="(item, index) in goods_list"
+					:key="index">
 					<view class="open-to-rob" v-if="item.status">{{ item.time }}开抢</view>
 					<view class="goods-pic">
 						<image class="integral-icon" mode="aspectFit" :src="item.goods_pic"></image>
@@ -70,27 +74,35 @@
 	export default {
 		data() {
 			return {
+				sign_status: false, // 是否签到
 				integral_list: [{
 					day: 1,
 					num: 1,
+					status: true,
 				}, {
 					day: 2,
 					num: 1,
+					status: true,
 				}, {
 					day: 3,
 					num: 1,
+					status: false,
 				}, {
 					day: 4,
 					num: 1,
+					status: false,
 				}, {
 					day: 5,
 					num: 1,
+					status: false,
 				}, {
 					day: 6,
 					num: 1,
+					status: false,
 				}, {
 					day: 7,
 					num: 10,
+					status: false,
 				}],
 				goods_list: [{
 					goods_name: '星星气泡水组合套装',
@@ -99,12 +111,14 @@
 					remaining: 10,
 					status: 1,
 					time: '15:00',
+					end: false,
 				}, {
 					goods_name: '神里绫华 巴巴托斯',
 					goods_pic: 'https://img9.51tietu.net/pic/2019-091200/euzekmi5m23euzekmi5m23.jpg',
 					goods_integral: 100,
 					remaining: 102,
 					status: 0,
+					end: false,
 				}, {
 					goods_name: '璃月钟离 稻妻雷神',
 					goods_pic: 'https://img9.51tietu.net/pic/2019-091200/143tt0ta4sr143tt0ta4sr.jpg',
@@ -112,6 +126,7 @@
 					remaining: 55,
 					status: 1,
 					time: '14:00',
+					end: true,
 				}, {
 					goods_name: '星星气泡水组合套装',
 					goods_pic: 'https://img9.51tietu.net/pic/2019-091200/ff1vqwm3q33ff1vqwm3q33.jpg',
@@ -119,6 +134,7 @@
 					remaining: 33,
 					status: 1,
 					time: '16:00',
+					end: false,
 				}, {
 					goods_name: '星星气泡水组合套装',
 					goods_pic: 'https://img9.51tietu.net/pic/2019-091200/vgkpidei2tjvgkpidei2tj.jpg',
@@ -126,22 +142,39 @@
 					remaining: 24,
 					status: 1,
 					time: '20:00',
+					end: true,
 				}, {
 					goods_name: '枫原万叶 九条裟罗',
 					goods_pic: 'https://img9.51tietu.net/pic/2019-091200/ff1vqwm3q33ff1vqwm3q33.jpg',
 					goods_integral: 600,
 					remaining: 26,
 					status: 0,
+					end: false,
 				}, {
 					goods_name: '星星气泡水组合套装',
 					goods_pic: 'https://img9.51tietu.net/pic/2019-091200/143tt0ta4sr143tt0ta4sr.jpg',
 					goods_integral: 500,
 					remaining: 52,
 					status: 0,
+					end: false,
 				}]
 			}
 		},
-		methods: {}
+		methods: {
+			handleSign() {
+				if (!this.sign_status) {
+					this.sign_status = true
+					this.handleJump({
+						type: './integral_mall_remind'
+					})
+				}
+			},
+			handleJump(link) {
+				uni.navigateTo({
+					url: link.type
+				});
+			}
+		}
 	}
 </script>
 
@@ -299,19 +332,32 @@
 						//background-repeat: no-repeat;
 						//background-size: 100% 100%;
 					}
+
+					.line-active {
+						background-color: #f1a342 !important;
+					}
 				}
 			}
 
 			.integral-btn {
 				margin: 40rpx auto 20rpx;
 				width: 230rpx;
-				height: 60rpx;
+				height: 65rpx;
 				color: #b0d342;
 				border-radius: 50rpx;
 				font-size: 32rpx;
-				line-height: 60rpx;
+				line-height: 65rpx;
 				text-align: center;
 				border: 2rpx solid #b0d342;
+			}
+
+			.active {
+				width: 234rpx;
+				height: 69rpx;
+				line-height: 69rpx;
+				color: #FFFFFF !important;
+				border: none !important;
+				background-color: #d3dfac !important;
 			}
 
 			.integral-see {
@@ -420,6 +466,10 @@
 						color: #707274;
 						line-height: 50rpx;
 					}
+				}
+
+				.end-active {
+					opacity: 0.7;
 				}
 			}
 		}
