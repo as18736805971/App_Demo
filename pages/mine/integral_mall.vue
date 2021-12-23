@@ -67,6 +67,29 @@
 			</view>
 		</view>
 		<!-- 商品列表 -->
+
+    <!-- 商品列表 -->
+    <view class="goods-list">
+      <view class="txt-title">
+        <view>优惠券</view>
+        <image class="arrow" :src="require('@/static/icon/right_arrow4.png')"></image>
+      </view>
+      <view class="goods-item">
+        <view class="goods-info" :class="item.end ? 'end-active' : ''" v-for="(item, index) in goods_list"
+              :key="index">
+          <view class="open-to-rob" v-if="item.status">{{ item.time }}开抢</view>
+          <view class="goods-pic">
+            <image class="integral-icon" mode="aspectFit" :src="item.goods_pic"></image>
+          </view>
+          <view class="goods-name">{{ item.goods_name }}</view>
+          <view class="goods-integral">
+            <text>{{ item.goods_integral }}</text>积分
+          </view>
+          <view class="goods-num">剩余{{ item.remaining }}件</view>
+        </view>
+      </view>
+    </view>
+    <!-- 商品列表 -->
 	</view>
 </template>
 
@@ -148,13 +171,6 @@
 					goods_pic: 'https://img9.51tietu.net/pic/2019-091200/ff1vqwm3q33ff1vqwm3q33.jpg',
 					goods_integral: 600,
 					remaining: 26,
-					status: 0,
-					end: false,
-				}, {
-					goods_name: '星星气泡水组合套装',
-					goods_pic: 'https://img9.51tietu.net/pic/2019-091200/143tt0ta4sr143tt0ta4sr.jpg',
-					goods_integral: 500,
-					remaining: 52,
 					status: 0,
 					end: false,
 				}]
