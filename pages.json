@@ -140,6 +140,12 @@
 			"style": {
 				"navigationBarTitleText": "我的地址"
 			}
+		},
+		{
+			"path": "pages/mine/add_address",
+			"style": {
+				"navigationBarTitleText": ""
+			}
 		}
 	],
 	"tabBar": {

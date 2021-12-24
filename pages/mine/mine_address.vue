@@ -3,15 +3,17 @@
 		<view class="address-item" v-for="(item, index) in address_list" :key="index">
 			<view class="left">
 				<view class="address">
-					<view class="block default" v-if="item.default === 1">默认</view>
-					<view class="block">{{ item.block === 1 ? '家' : item.block === 2 ? '公司' : '学校' }}</view>
+					<view class="label default" v-if="item.default">默认</view>
+					<view class="label" v-if="item.label !== -1">
+						{{ item.label === 0 ? '家' : item.label === 1 ? '公司' : '学校' }}
+					</view>
 					<view class="txt">{{ item.address }}</view>
 				</view>
 				<view class="info">{{ item.nickname }}<text>{{ item.sex === 1 ? '先生' : '女士' }}</text>
 					{{ item.phone }}
 				</view>
 			</view>
-			<view class="right">
+			<view class="right" @click="handleJump({type: './add_address?edit=edit'})">
 				<image class="edit-icon" :src="require('@/static/icon/edit.png')"></image>
 			</view>
 		</view>
@@ -21,7 +23,7 @@
 				<image :src="require('@/static/icon/wechat1.png')"></image>
 				微信导入
 			</view>
-			<view class="btn">
+			<view class="btn" @click="handleJump({type: './add_address?edit=add'})">
 				<image :src="require('@/static/icon/add1.png')"></image>
 				新增地址
 			</view>
@@ -34,30 +36,36 @@
 		data() {
 			return {
 				address_list: [{
-					default: 1,
-					block: 1,
+					default: true,
+					label: 0,
 					address: '江山盛世名门二期',
 					nickname: '你的眼里有星星',
 					sex: 1,
 					phone: '18736805971',
 				}, {
-					default: 0,
-					block: 2,
+					default: false,
+					label: 2,
 					address: '江山盛世名门二期',
 					nickname: '钟离',
 					sex: 1,
 					phone: '15538847971',
 				}, {
-					default: 0,
-					block: 3,
+					default: false,
+					label: 1,
 					address: '江山盛世名门二期',
 					nickname: '你的眼里有星星',
-					sex: 0,
+					sex: 2,
 					phone: '18736805971',
 				}]
 			}
 		},
-		methods: {}
+		methods: {
+			handleJump(link) {
+				uni.navigateTo({
+					url: link.type
+				});
+			}
+		}
 	}
 </script>
 
@@ -75,7 +83,6 @@
 			align-items: center;
 			justify-content: space-between;
 			background-color: #FFFFFF;
-			box-shadow: 2rpx 3rpx 10rpx rgba(0, 0, 0, 0.1);
 			margin-bottom: 20rpx;
 
 			.left {
@@ -87,7 +94,7 @@
 					display: flex;
 					align-items: center;
 
-					.block {
+					.label {
 						padding: 0 10rpx;
 						height: 35rpx;
 						display: flex;

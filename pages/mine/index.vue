@@ -232,7 +232,7 @@
 					icon: require('@/static/appicon/address.png'),
 					hot: false,
 					link: {
-						type: 'address',
+						type: './mine_address',
 					}
 				}, {
 					title: '开发票',
@@ -270,6 +270,7 @@
 			},
 			// 授权弹窗
 			handleAuthModal(type) {
+        console.log('8788787878787')
 				if (type === 2) {
 					this.$refs.modal_auth.handleHiddenModal()
 				} else {

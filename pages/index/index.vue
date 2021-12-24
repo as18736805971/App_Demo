@@ -156,14 +156,22 @@
 		},
 		computed: {
 			getWid() {
-				return getApp()['userInfo'].growth.wid.toString() + "px"
+        if (getApp()['userInfo'].growth) {
+          return getApp()['userInfo'].growth.wid.toString() + "px"
+        } else {
+          return 0
+        }
 			},
 			// 选中成长值长度
 			activePx() {
-				return (getApp()['userInfo'].growth.value / getApp()['userInfo'].growth.max_value * getApp()['userInfo'].growth.wid) + 'px'
+        if (getApp()['userInfo'].growth) {
+          return (getApp()['userInfo'].growth.value / getApp()['userInfo'].growth.max_value * getApp()['userInfo'].growth.wid) + 'px'
+        } else {
+          return 0
+        }
 			},
 		},
-		onLoad() {
+		onShow() {
       this.userInfo = getApp()['userInfo']
     },
 		methods: {
