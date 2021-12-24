@@ -239,14 +239,14 @@
 					icon: require('@/static/appicon/invoice.png'),
 					hot: false,
 					link: {
-						type: 'invoice',
+						type: './level_instructions',
 					}
 				}, {
 					title: '更多服务',
 					icon: require('@/static/appicon/more.png'),
 					hot: false,
 					link: {
-						type: 'more',
+						type: './more_page',
 					}
 				}, ], // 我的服务
 			}

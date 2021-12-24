@@ -152,6 +152,18 @@
 			"style": {
 				"navigationBarTitleText": "查看地图"
 			}
+		},
+		{
+			"path": "pages/mine/level_instructions",
+			"style": {
+				"navigationBarTitleText": "等级说明"
+			}
+		},
+		{
+			"path": "pages/mine/more_page",
+			"style": {
+				"navigationBarTitleText": "更多服务"
+			}
 		}
 	],
 	"tabBar": {
