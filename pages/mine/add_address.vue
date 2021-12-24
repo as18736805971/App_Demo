@@ -26,7 +26,7 @@
 			</view>
 			<view class="list-item height">
 				<text class="title">收货地址</text>
-				<view class="input-address">
+				<view class="input-address" @click="handleJump({type: './map'})">
 					<view class="address" :class="info.address === '' ? 'placeholder' : ''">
 						{{ info.address === '' ? '请选择收货地址' : info.address }}
 					</view>
@@ -132,7 +132,12 @@
 			// 是否默认
 			handleDefault(e) {
 				this.info.default = e.detail.value
-			}
+			},
+      handleJump(link) {
+        uni.navigateTo({
+          url: link.type
+        });
+      }
 		}
 	}
 </script>

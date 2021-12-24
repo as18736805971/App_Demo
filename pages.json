@@ -146,6 +146,12 @@
 			"style": {
 				"navigationBarTitleText": ""
 			}
+		},
+		{
+			"path": "pages/mine/map",
+			"style": {
+				"navigationBarTitleText": "查看地图"
+			}
 		}
 	],
 	"tabBar": {

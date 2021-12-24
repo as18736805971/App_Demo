@@ -235,7 +235,7 @@
 						type: './mine_address',
 					}
 				}, {
-					title: '开发票',
+					title: '等级说明',
 					icon: require('@/static/appicon/invoice.png'),
 					hot: false,
 					link: {
@@ -270,7 +270,6 @@
 			},
 			// 授权弹窗
 			handleAuthModal(type) {
-        console.log('8788787878787')
 				if (type === 2) {
 					this.$refs.modal_auth.handleHiddenModal()
 				} else {
@@ -319,9 +318,17 @@
 			},
 			// 页面跳转
 			handleJump(link) {
-				uni.navigateTo({
-					url: link.type
-				});
+        if (link.type === 'service') {
+          uni.showToast({
+            title: '暂无客服服务',
+            icon: 'none',
+            duration: 2000
+          });
+        } else {
+          uni.navigateTo({
+            url: link.type
+          });
+        }
 			},
 		}
 	}
