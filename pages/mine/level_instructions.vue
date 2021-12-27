@@ -1,31 +1,38 @@
 <template>
 	<view class="page-index">
-		<view class="title">你的眼里有星星：您在“你的眼里有星星”小程序成功授权，即可成为你的眼里有星星会员</view>
-
-		<view class="table">
-			<view class="table-left">
-				<view class="table-title">会员等级</view>
-				<view class="table-title" v-for="(item, index) in level_list" :key="index">{{ item.title }}</view>
-			</view>
-			<view class="table-left">
-				<view class="table-title">所需成长值</view>
-				<view class="table-title" v-for="(item, index) in level_list" :key="index">
-					{{ index + 1 !== level_list.length ? item.min + '-' + item.max : item.max + '及以上' }}
+		<template v-if="type === 'integral'">
+			<view class="title">获取积分：</view>
+			<view class="desc">在支持会员的门店出示会员码或“点单”小程序完成订单单后，可获得积分奖励。每消费1元=1积分，不足1元不积分如发生退款扣除对应积分。</view>
+			<view class="title">积分效期：</view>
+			<view class="desc">积分有效期为获得积分之日至下一年12月31日24点。积分到期后，未使用的积分将清零，清零后不做退还，但不影响会员等级。</view>
+			<view class="title">可用积分：</view>
+			<view class="desc">展示在首页积分为可用于积分商城中兑换的虛拟币，您每次可用的积分会随着您兑换的积分数量相应减少</view>
+			<view class="title">积分用途：</view>
+			<view class="desc">会员可在积分商城凭积分兑换礼品/礼券。</view>
+		</template>
+		<template v-else>
+			<view class="title">你的眼里有星星：您在“你的眼里有星星”小程序成功授权，即可成为你的眼里有星星会员</view>
+			<view class="table">
+				<view class="table-left">
+					<view class="table-title">会员等级</view>
+					<view class="table-title" v-for="(item, index) in level_list" :key="index">{{ item.title }}</view>
+				</view>
+				<view class="table-left">
+					<view class="table-title">所需成长值</view>
+					<view class="table-title" v-for="(item, index) in level_list" :key="index">
+						{{ index + 1 !== level_list.length ? item.min + '-' + item.max : item.max + '及以上' }}
+					</view>
 				</view>
 			</view>
-		</view>
-
-		<view class="title">等级有效期：</view>
-		<view class="desc">等级有效期：180天，按照等级升级日算起，满180天后的次日
-			系统将根据过去180天内的成长值重新计算等级，若在180天内
-			再次升级则自升级之日起重新计算新等级的180天有效期。</view>
-		<view class="title">成长值说明：</view>
-		<view class="desc">1） 会员卡适用范国内每实际消费1元人民币=1成长值，
-			若消费金额换算为成长值后不为整数，向下取整，仅取整数积
-			累成长值；</view>
-		<view class="desc">2） 会员卡适用范国：在“你的眼里有星星酒屋”“你的眼里有星星梦工厂“中国境内（香港、台湾、澳门地区除外）门店、
-			“你的眼里有星星点单”小程序及你的眼里有星星指定渠道消费可以获得相应的成长值。</view>
-		<view class="desc">3） 如产生退款，扣除对应成长值。</view>
+			<view class="title">等级有效期：</view>
+			<view class="desc">等级有效期：180天，按照等级升级日算起，满180天后的次日系统将根据过去180天内的成长值重新计算等级，若在180天内再次升级则自升级之日起重新计算新等级的180天有效期。
+			</view>
+			<view class="title">成长值说明：</view>
+			<view class="desc">1） 会员卡适用范国内每实际消费1元人民币=1成长值，若消费金额换算为成长值后不为整数，向下取整，仅取整数积累成长值；</view>
+			<view class="desc">2）
+				会员卡适用范国：在“你的眼里有星星酒屋”“你的眼里有星星梦工厂“中国境内（香港、台湾、澳门地区除外）门店、“你的眼里有星星点单”小程序及你的眼里有星星指定渠道消费可以获得相应的成长值。</view>
+			<view class="desc">3） 如产生退款，扣除对应成长值。</view>
+		</template>
 	</view>
 </template>
 
@@ -33,6 +40,7 @@
 	export default {
 		data() {
 			return {
+				type: 'level',
 				level_list: [{
 						title: 'V1',
 						min: 0,
@@ -65,6 +73,12 @@
 					},
 				]
 			}
+		},
+		onLoad(e) {
+			this.type = e.type
+			uni.setNavigationBarTitle({
+				title: this.type === 'integral' ? '积分规则' : '等级说明'
+			});
 		},
 		methods: {}
 	}

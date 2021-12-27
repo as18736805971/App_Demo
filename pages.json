@@ -14,7 +14,7 @@
 			}
 		},
 		{
-			"path": "pages/goods/index",
+			"path": "pages/new_page/goodsCar",
 			"style": {
 				"navigationBarTitleText": "购物车"
 			}
@@ -156,13 +156,19 @@
 		{
 			"path": "pages/mine/level_instructions",
 			"style": {
-				"navigationBarTitleText": "等级说明"
+				"navigationBarTitleText": ""
 			}
 		},
 		{
 			"path": "pages/mine/more_page",
 			"style": {
 				"navigationBarTitleText": "更多服务"
+			}
+		},
+		{
+			"path": "pages/mine/integral_subsidiary",
+			"style": {
+				"navigationBarTitleText": "积分明细"
 			}
 		}
 	],
@@ -182,7 +188,7 @@
 			"selectedIconPath": "static/icon/list1.png",
 			"text": "列表"
 		}, {
-			"pagePath": "pages/goods/index",
+			"pagePath": "pages/new_page/goodsCar",
 			"iconPath": "static/icon/share.png",
 			"selectedIconPath": "static/icon/share1.png",
 			"text": "购物车"

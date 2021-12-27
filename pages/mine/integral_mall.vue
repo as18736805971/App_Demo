@@ -4,9 +4,9 @@
 		<view class="cover">
 			<!-- 积分 -->
 			<view class="integral">
-				<view class="left">
+				<view class="left" @click="handleJump({type: './integral_subsidiary'})">
 					<image class="integral-icon" :src="require('@/static/appicon/integral.png')"></image>
-					<text class="num">3</text><text class="txt">积分</text>
+					<text class="num">5</text><text class="txt">积分</text>
 					<image class="integral-right" :src="require('@/static/icon/right_arrow3.png')"></image>
 				</view>
 				<view class="right">兑换记录</view>

@@ -191,11 +191,11 @@
 					})
 				} else if (index === 1) {
 					this.handleJump({
-						type: '../mine/exchange_center?type=1'
+						type: '../mine/integral_list'
 					})
 				} else {
 					this.handleJump({
-						type: '../mine/exchange_center?type=1'
+						type: '../mine/integral_mall'
 					})
 				}
 			},
