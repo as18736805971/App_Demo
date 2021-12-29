@@ -13,7 +13,7 @@
 				<view class="right-list-item" v-for="(item, index) in list" :key="index">
 					<view class="title-content">{{ item.name }}</view>
 					<view class="item">
-						<view class="item-content" v-for="(item2, index2) in item.list" :key="index2">
+						<view class="item-content" v-for="(item2, index2) in item.list" :key="index2" @click="handleJump()">
 							<image :src="item2.src" class="image"></image>
 							<text class="name">{{ item2.name }}</text>
 						</view>
@@ -122,6 +122,11 @@
 					}
 				})
 			},
+      handleJump() {
+        uni.navigateTo({
+          url: '../goods/details'
+        });
+      }
 		}
 	}
 </script>

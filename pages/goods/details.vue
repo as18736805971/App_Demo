@@ -1,603 +1,462 @@
 <template>
-	<view class="goodsDetails">
-		<!-- 轮播图 -->
-		<view class="banner">
-
-			<swiper class="banner" @change="bannerChange">
-				<swiper-item v-for="(item, index) in bannerList" :key="index">
-					<view class="bannerItem">
-						<image :src="item.banner_img"></image>
-					</view>
-				</swiper-item>
-			</swiper>
-
-			<view class="bannerNum">{{current + 1}}/{{bannerList.length}}</view>
-
-		</view>
-		<!-- 轮播图 -->
-
-		<view class="preSale">
-			<view class="preSaleList">
-				<view class="preSaleTitle">
-					<view class="title">
-						<view class="sale">预约价</view>
-					</view>
-					<view class="price">
-						<view class="money">￥<text>200</text></view>
-						<view class="discount">原价:<text>￥220</text></view>
-					</view>
+	<view class="page-index">
+		<swiper class="swiper">
+			<swiper-item v-for="(item, index) in goods_info.goods_pic" :key="index">
+				<view class="swiper-item">
+					<image class="swiper-image" mode="aspectFit" :src="item.image"></image>
 				</view>
-				<view class="count-down">
-					<text>已预约32</text>
-					<text>剩余160</text>
-				</view>
+			</swiper-item>
+		</swiper>
+
+		<view class="goods">
+			<view class="goods-name">{{ goods_info.goods_name }}</view>
+			<view class="goods-hot">
+				<view class="hot-item" v-for="(item, index) in goods_info.goods_hot" :key="index">{{ item }}</view>
 			</view>
-		</view>
+			<view class="goods-desc">{{ goods_info.goods_desc }}</view>
 
-		<view class="details">
-			<view class="detailsContent">
-				<view class="name">
-					<view class="goodsName">冬季美白水乳秋冬干性皮肤补水美白套装</view>
-					<view class="share">
-						<view class="shareImg">
-							<image :src="require('@/static/appicon/share.png')"></image>
-						</view>
-						<view class="text">
-							<!-- <button hover-class='none'>分享</button> -->
-							分享
+			<view class="goods-attr">
+				<view class="attr-list" v-for="(item, index) in goods_info.goods_attr" :key="index">
+					<view class="attr-title">{{ item.title }}<text class="attr-desc"
+							v-if="item.desc">{{item.desc}}</text></view>
+					<view class="attr-content">
+						<view class="attr-item" v-for="(vv, kk) in item.attr" :key="kk"
+							:class="[vv.status ? 'active' : '', vv.disable ? 'disable' : '']"
+							@click="vv.disable ? '' : item.type !== 1 && vv.status ? '' : handleClickAttr(index, kk, item.type)">
+							<template v-if="index !== 0 && kk === 0">
+								<image v-if="vv.status" class="live-icon" :src="require('@/static/icon/live1.png')">
+								</image>
+								<image v-else class="live-icon" :src="require('@/static/icon/live.png')"></image>
+							</template>
+							{{ vv.desc }}
+							<text class="price" v-if="vv.price">￥{{ vv.price }}</text>
 						</view>
 					</view>
 				</view>
-				<view class="describe">秋冬干性皮肤补水美白，让你的肌肤美好整个冬季，本品适合干性、油性皮肤。</view>
 			</view>
 		</view>
 
-		<view class="tabbar">
-
-			<view class="tab">
-				<view class="tabItem" @click="tabCut(0)">
-					<view class="title" :class="[tabbar == 0 ? 'active' : '']">商品详情</view>
-					<view class="line" v-if="tabbar == 0"></view>
-				</view>
-				<view class="tabItem" @click="tabCut(1)">
-					<view class="title" :class="[tabbar == 1 ? 'active' : '']">商品属性</view>
-					<view class="line" v-if="tabbar == 1"></view>
-				</view>
-				<view class="tabItem" @click="tabCut(2)">
-					<view class="title" :class="[tabbar == 2 ? 'active' : '']">商品评价</view>
-					<view class="line" v-if="tabbar == 2"></view>
-				</view>
-			</view>
-
-		</view>
-
-		<view class="tabSwipe">
-
-			<swiper class="tabSwipe" circular :current="tabbar" @change="tabChange">
-				<swiper-item>
-					<view class="tabDetails">暂无内容</view>
-				</swiper-item>
-				<swiper-item>
-					<view class="tabAttr">暂无内容</view>
-				</swiper-item>
-				<swiper-item>
-					<view class="tabComment">暂无内容</view>
-				</swiper-item>
-			</swiper>
-
-		</view>
-
-		<view class="float">
-			<view class="content">
-				<view class="conleft">
-
-					<view class="icon" v-for="(item, index) in footerIcon" :key="index" @click="iconChange(index)">
-						<view class="iconImg">
-							<image :src="item.icon" v-if="item.status == 0"></image>
-							<image :src="item.selectIcon" v-if="item.status == 1"></image>
+		<view class="suspend-button">
+			<view class="suspend-content">
+				<view class="all-price">￥{{ all_price }}</view>
+				<view class="all-attr">
+					<view class="all-attr-left">{{ select_txt }}</view>
+					<view class="all-attr-right">
+						<view class="round" @click="handleSetNum(0)">
+							<image class="add-icon" :src="require('@/static/icon/add3.png')"></image>
 						</view>
-						<view class="iconText" :class="[item.status == 1 ? 'active' : '']">{{item.name}}</view>
+						<view class="txt">{{ goods_num }}</view>
+						<view class="round add" @click="handleSetNum(1)">
+							<image class="add-icon" :src="require('@/static/icon/add2.png')"></image>
+						</view>
 					</view>
-
 				</view>
-				<view class="conright">
-					<view class="right" @click="cutOrder">支付</view>
-				</view>
+				<view class="all-btn">加入购物车</view>
 			</view>
 		</view>
-
 	</view>
 </template>
 
 <script>
 	export default {
-		name: "goodsDetails",
 		data() {
 			return {
-				current: 0,
-				bannerList: [{
-						banner_id: 1,
-						banner_name: 'banner1',
-						banner_img: require('@/static/appicon/image.png')
-					},
-					{
-						banner_id: 2,
-						banner_name: 'banner2',
-						banner_img: require('@/static/appicon/order.png')
-					},
-					{
-						banner_id: 3,
-						banner_name: 'banner3',
-						banner_img: require('@/static/appicon/member.png')
+				goods_num: 1,
+				goods_info: {
+					id: 1,
+					goods_name: '霸气芝士草莓',
+					goods_price: '28.00',
+					goods_hot: ['人气爆品', '可做热饮', '用料丰富'],
+					goods_desc: '【650ml】 经典人气产品。酸甜草莓，四季出品。搭配金奖茉莉初雪，淋上轻盈香滑的芝士奶糖。喝上一口，酸甜鲜爽，满满的幸福感！',
+					goods_pic: [{
+						image: 'https://img9.51tietu.net/pic/2019-091200/vgkpidei2tjvgkpidei2tj.jpg'
+					}],
+					goods_attr: [{
+							title: '加料',
+							type: 1, // 多选
+							attr: [{
+								id: 1,
+								desc: '0卡糖 (0卡0脂肪)',
+								price: '1.00',
+								status: true,
+								disable: false,
+							}, {
+								id: 2,
+								desc: '燃爆菌',
+								price: '4.00',
+								status: false,
+								disable: true,
+							}, {
+								id: 3,
+								desc: 'Q弹脆珠珠',
+								price: '3.00',
+								status: false,
+								disable: false,
+							}],
+						},
+						{
+							title: '糖度',
+							desc: '(茶饮含糖量较低，推荐标准做法更好喝)',
+							type: 0, // 单选
+							attr: [{
+								id: 1,
+								desc: '标准甜 (推荐)',
+								status: true,
+								disable: false,
+							}, {
+								id: 2,
+								desc: '少甜',
+								status: false,
+								disable: false,
+							}, {
+								id: 3,
+								desc: '少少甜',
+								status: false,
+								disable: false,
+							}, {
+								id: 4,
+								desc: '不另外加糖',
+								status: false,
+								disable: false,
+							}],
+						}, {
+							title: '茶底',
+							type: 0, // 单选
+							attr: [{
+								id: 1,
+								desc: '金观音 (果香味)',
+								status: true,
+								disable: false,
+							}, {
+								id: 2,
+								desc: '初露 (茶香味)',
+								status: false,
+								disable: false,
+							}, {
+								id: 3,
+								desc: '去茶底',
+								status: false,
+								disable: false,
+							}],
+						}, {
+							title: '温度',
+							type: 0, // 单选
+							attr: [{
+								id: 1,
+								desc: '标准冰 (冰沙)',
+								status: true,
+								disable: false,
+							}],
+						},
+						{
+							title: '环保',
+							type: 0, // 单选
+							attr: [{
+								id: 1,
+								desc: 'PLA可降解吸管',
+								status: true,
+								disable: false,
+							}, {
+								id: 2,
+								desc: '可降解吸管',
+								status: false,
+								disable: false,
+							}, {
+								id: 3,
+								desc: '不使用吸管',
+								status: false,
+								disable: false,
+							}],
+						}
+					]
+				}
+			}
+		},
+		computed: {
+			select_txt() {
+				let txt = ''
+				this.goods_info.goods_attr.map((item, index) => {
+					item.attr.map((vv, kk) => {
+						vv.status ? txt += vv.desc + '/' : ''
+					})
+				})
+				return txt.substr(0, txt.length - 1)
+			},
+			all_price() {
+				let allPrice = 0
+				this.goods_info.goods_attr.map((item, index) => {
+					if (item.type === 1) {
+						item.attr.map((vv, kk) => {
+							vv.status ? allPrice += parseInt(vv.price) : ''
+						})
 					}
-				],
-				tabbar: 0,
-				footerIcon: [{
-						id: 1,
-						name: '首页',
-						status: 0,
-						icon: require('@/static/icon/index1.png'),
-					},
-					{
-						id: 2,
-						name: '收藏',
-						status: 1,
-						icon: require('@/static/icon/icon_star.png'),
-						selectIcon: require('@/static/icon/icon_star_active.png'),
-					},
-					{
-						id: 3,
-						name: '客服',
-						status: 0,
-						icon: require('@/static/appicon/app.png'),
-					}
-				]
+				})
+				allPrice += parseInt(this.goods_info.goods_price)
+				allPrice = allPrice * this.goods_num
+				return allPrice.toFixed(2)
 			}
 		},
 		methods: {
-			bannerChange(e) {
-				this.current = e.detail.current
-			},
-			tabCut(index) {
-				this.tabbar = index
-			},
-			tabChange(e) {
-				this.tabbar = e.detail.current
-			},
-			iconChange(index) {
-				if (index == 0) {
-					uni.switchTab({
-						url: '/pages/index/index'
-					});
-				} else if (index == 1) {
-					let status = this.footerIcon[index].status;
-					if (status == 1) {
-						this.footerIcon[index].status = 0
-						uni.showToast({
-							icon: 'none',
-							title: '取消收藏',
-							duration: 1500
-						});
-					} else {
-						this.footerIcon[index].status = 1
-						uni.showToast({
-							icon: 'none',
-							title: '已收藏',
-							duration: 1500
-						});
-					}
-
-				} else if (index == 2) {
-					uni.showToast({
-						icon: 'none',
-						title: '暂无客服服务',
-						duration: 2000,
-					});
+			// 选择商品规格
+			handleClickAttr(index, kk, type) {
+				if (type === 1) {
+					this.goods_info.goods_attr[index].attr[kk].status = !this.goods_info.goods_attr[index].attr[kk].status
 				} else {
-					uni.switchTab({
-						url: '/pages/index/index'
-					});
+					this.goods_info.goods_attr[index].attr.map((item, index) => {
+						if (index === kk) {
+							item.status = true
+						} else {
+							item.status = false
+						}
+					})
 				}
 			},
-			cutOrder() {
-				uni.navigateTo({
-					url: './orderDetails'
-				});
+			// 增减商品数量
+			handleSetNum(type) {
+				if (type === 1) {
+					this.goods_num += 1
+				} else {
+					if (this.goods_num > 1) {
+						this.goods_num -= 1
+					} else {
+						this.goods_num = 1
+					}
+				}
 			}
 		}
 	}
 </script>
 
-<style lang="scss">
-	page {
+<style lang="scss" scoped>
+	.page-index {
 		font-size: 24rpx;
-		background-color: #f5f4f4;
-	}
+		color: #242424;
+		background-color: #FFFFFF;
 
-	button::after {
-		border: none;
-		width: 100rpx;
-		background-color: none;
-	}
+		.swiper {
+			width: 100%;
+			height: 550rpx;
 
-	.goodsDetails {
-		width: 100%;
-		background-color: #f5f4f4;
-
-		.banner {
-			width: 750rpx;
-			height: 750rpx;
-			background-color: #FFFFFF;
-			white-space: nowrap;
-			box-sizing: border-box;
-			position: relative;
-
-			.bannerItem {
-				width: 750rpx;
-				height: 750rpx;
-				display: inline-block;
-
-				image {
-					width: 750rpx;
-					height: 750rpx;
-				}
-			}
-
-			.bannerNum {
-				position: absolute;
-				width: 80rpx;
-				height: 46rpx;
-				opacity: 0.4;
-				color: #FFFFFF;
-				text-align: center;
-				line-height: 46rpx;
-				background: #000000;
-				border-radius: 23rpx;
-				font-size: 26rpx;
-				letter-spacing: 1rpx;
-				top: 90%;
-				left: 85%;
-			}
-
-		}
-
-		.preSale {
-			width: 750rpx;
-			height: 110rpx;
-			background-color: #eab656;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			color: #FFFFFF;
-			font-size: 22rpx;
-
-			.preSaleList {
-				width: 700rpx;
-				height: 90rpx;
-				display: flex;
-				justify-content: space-between;
-
-				.preSaleTitle {
-					width: 380rpx;
-					height: 90rpx;
-
-					.title {
-						width: 500rpx;
-						height: 40rpx;
-						display: flex;
-
-						.sale {
-							height: 40rpx;
-							font-size: 26rpx;
-							line-height: 40rpx;
-							margin-right: 20rpx;
-						}
-
-						.number {
-							height: 40rpx;
-							font-size: 20rpx;
-							line-height: 48rpx;
-						}
-					}
-
-					.price {
-						width: 500rpx;
-						height: 50rpx;
-						display: flex;
-						align-items: center;
-
-						.money {
-							height: 50rpx;
-							font-size: 26rpx;
-							line-height: 55rpx;
-							margin-right: 20rpx;
-							letter-spacing: 0rpx;
-
-							text {
-								font-size: 34rpx;
-								font-weight: 800;
-							}
-						}
-
-						.discount {
-							height: 38rpx;
-							line-height: 40rpx;
-							letter-spacing: 1rpx;
-
-							text {
-								text-decoration: line-through;
-							}
-						}
-					}
-				}
-
-				.count-down {
-					width: 300rpx;
-					height: 90rpx;
-					line-height: 90rpx;
-					margin-right: 20rpx;
-					display: flex;
-					justify-content: flex-end;
-
-					text {
-						margin-right: 20rpx;
-					}
-				}
-			}
-		}
-
-		.details {
-			width: 750rpx;
-			height: 190rpx;
-			background-color: #FFFFFF;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			border-bottom: 1rpx solid #e9e9e9;
-
-			.detailsContent {
-				width: 700rpx;
-				height: 160rpx;
-
-				.name {
-					width: 700rpx;
-					height: 75rpx;
-					display: flex;
-					justify-content: space-between;
-
-					.goodsName {
-						width: 474rpx;
-						height: 75rpx;
-						font-size: 28rpx;
-						font-family: PingFang SC Medium, PingFang SC Medium-Medium;
-						font-weight: 600;
-						text-align: left;
-						color: #222222;
-						line-height: 38rpx;
-						letter-spacing: 1rpx;
-						overflow: hidden;
-						text-overflow: ellipsis;
-					}
-
-
-					.share {
-						width: 80rpx;
-						height: 75rpx;
-						border-left: 1rpx dotted #CCCCCC;
-
-						.shareImg {
-							width: 32rpx;
-							height: 32rpx;
-							margin: 0 auto;
-
-							image {
-								width: 32rpx;
-								height: 32rpx;
-							}
-						}
-
-						.text {
-							width: 80rpx;
-							height: 43rpx;
-							font-size: 22rpx;
-							font-family: PingFang SC Regular, PingFang SC Regular-Regular;
-							font-weight: 400;
-							text-align: center;
-							color: #888888;
-							line-height: 50rpx;
-						}
-					}
-
-				}
-
-				.describe {
-					width: 700rpx;
-					height: 60rpx;
-					margin-top: 17rpx;
-					font-size: 22rpx;
-					font-family: PingFang SC Regular, PingFang SC Regular-Regular;
-					font-weight: 400;
-					text-align: left;
-					color: #999999;
-					line-height: 30rpx;
-					letter-spacing: 1rpx;
-					overflow: hidden;
-					text-overflow: ellipsis;
-				}
-
-			}
-
-		}
-
-		.tabbar {
-			width: 750rpx;
-			background-color: #FFFFFF;
-
-			.tab {
-				width: 700rpx;
-				height: 108rpx;
-				margin: 0 auto;
+			.swiper-item {
+				width: 100%;
+				height: 550rpx;
 				display: flex;
 				align-items: center;
-				justify-content: space-around;
-				background-color: #FFFFFF;
+				justify-content: center;
 
-				.tabItem {
-					width: 150rpx;
-					height: 70rpx;
-
-					.title {
-						width: 150rpx;
-						height: 66rpx;
-						font-size: 28rpx;
-						font-weight: 700;
-						text-align: center;
-						line-height: 65rpx;
-						color: #0F0F0F;
-					}
-
-					.line {
-						width: 80rpx;
-						height: 6rpx;
-						background: #eab656;
-						border-radius: 2rpx;
-						margin: 0 auto;
-					}
-
-					.active {
-						color: #eab656;
-					}
-
+				.swiper-image {
+					width: 100%;
+					height: 550rpx;
 				}
+			}
+		}
 
+		.goods {
+			height: calc(100vh - 860rpx);
+			padding: 10rpx 20rpx 20rpx;
+			overflow-y: auto;
+
+			&-name {
+				width: 100%;
+				height: 50rpx;
+				font-size: 28rpx;
+				font-weight: bold;
+				color: #242524;
+				line-height: 50rpx;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
 			}
 
-		}
-
-		.tabSwipe {
-			width: 750rpx;
-			height: 500rpx;
-			background-color: #f5f4f4;
-			font-size: 28rpx;
-			text-align: center;
-			margin-bottom: 120rpx;
-		}
-
-		.float {
-			width: 750rpx;
-			height: 100rpx;
-			position: fixed;
-			bottom: 0;
-			background: #ffffff;
-			box-shadow: 0rpx 1rpx 15rpx rgba(0, 0, 0, 0.12);
-			display: flex;
-			justify-content: center;
-			align-items: center;
-
-			.content {
-				width: 700rpx;
-				height: 80rpx;
+			&-hot {
+				width: 100%;
+				height: auto;
+				padding: 10rpx 0 0;
 				display: flex;
+				flex-wrap: wrap;
 				align-items: center;
-				justify-content: space-between;
 
-				.conleft {
-					width: 280rpx;
-					height: 80rpx;
-					display: flex;
-					justify-content: space-around;
-
-					.icon {
-						width: 90rpx;
-						height: 80rpx;
-
-						.iconImg {
-							width: 40rpx;
-							height: 40rpx;
-							margin: 0 auto;
-
-							image {
-								width: 40rpx;
-								height: 40rpx;
-							}
-						}
-
-						.iconText {
-							height: 40rpx;
-							width: 90rpx;
-							text-align: center;
-							line-height: 50rpx;
-							color: #888888;
-							font-size: 24rpx;
-						}
-
-						.active {
-							color: #409eff;
-						}
-
-					}
-
-				}
-
-				.conright {
-					width: 200rpx;
-					height: 60rpx;
-					border-radius: 50rpx;
-					background: #409eff;
+				.hot-item {
 					display: flex;
 					align-items: center;
 					justify-content: center;
-
-					.left {
-						width: 190rpx;
-						height: 60rpx;
-						font-size: 22rpx;
-						font-family: PingFang SC Medium, PingFang SC Medium-Medium;
-						font-weight: 500;
-						text-align: center;
-						color: #ffffff;
-						line-height: 32rpx;
-						letter-spacing: 1rpx;
-						overflow: hidden;
-						text-overflow: ellipsis;
-					}
-
-					.right {
-						width: 190rpx;
-						height: 60rpx;
-						text-align: center;
-						line-height: 60rpx;
-						color: #FFFFFF;
-						font-size: 30rpx;
-						font-weight: 500;
-					}
-
+					border-radius: 8rpx;
+					padding: 5rpx 10rpx;
+					font-size: 22rpx;
+					color: #eea2b1;
+					background-color: #f9f3f3;
+					margin-right: 15rpx;
+					margin-bottom: 10rpx;
 				}
-
 			}
 
+			&-desc {
+				width: 100%;
+				height: auto;
+				padding: 10rpx 0;
+				font-size: 24rpx;
+				color: #707274;
+				margin-bottom: 20rpx;
+			}
+
+			&-attr {
+				width: 100%;
+				height: auto;
+
+				.attr-list {
+					width: 100%;
+					height: auto;
+
+					.attr-title {
+						width: 100%;
+						height: 50rpx;
+						line-height: 50rpx;
+						font-size: 24rpx;
+						color: #242524;
+						margin-bottom: 10rpx;
+
+						.attr-desc {
+							margin-left: 20rpx;
+							color: #a0a4a6;
+						}
+					}
+
+					.attr-content {
+						width: 100%;
+						display: flex;
+						align-items: center;
+						flex-wrap: wrap;
+
+						.attr-item {
+							display: flex;
+							align-items: center;
+							justify-content: center;
+							padding: 15rpx 20rpx;
+							border-radius: 10rpx;
+							border: 2rpx solid #e2e4e6;
+							background-color: #FFFFFF;
+							margin-right: 20rpx;
+							margin-bottom: 20rpx;
+							font-size: 22rpx;
+							color: #707274;
+
+							.live-icon {
+								width: 25rpx;
+								height: 25rpx;
+								margin-right: 10rpx;
+							}
+
+							.price {
+								margin-left: 10rpx;
+							}
+						}
+
+						.active {
+							border: 2rpx solid #b0d342;
+							background-color: #f4f7e5;
+							color: #242524;
+						}
+
+						.disable {
+							color: #cdced0;
+						}
+					}
+				}
+			}
 		}
 
-		.tabDetails {
-			width: 750rpx;
-			height: 500rpx;
-			color: #C8C7CC;
+		.suspend-button {
+			position: fixed;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			height: 244rpx;
+			padding: 20rpx 0;
 			background-color: #FFFFFF;
-		}
+			box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.1);
 
-		.tabAttr {
-			width: 750rpx;
-			height: 500rpx;
-			color: #C8C7CC;
-			background-color: #FFFFFF;
-		}
+			.suspend-content {
+				height: 100%;
+				margin: 0 20rpx;
 
-		.tabComment {
-			width: 750rpx;
-			height: 500rpx;
-			color: #C8C7CC;
-			background-color: #FFFFFF;
-		}
+				.all-price {
+					width: 100%;
+					height: 60rpx;
+					line-height: 60rpx;
+					font-size: 32rpx;
+					font-weight: bold;
+					color: #242524;
+				}
 
+				.all-attr {
+					width: 100%;
+					height: 82rpx;
+					background-color: #FFFFFF;
+					margin-bottom: 20rpx;
+					display: flex;
+					align-items: center;
+					justify-content: space-between;
+
+					.all-attr-left {
+						width: 70%;
+						height: 82rpx;
+						color: #707274;
+						font-size: 20rpx;
+						line-height: 40rpx;
+						display: -webkit-box;
+						-webkit-box-orient: vertical;
+						-webkit-line-clamp: 2;
+						overflow: hidden;
+					}
+
+					.all-attr-right {
+						width: 30%;
+						height: 82rpx;
+						display: flex;
+						align-items: center;
+						justify-content: flex-end;
+
+						.round {
+							width: 40rpx;
+							height: 40rpx;
+							border-radius: 50rpx;
+							border: 2rpx solid #b3b7b9;
+							display: flex;
+							align-items: center;
+							justify-content: center;
+
+							.add-icon {
+								width: 20rpx;
+								height: 20rpx;
+							}
+						}
+
+						.add {
+							border: none;
+							width: 42rpx;
+							height: 42rpx;
+							background-color: #b0d342;
+						}
+
+						.txt {
+							color: #484b4d;
+							font-size: 32rpx;
+							margin: 0 25rpx;
+						}
+					}
+				}
+
+				.all-btn {
+					width: 100%;
+					height: 80rpx;
+					line-height: 80rpx;
+					text-align: center;
+					border-radius: 50rpx;
+					background-color: #b0d342;
+					font-size: 26rpx;
+					color: #242524;
+				}
+			}
+		}
 	}
 </style>

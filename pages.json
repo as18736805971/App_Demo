@@ -35,7 +35,8 @@
 		{
 			"path": "pages/goods/details",
 			"style": {
-				"navigationBarTitleText": "商品详情"
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom" //禁用uni-app默认的头部导航
 			}
 		},
 		{
