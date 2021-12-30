@@ -1,5 +1,5 @@
 <template>
-	<view class="page-index">
+	<view class="page-index" @touchmove.stop.prevent>
 		<view class="page-search">
 			<view class="block">
 				<image class="icon-cup" :src="require('@/static/appicon/cup.png')"></image>
@@ -45,7 +45,14 @@
 		</view>
 
 		<view class="page-list">
-			<view class="page-list-left"></view>
+			<view class="page-list-left">
+				<scroll-view scroll-y="true" class="list-scroll">
+					<view class="scroll-item" :class="class_id === item.id ? 'active' : ''"
+						v-for="(item, index) in class_list" :key="index" @click="handleClassSet(item.id)">
+						<text class="scroll-item-txt">{{ item.title }}</text>
+					</view>
+				</scroll-view>
+			</view>
 			<view class="page-list-right"></view>
 		</view>
 
@@ -67,6 +74,60 @@
 					icon: require('@/static/appicon/app.png'),
 					text: '安抚巾克拉克斯顿积分·',
 				}], // 轮播公告
+				class_id: 1,
+				class_list: [{
+						id: 1,
+						title: '神里绫华',
+					},
+					{
+						id: 2,
+						title: '摩拉克斯',
+					},
+					{
+						id: 3,
+						title: '早柚',
+					},
+					{
+						id: 4,
+						title: '宵宫',
+					},
+					{
+						id: 5,
+						title: '优菈',
+					},
+					{
+						id: 6,
+						title: '琴',
+					},
+					{
+						id: 7,
+						title: '迪奥娜',
+					},
+					{
+						id: 8,
+						title: '胡桃',
+					},
+					{
+						id: 9,
+						title: '枫原万叶',
+					},
+					{
+						id: 10,
+						title: '荒泷一斗',
+					},
+					{
+						id: 11,
+						title: '雷电将军',
+					},
+					{
+						id: 12,
+						title: '甘雨',
+					},
+					{
+						id: 13,
+						title: '宵',
+					}
+				]
 			}
 		},
 		methods: {
@@ -76,6 +137,10 @@
 			},
 			// 点击公告
 			handleNotice(item) {},
+			// 点击分类
+			handleClassSet(id) {
+				this.class_id = id
+			},
 		}
 	}
 </script>
@@ -223,11 +288,13 @@
 		.page-rules {
 			width: 100%;
 			height: 70rpx;
+			margin-bottom: 4rpx;
 			color: #5a5959;
 			font-size: 24rpx;
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
+			z-index: 55;
 			box-shadow: 0 10rpx 10rpx -10rpx rgba(0, 0, 0, 0.1);
 
 			.rules-left {
@@ -281,22 +348,54 @@
 
 		.page-list {
 			width: 100%;
-			height: calc(100vh - 453rpx);
+			height: calc(100vh - 457rpx);
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
-			background-color: #4cd964;
 
 			&-left {
 				width: 180rpx;
 				height: 100%;
 				background-color: #f5f5f5;
+
+				.list-scroll {
+					width: 180rpx;
+					height: 100%;
+
+					.scroll-item {
+						width: 180rpx;
+						height: 100rpx;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						font-size: 24rpx;
+						color: #707274;
+
+						.scroll-item-txt {
+							width: 150rpx;
+							height: 100rpx;
+							text-align: center;
+							line-height: 100rpx;
+							overflow: hidden;
+							text-overflow: ellipsis;
+							white-space: nowrap;
+						}
+					}
+
+					.active {
+						width: 170rpx;
+						font-size: 24rpx;
+						font-weight: bold;
+						color: #242524;
+						background-color: #FFFFFF;
+						border-left: 10rpx solid #b0d342;
+					}
+				}
 			}
 
 			&-right {
 				width: 570rpx;
 				height: 100%;
-				background-color: #1A78FD;
 			}
 		}
 
