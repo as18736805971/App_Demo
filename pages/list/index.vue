@@ -1,26 +1,55 @@
 <template>
 	<view class="page-index">
-		<view class="title"></view>
-
-		<view class="list">
-			<scroll-view class="left-scroll-item" scroll-y>
-				<view class="left-list-item" id="leftScroll" :class="activeIndex === index ? 'active' : ''"
-					v-for="(item, index) in cate_list" :key="index" @click="changeCate(index)">{{item.name}}</view>
-			</scroll-view>
-
-			<scroll-view class="right-scroll-item" scroll-y scroll-with-animation :scroll-top="rightScrollTop"
-				@scroll="onRightScroll">
-				<view class="right-list-item" v-for="(item, index) in list" :key="index">
-					<view class="title-content">{{ item.name }}</view>
-					<view class="item">
-						<view class="item-content" v-for="(item2, index2) in item.list" :key="index2" @click="handleJump()">
-							<image :src="item2.src" class="image"></image>
-							<text class="name">{{ item2.name }}</text>
-						</view>
-					</view>
-				</view>
-			</scroll-view>
+		<view class="page-search">
+			<view class="block">
+				<image class="icon-cup" :src="require('@/static/appicon/cup.png')"></image>
+				一起喝
+			</view>
+			<view class="input">
+				<image class="icon-search" :src="require('@/static/icon/search.png')"></image>
+				搜索商品
+			</view>
+			<view class="hidden"></view>
 		</view>
+
+		<view class="page-distance">
+			<view class="distance-left">
+				<view class="address">
+					你的眼里有星星
+					<image class="icon-right" :src="require('@/static/icon/right_arrow.png')"></image>
+				</view>
+				<view class="distance">距离您2.7km</view>
+			</view>
+			<view class="distance-right">
+				<view class="switch-item">
+					<view class="switch" :class="take_type === 1 ? 'active' : ''" @click="handleTake(1)">自取</view>
+					<view class="switch" :class="take_type === 2 ? 'active' : ''" @click="handleTake(2)">外卖</view>
+				</view>
+			</view>
+		</view>
+
+		<view class="page-rules">
+			<view class="rules-left">
+				<swiper class="notice-item" autoplay vertical circular :interval="10000">
+					<swiper-item v-for="(item, index) in notice_list" :key="index">
+						<view class="notice-item align-center" @click="handleNotice(item, index)">
+							<image class="notice-icon" :src="item.icon"></image>
+							<view class="notice-txt">{{ item.text }}</view>
+						</view>
+					</swiper-item>
+				</swiper>
+			</view>
+			<view class="rules-right">
+				查看更多<image class="icon-under" :src="require('@/static/icon/under_arrow.png')"></image>
+			</view>
+		</view>
+
+		<view class="page-list">
+			<view class="page-list-left"></view>
+			<view class="page-list-right"></view>
+		</view>
+
+		<view class="page-shop"></view>
 	</view>
 </template>
 
@@ -28,193 +57,258 @@
 	export default {
 		data() {
 			return {
-				activeIndex: 0, // 左边当前菜单项的索引
-				cate_list: [], // 左边导航菜单
-				list: [], // 右边商品列表
-				leftDomsTop: [], // 左侧节点距离
-				rightDomsTop: [], // 右侧节点距离
-				rightScrollTop: 0, // 默认右侧列表距离顶部距离
-				cateItemHeight: [],
-				leftScrollTop: '',
-			}
-		},
-		onLoad() {
-			this.getData()
-		},
-		onReady() {
-			// 获取左侧菜单及右侧列表 距离顶部的距离
-			const query = uni.createSelectorQuery().in(this);
-			query.selectAll('.left-list-item').boundingClientRect(data => {
-				this.leftDomsTop = data.map(v => v.top - 55)
-			}).exec();
-			query.selectAll('.right-list-item').boundingClientRect(data => {
-				this.rightDomsTop = data.map(v => v.top - 55)
-			}).exec();
-
-			query.selectAll('.left-list-item').fields({
-				size: true, // 尺寸
-				rect: true // 布局信息
-			}, data => {
-				this.cateItemHeight = data.map(v => {
-					this.cateItemHeight = v.height
-					return v.top
-				})
-			}).exec();
-		},
-		wacth: {
-			activeIndex(newValue, oldValue) {
-				// 获取左边scroll-view的高度，top值
-				const query = uni.createSelectorQuery().in(this);
-				query.selectAll('#leftScroll').fields({
-					size: true,
-					scrollOffset: true, // 滚动状态
-				}, data => {
-					let H = data.height
-					let ST = data.scrollTop
-					// 下边
-					if ((this.leftDomsTop[newValue] + this.cateItemHeight) > (H + ST)) {
-						return this.leftScrollTop = this.leftDomsTop[newValue] + this.cateItemHeight - H
-					}
-					// 上边
-					if (ST > this.cateItemHeight) {
-						this.leftScrollTop = this.leftDomsTop[newValue]
-					}
-				})
+				take_type: 1, // 1自取 2外卖
+				notice_list: [{
+					id: 1,
+					icon: require('@/static/appicon/about.png'),
+					text: '安抚巾克拉克斯顿积分·',
+				}, {
+					id: 2,
+					icon: require('@/static/appicon/app.png'),
+					text: '安抚巾克拉克斯顿积分·',
+				}], // 轮播公告
 			}
 		},
 		methods: {
-			// 初始化数据
-			getData() {
-				for (let i = 0; i < 20; i++) {
-					this.cate_list.push({
-						name: '测试分类' + i
-					})
-					this.list.push({
-						name: `—— 产品分类${i} ——`,
-						list: []
-					})
-				}
-
-				for (let i = 0; i < this.list.length; i++) {
-					for (let j = 0; j < 8; j++) {
-						this.list[i].list.push({
-							src: require('@/static/appicon/app.png'),
-							name: `商品${j}`
-						})
-					}
-				}
+			// 点击配送状态
+			handleTake(type) {
+				this.take_type = type
 			},
-			// 点击左边导航栏
-			changeCate(index) {
-				this.activeIndex = index
-
-				// 右边scroll-view滚动到对应区块
-				this.rightScrollTop = this.rightDomsTop[index]
-				this.$forceUpdate()
-			},
-			// 监听右边滚动事件
-			onRightScroll(e) {
-				// 匹配当前scrollTop所处的索引
-				this.rightDomsTop.forEach((v, k) => {
-					if (v < e.detail.scrollTop + 3) {
-						this.activeIndex = k
-						return false
-					}
-				})
-			},
-      handleJump() {
-        uni.navigateTo({
-          url: '../goods/details'
-        });
-      }
+			// 点击公告
+			handleNotice(item) {},
 		}
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	.page-index {
-		width: 100%;
-		min-height: 100vh;
+		position: relative;
+		padding-top: 98rpx;
+		font-size: 24rpx;
+		color: #242424;
+		background-color: #FFFFFF;
 
-		.title {
-			width: 100%;
-			height: 100rpx;
-			background-color: #007AFF;
+		.align-center {
+			display: flex;
+			align-items: center;
 		}
 
-		.list {
-			width: 100%;
-			height: calc(100vh - var(--status-bar-height) - 38rpx);
+		.page-search {
 			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 0 15rpx;
+			height: 60rpx;
 
-			.left-scroll-item {
-				width: 20%;
-				height: 100%;
-				background-color: #FFFFFF;
+			.block {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				width: 170rpx;
+				height: 60rpx;
+				font-size: 26rpx;
+				color: #242524;
+				border: 2rpx solid #e3e5e7;
+				border-radius: 50rpx;
 
-				.left-list-item {
+				.icon-cup {
+					width: 35rpx;
+					height: 35rpx;
+					margin-right: 15rpx;
+				}
+			}
+
+			.input {
+				width: 260rpx;
+				height: 60rpx;
+				border-radius: 50rpx;
+				background-color: #f9f9f9;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				color: #a0a4a6;
+				font-size: 26rpx;
+
+				.icon-search {
+					width: 35rpx;
+					height: 35rpx;
+					margin-right: 10rpx;
+				}
+			}
+
+			.hidden {
+				width: 170rpx;
+				height: 60rpx;
+			}
+		}
+
+		.page-distance {
+			margin-top: 20rpx;
+			margin-bottom: 10rpx;
+			height: 95rpx;
+			padding: 0 30rpx;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+
+			.distance-left {
+				width: 70%;
+				height: 95rpx;
+				display: flex;
+				align-items: center;
+				flex-wrap: wrap;
+
+				.address {
 					width: 100%;
-					height: 60rpx;
-					padding-left: 10rpx;
-					line-height: 60rpx;
+					height: 55rpx;
+					display: flex;
+					align-items: center;
+					font-size: 30rpx;
+					font-weight: bold;
+					color: #242524;
+
+					.icon-right {
+						margin-left: 10rpx;
+						width: 20rpx;
+						height: 20rpx;
+					}
+				}
+
+				.distance {
+					width: 100%;
+					height: 40rpx;
+					line-height: 40rpx;
 					font-size: 24rpx;
-					overflow: hidden;
-					text-overflow: ellipsis;
-					white-space: nowrap;
-				}
-
-				.active {
-					color: #007AFF;
+					color: #a4a7aa;
 				}
 			}
 
-			.right-scroll-item {
-				width: 80%;
-				height: 100%;
-				background-color: #FFFFFF;
-				border-left: 2rpx solid #C0C0C0;
-				padding-left: 35rpx;
+			.distance-right {
+				width: 30%;
+				height: 95rpx;
+				display: flex;
+				align-items: center;
+				justify-content: flex-end;
+				overflow: hidden;
 
-				.right-list-item {
+				.switch-item {
+					height: 60rpx;
+					width: 180rpx;
+					padding: 1rpx 4rpx;
+					border-radius: 50rpx;
+					background-color: #f5f5f5;
+					display: flex;
+					align-items: center;
+					justify-content: space-between;
+
+					.switch {
+						height: 54rpx;
+						width: 90rpx;
+						font-size: 24rpx;
+						color: #676a69;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+					}
+
+					.active {
+						color: #FFFFFF;
+						border-radius: 50rpx;
+						background-color: #242524;
+					}
+				}
+			}
+		}
+
+		.page-rules {
+			width: 100%;
+			height: 70rpx;
+			color: #5a5959;
+			font-size: 24rpx;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			box-shadow: 0 10rpx 10rpx -10rpx rgba(0, 0, 0, 0.1);
+
+			.rules-left {
+				width: 70%;
+				height: 70rpx;
+				margin-left: 30rpx;
+
+				.notice-item {
 					width: 100%;
+					height: 70rpx;
 
-					.title-content {
-						width: 100%;
-						height: 80rpx;
-						text-align: center;
-						font-size: 28rpx;
-						line-height: 80rpx;
+					.notice-icon {
+						width: 40rpx;
+						height: 40rpx;
+						margin-right: 10rpx;
 					}
 
-					.item {
-						width: 100%;
-						display: flex;
-						flex-wrap: wrap;
-					}
-
-					.item-content {
-						display: flex;
-						flex-direction: column;
-						margin-right: 20rpx;
-						margin-bottom: 20rpx;
-
-						.image {
-							width: 120rpx;
-							height: 120rpx;
-						}
-
-						.name {
-							width: 120rpx;
-							height: 30rpx;
-							text-align: center;
-							font-size: 24rpx;
-							overflow: hidden;
-							text-overflow: ellipsis;
-							white-space: nowrap;
-						}
+					.notice-txt {
+						width: 430rpx;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: nowrap;
 					}
 				}
 			}
+
+			.rules-right {
+				width: 30%;
+				height: 70rpx;
+				display: flex;
+				align-items: center;
+				justify-content: flex-end;
+				margin-right: 30rpx;
+
+				.icon-under {
+					margin-left: 10rpx;
+					width: 25rpx;
+					height: 25rpx;
+				}
+			}
+		}
+
+		.rules-show {
+			position: fixed;
+			z-index: 66;
+			top: 342rpx;
+			left: 0;
+			height: 200rpx !important;
+			box-shadow: none !important;
+		}
+
+		.page-list {
+			width: 100%;
+			height: calc(100vh - 453rpx);
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			background-color: #4cd964;
+
+			&-left {
+				width: 180rpx;
+				height: 100%;
+				background-color: #f5f5f5;
+			}
+
+			&-right {
+				width: 570rpx;
+				height: 100%;
+				background-color: #1A78FD;
+			}
+		}
+
+		.list-show {
+			margin-top: 70rpx;
+		}
+
+		.page-shop {
+			position: relative;
+			width: 100%;
+			height: 100rpx;
+			background-color: #1A78FD;
 		}
 	}
 </style>
