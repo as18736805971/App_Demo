@@ -92,7 +92,7 @@
 		</view>
 
 		<view class="page-shop" v-if="shop_car.length !== 0">
-			<view class="shop-car" @click="handleShowBounced()">
+			<view class="shop-car" @click.stop="handleShowBounced()">
 				<image class="car-icon" :src="require('@/static/appicon/shop_car.png')"></image>
 			</view>
 			<view class="shop-car-num">1</view>
@@ -103,7 +103,7 @@
 		<!-- 购物车弹框 -->
 		<view class="bounced" :class="bounced_show ? '' : 'bounced-car-show'">
 			<!-- 遮罩层 -->
-			<view :class="{'bounced-box': modalState}" @click="handleHiddenModal()"></view>
+			<view :class="{'bounced-box': modalState}" @click.stop="handleHiddenModal()"></view>
 			<!-- 遮罩层 -->
 			<view class="bounced-item" :class="{'bounced-show': modalState}">
 				<view class="shop-car-list">
