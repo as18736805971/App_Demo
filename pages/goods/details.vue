@@ -280,7 +280,7 @@
 					display: flex;
 					align-items: center;
 					justify-content: center;
-					border-radius: 8rpx;
+					border-radius: 4rpx;
 					padding: 5rpx 10rpx;
 					font-size: 22rpx;
 					color: #eea2b1;
