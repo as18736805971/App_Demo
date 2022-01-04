@@ -1,7 +1,7 @@
 <template>
 	<view class="page-index" @touchmove.stop.prevent>
 		<view class="page-search">
-			<view class="block">
+			<view class="block" @click="handleDrink(true)">
 				<image class="icon-cup" :src="require('@/static/appicon/cup.png')"></image>
 				一起喝
 			</view>
@@ -83,7 +83,7 @@
 					<swiper class="swiper" indicator-dots indicator-color="rgba(0, 0, 0, 0.3)"
 						indicator-active-color="rgba(0, 0, 0, 0.6)" autoplay>
 						<swiper-item v-for="(item, index) in cover_list" :key="index">
-							<view class="swiper-item">
+							<view class="swiper-item" @click.stop="handleCover()">
 								<image class="swiper-item" mode="scaleToFill" :src="item.pic"></image>
 							</view>
 						</swiper-item>
@@ -132,13 +132,16 @@
 			</view>
 		</view>
 
-		<view class="page-shop" v-if="shop_car.length !== 0">
-			<view class="shop-car" @click.stop="handleShowBounced()">
-				<image class="car-icon" :src="require('@/static/appicon/shop_car.png')"></image>
-			</view>
-			<view class="shop-car-num">{{ shop_car.length }}</view>
-			<view class="shop-car-price">￥{{ all_price }}</view>
-			<view class="shop-car-btn">选好了</view>
+		<view class="page-shop" :class="business_status ? '' : 'shop-center'" v-if="shop_car.length !== 0">
+			<template v-if="business_status">
+				<view class="shop-car" @click.stop="handleShowBounced()">
+					<image class="car-icon" :src="require('@/static/appicon/shop_car.png')"></image>
+				</view>
+				<view class="shop-car-num">{{ shop_car.length }}</view>
+				<view class="shop-car-price">￥{{ all_price }}</view>
+				<view class="shop-car-btn">选好了</view>
+			</template>
+			<template v-else>休息中（营业时间：{{ business_time }}）</template>
 		</view>
 
 		<!-- 购物车弹框 -->
@@ -179,11 +182,58 @@
 			</view>
 		</view>
 		<!-- 购物车弹框 -->
+
+		<!-- 一起喝 -->
+		<base-modal ref="modal_auth">
+			<view class="modal-auth">
+				<view class="select-block">
+					<view class="block-item" :class="invite === 1 ? 'block-active' : ''" @click="handleInvite(1)">
+						<image class="block-icon" :src="require('@/static/appicon/drinks1.png')"></image>
+						自取
+					</view>
+					<view class="block-item" :class="invite === 2 ? 'block-active' : ''" @click="handleInvite(2)">
+						<image class="block-icon" :src="require('@/static/appicon/drinks1.png')"></image>
+						外卖
+					</view>
+				</view>
+				<view class="shop-text">{{ invite === 1 ? '自取门店' : '配送地址' }}</view>
+				<template v-if="invite === 1">
+					<view class="block-title">你的眼里有星星门店<view class="distribution">可外送</view>
+					</view>
+					<view class="distance-text">距离2.7km</view>
+					<view class="desc-text">
+						<image class="txt-icon" :src="require('@/static/icon/address.png')"></image>
+						<view class="txt">河南省商丘市民权县江山盛世名门二期东门</view>
+					</view>
+					<view class="desc-text">
+						<image class="txt-icon" :src="require('@/static/icon/clock.png')"></image>
+						<view class="txt">营业时间：{{ business_time }}</view>
+					</view>
+				</template>
+				<template v-if="invite === 2">
+					<view class="no-address">您的地址超出 你的眼里有星星门店 配送范围</view>
+					<view class="no-address">请先切换地址再进行下单</view>
+				</template>
+				<view class="switch-txt" @click="handleSwitchShop()">
+					切换{{ invite === 1 ? '门店' : '地址' }}
+					<image class="block-icon-right" :src="require('@/static/icon/right_arrow.png')"></image>
+				</view>
+				<view class="block-btn">
+					<view class="btn-no" @click="handleDrink(false)">我再想想</view>
+					<view class="btn-yes" :class="invite === 2 ? 'opacity' : ''">发起拼单</view>
+				</view>
+			</view>
+		</base-modal>
+		<!-- 一起喝 -->
 	</view>
 </template>
 
 <script>
+	import BaseModal from '@/components/base/BaseModal'
 	export default {
+		components: {
+			BaseModal,
+		},
 		data() {
 			return {
 				rules_show: false, // 查看更多
@@ -199,7 +249,7 @@
 					icon: require('@/static/appicon/app.png'),
 					text: '共同防疫·免配送费',
 				}], // 轮播公告
-				business_status: 0, // 是否营业
+				business_status: true, // 是否营业
 				business_time: '10:00-22:00', // 营业时间
 				goods_list: [{
 					id: 1,
@@ -401,6 +451,7 @@
 				}], // 轮播封面图
 				bounced_show: false, // 显示弹框
 				modalState: false, // 弹框内容
+				invite: 1, // 一起喝 1自取 2外卖
 			}
 		},
 		computed: {
@@ -444,6 +495,24 @@
 			handleHiddenModal() {
 				this.modalState = false
 				this.bounced_show = false
+			},
+			// 点击轮播封面图
+			handleCover(index) {
+				this.business_status = !this.business_status
+			},
+			// 点击一起喝
+			handleDrink(status) {
+				status ? this.$refs.modal_auth.handleShowModal() : this.$refs.modal_auth.handleHiddenModal()
+			},
+			// 自取/外卖
+			handleInvite(type) {
+				this.invite = type
+			},
+			// 切换门店/地址
+			handleSwitchShop() {
+				uni.navigateTo({
+					url: this.invite === 1 ? '' : '../mine/mine_address'
+				});
 			},
 			// 清空购物车
 			handleEmpty() {
@@ -987,7 +1056,7 @@
 			}
 
 			.shop-car-price {
-				width: 75%;
+				width: 65%;
 				height: 116rpx;
 				padding-left: 170rpx;
 				color: #242524;
@@ -997,7 +1066,7 @@
 			}
 
 			.shop-car-btn {
-				width: 25%;
+				width: 35%;
 				height: 116rpx;
 				font-size: 30rpx;
 				line-height: 116rpx;
@@ -1005,6 +1074,13 @@
 				color: #242524;
 				background-color: #b0d342;
 			}
+		}
+
+		.shop-center {
+			font-size: 30rpx;
+			color: #b0d342;
+			background-color: #f0f3e7;
+			justify-content: center !important;
 		}
 
 		.bounced {
@@ -1295,6 +1371,155 @@
 		.rules-car-show {
 			transition: all 1s ease;
 			z-index: -1000 !important;
+		}
+
+		.modal-auth {
+			height: auto;
+			border-radius: 20rpx 20rpx 0 0;
+			background-color: #FFFFFF;
+			padding: 40rpx 30rpx;
+
+			.select-block {
+				height: 150rpx;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+
+				.block-item {
+					width: 45%;
+					height: 140rpx;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					border: 2rpx solid #e2e4e6;
+					border-radius: 12rpx;
+					font-size: 30rpx;
+					font-weight: bold;
+
+					.block-icon {
+						width: 60rpx;
+						height: 60rpx;
+						margin-right: 10rpx;
+					}
+				}
+
+				.block-active {
+					border: 4rpx solid #b0d342;
+				}
+			}
+
+			.shop-text {
+				margin-top: 30rpx;
+				height: 50rpx;
+				line-height: 50rpx;
+				font-size: 26rpx;
+				color: #707274;
+				margin-bottom: 10rpx;
+			}
+
+			.block-title {
+				height: 50rpx;
+				display: flex;
+				align-items: center;
+				color: #242524;
+				font-size: 30rpx;
+
+				.distribution {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					font-size: 20rpx;
+					padding: 5rpx 10rpx;
+					height: 30rpx;
+					border-radius: 6rpx;
+					margin-left: 10rpx;
+					background-color: #b0d342;
+				}
+
+			}
+
+			.no-address {
+				height: 50rpx;
+				line-height: 50rpx;
+				text-align: center;
+				font-size: 24rpx;
+			}
+
+			.distance-text {
+				height: 30rpx;
+				line-height: 30rpx;
+				font-size: 24rpx;
+				color: #707274;
+				margin-bottom: 20rpx;
+			}
+
+			.desc-text {
+				display: flex;
+				align-items: flex-start;
+				height: auto;
+				font-size: 24rpx;
+				color: #707274;
+				margin-bottom: 10rpx;
+
+				.txt-icon {
+					width: 30rpx;
+					height: 30rpx;
+					margin-right: 20rpx;
+				}
+
+				.txt {
+					width: 636rpx;
+				}
+			}
+
+			.switch-txt {
+				height: 100rpx;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 24rpx;
+				color: #929698;
+
+				.block-icon-right {
+					width: 20rpx;
+					height: 20rpx;
+					margin-left: 5rpx;
+				}
+			}
+
+			.block-btn {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				height: 80rpx;
+
+				.btn-no {
+					width: 42%;
+					background-color: #e2e4e6;
+					height: 80rpx;
+					color: #707274;
+					font-size: 26rpx;
+					line-height: 80rpx;
+					text-align: center;
+					margin-right: 40rpx;
+					border-radius: 50rpx;
+				}
+
+				.btn-yes {
+					width: 42%;
+					background-color: #b0d342;
+					height: 80rpx;
+					color: #313523;
+					font-size: 26rpx;
+					line-height: 80rpx;
+					text-align: center;
+					border-radius: 50rpx;
+				}
+
+				.opacity {
+					opacity: 0.5;
+				}
+			}
 		}
 	}
 </style>
