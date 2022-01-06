@@ -184,6 +184,12 @@
 			"style": {
 				"navigationBarTitleText": "添加备注"
 			}
+		},
+		{
+			"path": "pages/list/search",
+			"style": {
+				"navigationBarTitleText": "商品搜索"
+			}
 		}
 	],
 	"tabBar": {

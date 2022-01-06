@@ -161,7 +161,7 @@
 					}
 
 					.title {
-						width: 200rpx;
+						width: 180rpx;
 						height: 50rpx;
 						line-height: 50rpx;
 						text-align: left;
@@ -175,7 +175,7 @@
 				}
 
 				.desc {
-					width: 350rpx;
+					width: 370rpx;
 					height: 50rpx;
 					line-height: 50rpx;
 					text-align: right;

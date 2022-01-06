@@ -1,9 +1,11 @@
 <template>
 	<view class="page-index">
+		<image class="close-icon" @click="handleReturn()" :src="require('@/static/icon/close2.png')"></image>
+
 		<swiper class="swiper">
 			<swiper-item v-for="(item, index) in goods_info.goods_pic" :key="index">
 				<view class="swiper-item">
-					<image class="swiper-image" mode="aspectFit" :src="item.image"></image>
+					<image class="swiper-image" mode="scaleToFill" :src="item.image"></image>
 				</view>
 			</swiper-item>
 		</swiper>
@@ -69,7 +71,7 @@
 					goods_hot: ['人气爆品', '可做热饮', '用料丰富'],
 					goods_desc: '【650ml】 经典人气产品。酸甜草莓，四季出品。搭配金奖茉莉初雪，淋上轻盈香滑的芝士奶糖。喝上一口，酸甜鲜爽，满满的幸福感！',
 					goods_pic: [{
-						image: 'https://img9.51tietu.net/pic/2019-091200/vgkpidei2tjvgkpidei2tj.jpg'
+						image: 'https://img9.51tietu.net/pic/2019-091200/euzekmi5m23euzekmi5m23.jpg'
 					}],
 					goods_attr: [{
 							title: '加料',
@@ -222,16 +224,32 @@
 						this.goods_num = 1
 					}
 				}
-			}
+			},
+			// 返回上一页
+			handleReturn() {
+				uni.navigateBack({
+					delta: 1
+				});
+			},
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
 	.page-index {
+		position: relative;
 		font-size: 24rpx;
 		color: #242424;
 		background-color: #FFFFFF;
+
+		.close-icon {
+			position: absolute;
+			top: 103rpx;
+			left: 35rpx;
+			width: 50rpx;
+			height: 50rpx;
+			z-index: 999;
+		}
 
 		.swiper {
 			width: 100%;

@@ -5,7 +5,7 @@
 				<image class="icon-cup" :src="require('@/static/appicon/cup.png')"></image>
 				一起喝
 			</view>
-			<view class="input">
+			<view class="input" @click="handleJump({type: './search'})">
 				<image class="icon-search" :src="require('@/static/icon/search.png')"></image>
 				搜索商品
 			</view>
@@ -438,7 +438,7 @@
 				], // 商品分类
 				cover_list: [{
 					id: 1,
-					pic: 'https://img9.51tietu.net/pic/2019-091200/vgkpidei2tjvgkpidei2tj.jpg',
+					pic: 'https://img9.51tietu.net/pic/2019-091200/143tt0ta4sr143tt0ta4sr.jpg',
 				}, {
 					id: 2,
 					pic: 'https://img9.51tietu.net/pic/2019-091200/euzekmi5m23euzekmi5m23.jpg',

@@ -110,21 +110,21 @@
 				// 卡片数据
 				card_list: [{
 						id: 1,
-						title: '早柚',
+						title: '自取',
 						icon: require('@/static/appicon/help.png'),
-						desc: '神里绫华 巴巴托斯',
+						desc: '预约点单，到店自取',
 					},
 					{
 						id: 2,
-						title: '宵宫',
+						title: '外卖',
 						icon: require('@/static/appicon/password.png'),
-						desc: '璃月钟离 稻妻雷神',
+						desc: '快递送达，限时免配',
 					},
 					{
 						id: 3,
-						title: '甘雨',
+						title: '一起喝',
 						icon: require('@/static/appicon/price.png'),
-						desc: '枫原万叶 九条裟罗',
+						desc: '微信支付满88，随机立减15-88元',
 					}
 				],
 				// 卡片数据
@@ -132,7 +132,7 @@
 						id: 1,
 						title: '早柚',
 						icon: 'https://img9.51tietu.net/pic/2019-091200/ff1vqwm3q33ff1vqwm3q33.jpg',
-						desc: '神里绫华 巴巴托斯',
+						desc: '好茶随行 美好常在',
 					},
 					{
 						id: 2,
@@ -156,24 +156,25 @@
 		},
 		computed: {
 			getWid() {
-        if (getApp()['userInfo'].growth) {
-          return getApp()['userInfo'].growth.wid.toString() + "px"
-        } else {
-          return 0
-        }
+				if (getApp()['userInfo'].growth) {
+					return getApp()['userInfo'].growth.wid.toString() + "px"
+				} else {
+					return 0
+				}
 			},
 			// 选中成长值长度
 			activePx() {
-        if (getApp()['userInfo'].growth) {
-          return (getApp()['userInfo'].growth.value / getApp()['userInfo'].growth.max_value * getApp()['userInfo'].growth.wid) + 'px'
-        } else {
-          return 0
-        }
+				if (getApp()['userInfo'].growth) {
+					return (getApp()['userInfo'].growth.value / getApp()['userInfo'].growth.max_value * getApp()[
+						'userInfo'].growth.wid) + 'px'
+				} else {
+					return 0
+				}
 			},
 		},
 		onShow() {
-      this.userInfo = getApp()['userInfo']
-    },
+			this.userInfo = getApp()['userInfo']
+		},
 		methods: {
 			// 点击封面图
 			handleCover(data) {
@@ -182,6 +183,19 @@
 			// 点击卡片
 			handleCard(data) {
 				console.log('🥒', data)
+				if (data.index === 0) {
+					uni.switchTab({
+						url: '../list/index'
+					});
+				} else if (data.index === 1) {
+					this.handleJump({
+						type: '../mine/mine_address'
+					})
+				} else {
+					uni.switchTab({
+						url: '../list/index'
+					});
+				}
 			},
 			// 点击卡片
 			handleCardNew(data, index) {
