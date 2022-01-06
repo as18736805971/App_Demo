@@ -27,7 +27,7 @@
 							@click="handleJump({type: './integral_detail'})">
 							<view class="goods-pic">
 								<image class="goods-pic" mode="scaleToFill"
-									src="https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png">
+									src="https://img9.51tietu.net/pic/2019-091200/ff1vqwm3q33ff1vqwm3q33.jpg">
 								</image>
 							</view>
 							<view class="goods-name">神里绫华</view>

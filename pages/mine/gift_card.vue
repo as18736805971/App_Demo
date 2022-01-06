@@ -63,15 +63,15 @@
 			return {
 				list: ['购买礼品卡', '我的礼品卡'], // 选项卡列表
 				active_index: 0,
-				cover: 'https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png',
+				cover: 'https://img9.51tietu.net/pic/2019-091200/ff1vqwm3q33ff1vqwm3q33.jpg',
 				card_list: [{
 						title: '神里绫华',
 						list: [{
-								image: 'https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png',
+								image: 'https://img9.51tietu.net/pic/2019-091200/ff1vqwm3q33ff1vqwm3q33.jpg',
 								name: '神里绫华神里绫华',
 							},
 							{
-								image: 'https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png',
+								image: 'https://img9.51tietu.net/pic/2019-091200/ff1vqwm3q33ff1vqwm3q33.jpg',
 								name: '神里绫华神里绫华',
 							},
 						]
@@ -79,11 +79,11 @@
 					{
 						title: '神里绫华',
 						list: [{
-								image: 'https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png',
+								image: 'https://img9.51tietu.net/pic/2019-091200/ff1vqwm3q33ff1vqwm3q33.jpg',
 								desc: '神里绫华神里绫华',
 							},
 							{
-								image: 'https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png',
+								image: 'https://img9.51tietu.net/pic/2019-091200/ff1vqwm3q33ff1vqwm3q33.jpg',
 								name: '神里绫华神里绫华',
 							},
 						]
@@ -91,11 +91,11 @@
 					{
 						title: '神里绫华',
 						list: [{
-								image: 'https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png',
+								image: 'https://img9.51tietu.net/pic/2019-091200/ff1vqwm3q33ff1vqwm3q33.jpg',
 								name: '神里绫华神里绫华',
 							},
 							{
-								image: 'https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png',
+								image: 'https://img9.51tietu.net/pic/2019-091200/ff1vqwm3q33ff1vqwm3q33.jpg',
 								name: '神里绫华神里绫华',
 							},
 						]
@@ -103,11 +103,11 @@
 					{
 						title: '神里绫华',
 						list: [{
-								image: 'https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png',
+								image: 'https://img9.51tietu.net/pic/2019-091200/ff1vqwm3q33ff1vqwm3q33.jpg',
 								name: '神里绫华神里绫华',
 							},
 							{
-								image: 'https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png',
+								image: 'https://img9.51tietu.net/pic/2019-091200/ff1vqwm3q33ff1vqwm3q33.jpg',
 								name: '神里绫华神里绫华',
 							},
 						]
@@ -115,11 +115,11 @@
 					{
 						title: '神里绫华',
 						list: [{
-								image: 'https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png',
+								image: 'https://img9.51tietu.net/pic/2019-091200/ff1vqwm3q33ff1vqwm3q33.jpg',
 								name: '神里绫华神里绫华',
 							},
 							{
-								image: 'https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png',
+								image: 'https://img9.51tietu.net/pic/2019-091200/ff1vqwm3q33ff1vqwm3q33.jpg',
 								name: '神里绫华神里绫华',
 							},
 						]
@@ -151,7 +151,6 @@
 		.cover {
 			width: 100%;
 			height: 600rpx;
-			background-color: #4cd964;
 
 			.icon-cover {
 				width: 100%;

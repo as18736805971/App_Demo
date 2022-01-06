@@ -93,13 +93,13 @@
 							order_time: '2021-12-11 11:50:23',
 							price: '1057.59',
 							goods_list: [{
-									pic: 'https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png',
+									pic: 'https://img9.51tietu.net/pic/2019-091200/ff1vqwm3q33ff1vqwm3q33.jpg',
 								},
 								{
-									pic: 'https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png',
+									pic: 'https://img9.51tietu.net/pic/2019-091200/ff1vqwm3q33ff1vqwm3q33.jpg',
 								},
 								{
-									pic: 'https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png',
+									pic: 'https://img9.51tietu.net/pic/2019-091200/ff1vqwm3q33ff1vqwm3q33.jpg',
 								}
 							],
 						}, {
@@ -109,7 +109,7 @@
 							order_time: '2021-12-11 11:50:23',
 							price: '1057.59',
 							goods_list: [{
-								pic: 'https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png',
+								pic: 'https://img9.51tietu.net/pic/2019-091200/ff1vqwm3q33ff1vqwm3q33.jpg',
 							}],
 						}, {
 							id: 3,
@@ -118,10 +118,10 @@
 							order_time: '2021-12-11 11:50:23',
 							price: '1057.59',
 							goods_list: [{
-									pic: 'https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png',
+									pic: 'https://img9.51tietu.net/pic/2019-091200/ff1vqwm3q33ff1vqwm3q33.jpg',
 								},
 								{
-									pic: 'https://dev6.sssvip.net/addons/yb_guanwangv2/core/public/images/miniapp/background.png',
+									pic: 'https://img9.51tietu.net/pic/2019-091200/ff1vqwm3q33ff1vqwm3q33.jpg',
 								},
 							],
 						}]

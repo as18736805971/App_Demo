@@ -130,7 +130,7 @@
 				}],
 				goods_list: [{
 					goods_name: '星星气泡水组合套装',
-					goods_pic: 'https://img9.51tietu.net/pic/2019-091200/vgkpidei2tjvgkpidei2tj.jpg',
+					goods_pic: 'https://img9.51tietu.net/pic/2019-091200/ff1vqwm3q33ff1vqwm3q33.jpg',
 					goods_integral: 5000,
 					remaining: 10,
 					status: 1,
@@ -161,7 +161,7 @@
 					end: false,
 				}, {
 					goods_name: '星星气泡水组合套装',
-					goods_pic: 'https://img9.51tietu.net/pic/2019-091200/vgkpidei2tjvgkpidei2tj.jpg',
+					goods_pic: 'https://img9.51tietu.net/pic/2019-091200/ff1vqwm3q33ff1vqwm3q33.jpg',
 					goods_integral: 500,
 					remaining: 24,
 					status: 1,
