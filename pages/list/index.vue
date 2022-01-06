@@ -139,7 +139,7 @@
 				</view>
 				<view class="shop-car-num">{{ shop_car.length }}</view>
 				<view class="shop-car-price">￥{{ all_price }}</view>
-				<view class="shop-car-btn">选好了</view>
+				<view class="shop-car-btn" @click="handleJump({type: '../order/settlement'})">选好了</view>
 			</template>
 			<template v-else>休息中（营业时间：{{ business_time }}）</template>
 		</view>

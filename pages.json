@@ -172,6 +172,18 @@
 			"style": {
 				"navigationBarTitleText": "积分明细"
 			}
+		},
+		{
+			"path": "pages/order/settlement",
+			"style": {
+				"navigationBarTitleText": "订单结算"
+			}
+		},
+		{
+			"path": "pages/order/note",
+			"style": {
+				"navigationBarTitleText": "添加备注"
+			}
 		}
 	],
 	"tabBar": {
