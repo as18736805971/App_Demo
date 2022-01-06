@@ -7,6 +7,8 @@
 		<!-- 卡券列表 -->
 		<view class="card-list" v-if="card_list.length !== 0">
 			<view class="card-item" v-for="(item, index) in card_list" :key="index" @click="handleShowDetail(item)">
+				<view class="failure" v-if="page_type === 'history' && active_index === 1">已过期</view>
+
 				<view class="top">
 					<view class="image">
 						<image class="icon-image" mode="aspectFit" :src="item.image">
@@ -123,7 +125,7 @@
 		methods: {
 			handleTab(index) {
 				this.active_index = index
-				if (this.active_index === 1 || this.active_index === 2) {
+				if (this.active_index === 2) {
 					this.card_list = []
 				} else {
 					if (this.card_list.length === 0) {
@@ -191,6 +193,22 @@
 				padding: 10rpx;
 				background-color: #FFFFFF;
 				box-shadow: 0 0 10rpx rgba(0, 0, 0, 0.1);
+
+				.failure {
+					position: absolute;
+					top: 50rpx;
+					right: 40rpx;
+					padding: 8rpx;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					font-size: 20rpx;
+					border-radius: 4rpx;
+					border: 2rpx solid #c6c7c7;
+					color: #c6c7c7;
+					transform: rotate(-30deg);
+					z-index: 99;
+				}
 
 				.top {
 					height: 150rpx;
