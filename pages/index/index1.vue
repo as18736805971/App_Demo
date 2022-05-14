@@ -54,7 +54,9 @@
 				nowD: 20,
 			}
 		},
-		onLoad() {},
+		onLoad() {
+      console.log('新提交1')
+    },
 		methods: {
 			// 点击轮播图图片
 			selectedBanner(item, index) {
