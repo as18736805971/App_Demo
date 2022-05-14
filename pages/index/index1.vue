@@ -56,6 +56,7 @@
 		},
 		onLoad() {
       console.log('新提交1')
+      console.log('新提交2')
     },
 		methods: {
 			// 点击轮播图图片
